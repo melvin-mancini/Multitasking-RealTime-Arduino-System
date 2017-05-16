@@ -1,11 +1,11 @@
 #include <DigitalToggle.h>
 
 //Pin definition
-static int trigger = 8; // Pin HC-SR04
-static int echo = 9; // Pin HC-SR04
+static int trigger = 9; // Pin HC-SR04
+static int echo = 8; // Pin HC-SR04
 static int led_HC = 10; // Pin HC-SR04
-static int led_pulsed = 12; // Timed pulsed led
-static int led_temperature = 11; // Led to temperature overflow
+static int led_pulsed = 13; // Timed pulsed led
+static int led_temperature = 12; // Led to temperature overflow
 static int LM35_analogPin = 0; // analog pin for temperature sensor
 
 
