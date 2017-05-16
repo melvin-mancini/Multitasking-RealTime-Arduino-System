@@ -4,7 +4,7 @@ This simple project shows how Arduino can be used with a real time operating sys
 
 ### <a name="ARTe(Arduino-Real-Time-extension)"></a> ARTe (Arduino Real-Time extension)
 
-ARTe (Arduino Real-Time extension) is an extension to the Arduino framework that supports multitasking and real-time preemptive scheduling. Thanks to ARTe, the user can easily specify and run multiple concurrent loops at differents rates, in addition to the single execution cycle provided by the standard Arduino framework. Today ARTE supports the most popular platforms: Arduino UNO and Arduino DUE. In addition to the single loop present in the standard Arduino approach, the user can easily specify a number of concurrent loops to be executed at specific rates. Concurrency and real-time scheduling is provided by the ERIKA Enterprise ( http://erika.tuxfamily.org/drupal/ ) open-source real-time kernel. Loops can use the standard Arduino libraries, which have been enhanced to guarantee mutual exclusion in the access of shared data structures. The impact of ARTe in terms of footprint and runtime overhead has beed evaluated by extensive tests and resulted to be negligible.
+ARTe (Arduino Real-Time extension) is an extension to the Arduino framework that supports multitasking and real-time preemptive scheduling. Thanks to ARTe, the user can easily specify and run multiple concurrent loops at differents rates, in addition to the single execution cycle provided by the standard Arduino framework. Today ARTe supports the most popular platforms: Arduino UNO and Arduino DUE. In addition to the single loop present in the standard Arduino approach, the user can easily specify a number of concurrent loops to be executed at specific rates. Concurrency and real-time scheduling is provided by the ERIKA Enterprise ( http://erika.tuxfamily.org/drupal/ ) open-source real-time kernel. Loops can use the standard Arduino libraries, which have been enhanced to guarantee mutual exclusion in the access of shared data structures. The impact of ARTe in terms of footprint and runtime overhead has beed evaluated by extensive tests and resulted to be negligible.
 **You can use ARTe and develop Arduino code only with Windows platforms.** The project under consideration was developed on a machine with Windows 8.1.
 
 ### <a name="About-this-project"></a> About this project
@@ -14,8 +14,8 @@ Processes, when they are running, handle different activities. A process for man
 ## <a name="How-to-use"></a> How to use
 ### <a name="ARTe-installation"></a> ARTe installation
 In order to develop applications with ARTe you must download the development tool from the site ( http://retis.sssup.it/?q=arte ). The developer site provides all the information on how to use the development tool, providing documentation and examples.
-Once installed the tool is quite similar to Arduino's editor but with the ability to use the Art Extension.
-You can then enable or disable the ART extension by clicking on the **Tools** item in the menu bar. The item **ARTℇ** will appear and click on it you can select enable or disable.
+Once installed the tool is quite similar to Arduino's editor but with the ability to use the Arte Extension.
+You can then enable or disable the ARTe extension by clicking on the **Tools** item in the menu bar. The item **ARTℇ** will appear and click on it you can select enable or disable.
 
 
 ### <a name="Run-the-project"></a> Run the project
