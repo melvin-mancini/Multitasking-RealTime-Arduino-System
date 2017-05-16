@@ -2,7 +2,11 @@
 ## Introduction 
 This simple project shows how Arduino can be used with a real time operating system (Erika). A special version of Arduino called ARTe was used for software development. For more information on how to use ARTe, visit the official developer site ( http://retis.sssup.it/?q=arte ). 
 
+### <a name="ciao"></a>This is the Heading
+fdfdfddfd
+
 ### ARTe (Arduino Real-Time extension)
+
 ARTe (Arduino Real-Time extension) is an extension to the Arduino framework that supports multitasking and real-time preemptive scheduling. Thanks to ARTe, the user can easily specify and run multiple concurrent loops at differents rates, in addition to the single execution cycle provided by the standard Arduino framework. Today ARTE supports the most popular platforms: Arduino UNO and Arduino DUE. In addition to the single loop present in the standard Arduino approach, the user can easily specify a number of concurrent loops to be executed at specific rates. Concurrency and real-time scheduling is provided by the ERIKA Enterprise ( http://erika.tuxfamily.org/drupal/ ) open-source real-time kernel. Loops can use the standard Arduino libraries, which have been enhanced to guarantee mutual exclusion in the access of shared data structures. The impact of ARTe in terms of footprint and runtime overhead has beed evaluated by extensive tests and resulted to be negligible.
 **You can use ARTe and develop Arduino code only with Windows platforms.** The project under consideration was developed on a machine with Windows 8.1.
 
@@ -31,4 +35,4 @@ In the **Circuit Diagram** folder there are two files that show how to connect t
 
 <div style="text-align:center"> <img src="https://github.com/melvin-mancini/Multitasking-RealTime-Arduino/blob/master/Circuit%20Diagram/CircuitDiagram.png" width="500" height="450"/></div>
 
-After installing ARTe and implementing the circuit, you can connect the Arduino to the PC and wait for the software to recognize the device. Then, through the Arduino editor with ARTe, you should open the src.ino file located in the src folder of the project. You must enable ARTe as explained in the previous section [Link to ARTe installation](#ARTe Installation) and then you can complete the project and upload it to the Arduino board.
+After installing ARTe and implementing the circuit, you can connect the Arduino to the PC and wait for the software to recognize the device. Then, through the Arduino editor with ARTe, you should open the src.ino file located in the src folder of the project. You must enable ARTe as explained in the previous section [Link to ARTe installation](#ciao) and then you can complete the project and upload it to the Arduino board.
