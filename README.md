@@ -18,10 +18,5 @@ You can then enable or disable the ART extension by clicking on the **Tools** it
 
 ### Run the project
 In order to realize the system described above, you must have the following hardware components:
-*   Arduino Uno
-*   HC-SR04 (distance sensor)
-*   LM35 (temperature sensor)
-*   LED
-*   Electrical resistances
-*   Simple connectors for electronic devices
-In the **Circuit Diagram** folder there are two files that show how to connect the various components to the Arduino. The file in .fzz format was created using the Fritzing software, the recommended tool for building electronic circuits. In addition, there is an image that shows more intuitive how the various components must be connected.
+* Arduino Uno.
+In the **Circuit Diagram** folder there are two files that show how to connect the various components to the Arduino. The     file in .fzz format was created using the Fritzing software, the recommended tool for building electronic circuits. In         addition, there is an image that shows more intuitive how the various components must be connected.
