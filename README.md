@@ -16,6 +16,7 @@ In order to develop applications with ARTe you must download the development too
 Once installed the tool is quite similar to Arduino's editor but with the ability to use the Art Extension.
 You can then enable or disable the ART extension by clicking on the **Tools** item in the menu bar. The item **ARTℇ** will appear and click on it you can select enable or disable.
 
+
 ### Run the project
 In order to realize the system described above, you must have the following hardware components:
 
@@ -30,4 +31,4 @@ In the **Circuit Diagram** folder there are two files that show how to connect t
 
 <div style="text-align:center"> <img src="https://github.com/melvin-mancini/Multitasking-RealTime-Arduino/blob/master/Circuit%20Diagram/CircuitDiagram.png" width="500" height="450"/></div>
 
-After installing ARTe and implementing the circuit, you can connect the Arduino to the PC and wait for the software to recognize the device. Then, through the Arduino editor with ARTe, you should open the src.ino file located in the src folder of the project. You must enable ARTe as explained in the previous section [Link to a How to use](### ARTe Installation) and then you can complete the project and upload it to the Arduino board.
+After installing ARTe and implementing the circuit, you can connect the Arduino to the PC and wait for the software to recognize the device. Then, through the Arduino editor with ARTe, you should open the src.ino file located in the src folder of the project. You must enable ARTe as explained in the previous section [Link to ARTe installation](#ARTe Installation) and then you can complete the project and upload it to the Arduino board.
