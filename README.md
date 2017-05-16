@@ -27,4 +27,7 @@ In order to realize the system described above, you must have the following hard
 * Simple connectors for electronic devices.
 
 In the **Circuit Diagram** folder there are two files that show how to connect the various components to the Arduino. The     file .fzz format was created using the Fritzing software, the recommended tool for building electronic circuits. In addition, there is an image that shows more intuitive how the various components must be connected.
+
 <div style="text-align:center"> <img src="https://github.com/melvin-mancini/Multitasking-RealTime-Arduino/blob/master/Circuit%20Diagram/CircuitDiagram.png" width="500" height="450"/></div>
+
+After installing ARTe and implementing the circuit, you can connect the Arduino to the PC and wait for the software to recognize the device. Then, through the Arduino editor with ARTe, you should open the src.ino file located in the src folder of the project. You must enable ARTe as explained in the previous section [Link to a How to use](## How to use) and then you can complete the project and upload it to the Arduino board.
