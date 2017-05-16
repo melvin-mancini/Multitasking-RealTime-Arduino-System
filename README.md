@@ -1,6 +1,6 @@
 # <a name="Title"></a> Multitasking-RealTime-Arduino
 ## <a name="Introduction"></a> Introduction 
-This simple project shows how Arduino can be used with a real time operating system (Erika). A special version of Arduino called ARTe was used for software development. For more information on how to use ARTe, visit the official developer site ( http://retis.sssup.it/?q=arte ). 
+This simple project shows how Arduino can be used with a real time operating system (Erika). The project is designed to show how Arduino can be integrated with a Real-Time operating system and how to use harware and software components. A special version of Arduino called ARTe was used for software development. For more information on how to use ARTe, visit the official developer site ( http://retis.sssup.it/?q=arte ). 
 
 ### <a name="ARTe(Arduino-Real-Time-extension)"></a> ARTe (Arduino Real-Time extension)
 
@@ -9,7 +9,7 @@ ARTe (Arduino Real-Time extension) is an extension to the Arduino framework that
 
 ### <a name="About-this-project"></a> About this project
 Thanks to ARTe it has been possible to implement a system in which there are 3 periodic processes. Each of them has a given priority and is managed according to a real time scheduler algorithm made available by the ERIKA operating system.
-Processes, when they are running, handle different activities. A process for managing every 3 milliseconds the acquisition of the distance through the sensor HC-SR04. Another process for flashing a LED every 7 milliseconds. A final process to read the temperature returned by the LM35 sensor expressed in degrees Celsius. All processes are managed in real time mode.
+Processes, when they are running, handle different activities. A process for managing every 3 milliseconds the acquisition of the distance through the sensor HC-SR04. When an obstacle is placed at a distance of less than 10 cm, an "alarm" LED lights up. Another process for flashing a LED every 7 milliseconds. A final process to read the temperature returned by the LM35 sensor expressed in degrees Celsius. If the temperature exceeds 23 degrees Celsius then a warning LED is switched on. All processes are managed in real time mode. The system is efficient and effective with responsive response times.
 
 ## <a name="How-to-use"></a> How to use
 ### <a name="ARTe-installation"></a> ARTe installation
