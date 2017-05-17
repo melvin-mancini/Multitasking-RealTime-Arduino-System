@@ -1,4 +1,4 @@
-# <a name="Title"></a> Multitasking-RealTime-Arduino
+# <a name="Title"></a> Multitasking RealTime Arduino System
 ## <a name="Introduction"></a> Introduction 
 This simple project shows how Arduino can be used with a real time operating system (Erika). The project is designed to show how Arduino can be integrated with a Real-Time operating system and how to use hardware and software components. A special version of Arduino called ARTe was used for software development. For more information on how to use ARTe, visit the official developer site (http://retis.sssup.it/?q=arte). 
 
