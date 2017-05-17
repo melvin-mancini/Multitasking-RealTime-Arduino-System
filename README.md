@@ -36,7 +36,7 @@ After installing ARTe and implementing the circuit, you can connect the Arduino 
 
 ##  <a name="Problems"></a> Problems
 ### <a name="Problem-with-DigitalToggle-Arduino-Library"></a> Problem with DigitalToggle Arduino Library
-If you need to use the Digital Toggle  Arduino library, errors may be encountered during compilation. You should edit a file in order to use the library properly. Follow the steps below:
+ARTe is an extension of an Arduino version so you may encounter compilation errors when using some Arduino libraries. Compilation errors may occur when using the Arduino DigitalToggle library. You should edit a file in order to use the library properly. Follow the steps below:
 1. Download the file DigitalToggle.zip from Official Arduino Site ( https://playground.arduino.cc/Code/DigitalToggle )
 2. Before importing the library through the Arduino IDE, you must unzip the DigitalToggle.zip file and open the DigitalToggle.h file
 3. Replace the line of code **#include <pins_arduino.h>** with **#include "Arduino.h"**
