@@ -33,3 +33,10 @@ In the **Circuit Diagram** folder there are two files that show how to connect t
 <div style="text-align:center"> <img src="https://github.com/melvin-mancini/Multitasking-RealTime-Arduino/blob/master/Circuit%20Diagram/CircuitDiagram.png" width="500" height="450"/></div>
 
 After installing ARTe and implementing the circuit, you can connect the Arduino to the PC and wait for the software to recognize the device. Then, through the Arduino editor with ARTe, you should **open the src.ino file** located in the src folder of the project. I recommend opening the src.ino file using the ARTe editor directly, by clicking on the menu bar **File -> Open -> Select src.ino file**. You must **enable ARTe** as explained in the previous section [ARTe installation](#ARTe-installation) and then you can compile the project and upload it to the Arduino board.
+
+### <a name="Problem-with-DigitalToggle-Arduino-Library"></a> Problem with DigitalToggle Arduino Library
+There are errors when compiling if you are using the Arduino DigitalToggle library. You should edit a file in order to use the library properly.
+1. Download the file DigitalToggle.zip from Official Arduino Site ( https://playground.arduino.cc/Code/DigitalToggle )
+2. Before importing the library through the Arduino IDE, you must unzip the DigitalToggle.zip file and open the DigitalToggle.h file
+3. Replace the line of code **#include <pins_arduino.h>** with **#include "Arduino.h"**
+4. Once the DigitalToggle.h file has been modified, compress the folder into a .ZIP file and run the procedure to import the new library (See the section "Download, install and import" from the site https://playground.arduino.cc/Code/DigitalToggle).
