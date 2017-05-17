@@ -1,10 +1,10 @@
 # <a name="Title"></a> Multitasking-RealTime-Arduino
 ## <a name="Introduction"></a> Introduction 
-This simple project shows how Arduino can be used with a real time operating system (Erika). The project is designed to show how Arduino can be integrated with a Real-Time operating system and how to use hardware and software components. A special version of Arduino called ARTe was used for software development. For more information on how to use ARTe, visit the official developer site ( http://retis.sssup.it/?q=arte ). 
+This simple project shows how Arduino can be used with a real time operating system (Erika). The project is designed to show how Arduino can be integrated with a Real-Time operating system and how to use hardware and software components. A special version of Arduino called ARTe was used for software development. For more information on how to use ARTe, visit the official developer site (http://retis.sssup.it/?q=arte). 
 
 ### <a name="ARTe(Arduino-Real-Time-extension)"></a> ARTe (Arduino Real-Time extension)
 
-ARTe (Arduino Real-Time extension) is an extension to the Arduino framework that supports multitasking and real-time preemptive scheduling. Thanks to ARTe, the user can easily specify and run multiple concurrent loops at differents rates, in addition to the single execution cycle provided by the standard Arduino framework. Today ARTe supports the most popular platforms: Arduino UNO and Arduino DUE. In addition to the single loop present in the standard Arduino approach, the user can easily specify a number of concurrent loops to be executed at specific rates. Concurrency and real-time scheduling is provided by the ERIKA Enterprise ( http://erika.tuxfamily.org/drupal/ ) open-source real-time kernel. Loops can use the standard Arduino libraries, which have been enhanced to guarantee mutual exclusion in the access of shared data structures. The impact of ARTe in terms of footprint and runtime overhead has beed evaluated by extensive tests and resulted to be negligible.
+ARTe (Arduino Real-Time extension) is an extension to the Arduino framework that supports multitasking and real-time preemptive scheduling. Thanks to ARTe, the user can easily specify and run multiple concurrent loops at differents rates, in addition to the single execution cycle provided by the standard Arduino framework. Today ARTe supports the most popular platforms: Arduino UNO and Arduino DUE. In addition to the single loop present in the standard Arduino approach, the user can easily specify a number of concurrent loops to be executed at specific rates. Concurrency and real-time scheduling is provided by the ERIKA Enterprise (http://erika.tuxfamily.org/drupal/) open-source real-time kernel. Loops can use the standard Arduino libraries, which have been enhanced to guarantee mutual exclusion in the access of shared data structures. The impact of ARTe in terms of footprint and runtime overhead has beed evaluated by extensive tests and resulted to be negligible.
 **You can use ARTe and develop Arduino code only with Windows platforms.** The project under consideration was developed on a machine with Windows 8.1.
 
 ### <a name="About-this-project"></a> About this project
@@ -13,7 +13,7 @@ Processes, when they are running, handle different activities. A process for man
 
 ## <a name="How-to-use"></a> How to use
 ### <a name="ARTe-installation"></a> ARTe installation
-In order to develop applications with ARTe you have to download the development tool from the site ( http://retis.sssup.it/?q=arte ). The developer site provides all the information on how to use the development tool, providing documentation and examples.
+In order to develop applications with ARTe you have to download the development tool from the site (http://retis.sssup.it/?q=arte). The developer site provides all the information on how to use the development tool, providing documentation and examples.
 Once installed the tool is quite similar to Arduino's editor but with the ability to use the Arte Extension.
 You can then enable or disable the ARTe extension by clicking on the **Tools** item in the menu bar. The item **ARTℇ** will appear and click on it you can select enable or disable.
 
@@ -37,7 +37,7 @@ After installing ARTe and implementing the circuit, you can connect the Arduino 
 ##  <a name="Problems"></a> Problems
 ### <a name="Problem-with-DigitalToggle-Arduino-Library"></a> Problem with DigitalToggle Arduino Library
 ARTe is an extension of an Arduino version so you may encounter compilation errors when using some Arduino libraries. Compilation errors may occur when using the Arduino DigitalToggle library. You should edit a file in order to use the library properly. Follow the steps below:
-1. Download the file DigitalToggle.zip from Official Arduino Site ( https://playground.arduino.cc/Code/DigitalToggle )
+1. Download the file DigitalToggle.zip from Official Arduino Site (https://playground.arduino.cc/Code/DigitalToggle)
 2. Before importing the library through the Arduino IDE, you must unzip the DigitalToggle.zip file and open the DigitalToggle.h file
 3. Replace the line of code **#include <pins_arduino.h>** with **#include "Arduino.h"**
 4. Once the DigitalToggle.h file has been modified, compress the folder into a .ZIP file and run the procedure to import the new library (See the section "Download, install and import" from the site https://playground.arduino.cc/Code/DigitalToggle).
