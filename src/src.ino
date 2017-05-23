@@ -1,5 +1,3 @@
-#include <DigitalToggle.h>
-
 //Pin definition
 static int trigger = 9; // Pin HC-SR04
 static int echo = 8; // Pin HC-SR04
