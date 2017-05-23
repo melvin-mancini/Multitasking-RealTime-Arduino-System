@@ -9,7 +9,7 @@ ARTe (Arduino Real-Time extension) is an extension to the Arduino framework that
 
 ### <a name="About-this-project"></a> About this project
 Thanks to ARTe it has been possible to implement a system in which there are 3 periodic processes. Each of them has a given priority and is managed according to a real time scheduler algorithm made available by the ERIKA operating system.
-Processes, when they are running, handle different activities. A process for managing every 3 milliseconds the acquisition of the distance through the sensor HC-SR04. When an obstacle is placed at a distance of less than 10 cm, an "alarm" LED lights up. Another process for flashing a LED every 7 milliseconds. A final process to read the temperature returned by the LM35 sensor expressed in degrees Celsius. If the temperature exceeds 23 degrees Celsius then a warning LED is switched on. All processes are managed in real time mode. The system is efficient and effective with responsive response times.
+Processes, when they are running, handle different activities. A process for managing every 3 seconds the acquisition of the distance through the sensor HC-SR04. When an obstacle is placed at a distance of less than 10 cm, an "alarm" LED lights up. Another process for flashing a LED every 7 seconds. A final process to read the temperature returned by the LM35 sensor expressed in degrees Celsius is executed every 11 seconds. If the temperature exceeds 23 degrees Celsius then a warning LED is switched on. All processes are managed in real time mode. The system is efficient and effective with responsive response times.
 
 ## <a name="How-to-use"></a> How to use
 ### <a name="ARTe-installation"></a> ARTe installation
