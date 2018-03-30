@@ -16,6 +16,7 @@ Processes, when they are running, handle different activities. A process for man
 ## <a name="How-to-use"></a> How to use
 ### <a name="ARTe-installation"></a> ARTe installation
 In order to develop applications with ARTe you have to install the development tool. The developer site (http://retis.sssup.it/?q=arte) provides all the information on how to use the development tool, providing documentation and examples. The link (http://retis.sssup.it/?q=arte) where you can download the software application it seems to be not working. In this project it has been uploaded a version of ARTe and you can use it by opening the folder **work** and executing the file **arduino.exe**. The **ARTe-1.0.rar** file is an archive where there is the ARTe software application downloaded from the site (http://retis.sssup.it/?q=arte). If you want to install ARTe from the **ARTe-1.0.rar** file you should follow the instructions in the section [Problems](#Problems). If you use directly the program from the **work** folder you can skip the istructions of [Problems](#Problems) section because they are already performed.
+
 Once installed the tool is quite similar to Arduino's editor but with the ability to use the Arte Extension.
 You can then enable or disable the ARTe extension by clicking on the **Tools** item in the menu bar. The item **ARTℇ** will appear and click on it you can select enable or disable.
 
