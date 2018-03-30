@@ -15,11 +15,10 @@ Processes, when they are running, handle different activities. A process for man
 
 ## <a name="How-to-use"></a> How to use
 ### <a name="ARTe-installation"></a> ARTe installation
-In order to develop applications with ARTe you have to install the development tool. The developer site (http://retis.sssup.it/?q=arte) provides all the information on how to use the development tool, providing documentation and examples. The link (http://retis.sssup.it/?q=arte) where you can download the software application it seems to be not working. In this project it has been uploaded a version of ARTe and you can use it by opening the folder **work** and executing the file **arduino.exe**. The **ARTe-1.0.rar** file is an archive where there is the ARTe software application downloaded from the site (http://retis.sssup.it/?q=arte). If you want to install ARTe from the **ARTe-1.0.rar** file you should follow the instructions in the section [Problems](#Problems). If you use directly the program from the **work** folder you can skip the istructions of [Problems](#Problems) section because they are already performed.
+In order to develop applications with ARTe you have to install the development tool. The developer site (http://retis.sssup.it/?q=arte) provides all the information on how to use the development tool, providing documentation and examples. The link (http://retis.sssup.it/?q=arte) where you can download the software application it seems to be not working. In this project it has been uploaded a version of ARTe and you can use it by opening the folder **work** and executing the file **arduino.exe**. You need to import the library [DigitalToggle.zip](./Arte/DigitalToggle.zip) through the Arduino IDE.
 
 Once installed the tool is quite similar to Arduino's editor but with the ability to use the Arte Extension.
 You can then enable or disable the ARTe extension by clicking on the **Tools** item in the menu bar. The item **ARTℇ** will appear and click on it you can select enable or disable.
-
 
 ### <a name="Run-the-project"></a> Run the project
 In order to realize the system described above, you must have the following hardware components:
@@ -39,7 +38,7 @@ After installing ARTe and implementing the circuit, you can connect the Arduino 
 
 ##  <a name="Problems"></a> Problems
 ### <a name="Problem-with-DigitalToggle-Arduino-Library"></a> Problem with DigitalToggle Arduino Library
-If you use ARTe application from **work** directory in this repo, you can skip these instructions. 
+If you use ARTe application from **work** directory in this repo, you can skip these instructions because the library [DigitalToggle.zip](./Arte/DigitalToggle.zip) is updated.
 ARTe is an extension of an Arduino version so you may encounter compilation errors when using some Arduino libraries. Compilation errors may occur when using the Arduino DigitalToggle library. You should edit a file in order to use the library properly. Follow the steps below:
 1. Download the file DigitalToggle.zip from Official Arduino Site (https://playground.arduino.cc/Code/DigitalToggle)
 2. Before importing the library through the Arduino IDE, you must unzip the DigitalToggle.zip file and open the DigitalToggle.h file
