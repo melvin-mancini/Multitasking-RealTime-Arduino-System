@@ -1,0 +1,35 @@
+CPU avr {
+
+	OS EE {
+
+		////EE_OPT = "DEBUG";
+    //EE_OPT = "VERBOSE";
+		EE_OPT = " __HAS_TYPES_H__ ";
+    EE_OPT = "__LIB_ARTE__";
+    EE_OPT = "__AVR8_GCC_C99__";
+    //EE_OPT = "__ARDUINO_SDK__";
+		
+    
+    
+    
+		CPU_DATA = AVR8 {
+		  MULTI_STACK = FALSE;
+		};
+
+		MCU_DATA = MEGA {
+        MODEL = CUSTOM {MODEL = "##AVRMCUMODEL##";};
+    };
+
+		KERNEL_TYPE = FP {
+			NESTED_IRQ = TRUE;
+		};
+    
+    LIB = ENABLE { NAME = "ARTE"; };
+    
+	};
+
+  ISR func_timer0_int {
+  		CATEGORY = 2;
+  		ENTRY = "TIMER0_OVF";	
+  		PRIORITY = 1;
+  	};

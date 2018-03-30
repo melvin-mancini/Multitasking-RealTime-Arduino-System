@@ -1,0 +1,77 @@
+mingw-binutils
+========================================================================
+The GNU Binutils are a collection of tools for manipulating binary
+objects, such as object files, executables, and shared libraries. This
+package is capable of targetting 32bit win32, using the mingw.org
+runtime and headers (as distinguished from the 32bit or 64bit flavors
+of the mingw64 runtime and headers).
+
+Configuration
+-------------
+configure --srcdir=<buildpath>
+  --prefix=/usr --exec-prefix=/usr --bindir=/usr/bin \
+  --sbindir=/usr/sbin --libexecdir=/usr/lib --datadir=/usr/share \
+  --localstatedir=/var --sysconfdir=/etc --datarootdir=/usr/share \
+  --docdir=/usr/share/doc/mingw-binutils -C \
+  --build=i686-pc-cygwin [x86_64-unknown-cygwin] \
+  --host=i686-pc-cygwin  [x86_64-unknown-cygwin] \
+  --target=i686-pc-mingw32 \
+  --without-libiconv-prefix --without-libintl-prefix \
+  --with-sysroot=/usr/i686-pc-mingw32/sys-root \
+  --with-build-sysroot=/usr/i686-pc-mingw32/sys-root
+
+Build requirements:
+  gcc
+  make
+  flex
+  bison
+  zlib-devel
+  gettext
+  gettext-devel
+  libiconv 
+  libiconv-devel
+  ncursesw-devel
+  cygport-0.12.2-1
+
+Canonical homepage:
+  http://www.gnu.org/software/binutils/
+
+Canonical download:
+  ftp://sourceware.org/pub/binutils/snapshots/
+
+License:
+  GPLv3+
+
+Language:
+  C
+
+========================================================================
+
+Files included in the packages:
+
+  usr/bin/i686-pc-mingw32-*.exe
+  usr/i686-pc-mingw32/bin/*
+  usr/i686-pc-mingw32/lib/ldscripts/*
+  usr/share/doc/Cygwin/mingw-binutils.README
+  usr/share/doc/mingw-binutils/*
+  usr/share/man/man1/i686-pc-mingw32-*.1.gz
+
+========================================================================
+
+Port Notes:
+---------- mingw-binutils-2.23.1-1 -- 2013 Jul 04 -----------
+* Update to match mingw.org offerings
+* Rely on cygport to autogenerate setup.hint
+* New debuginfo package
+* First cygwin64 release
+
+---------- mingw-binutils-2.21-1 -- 2011 May 17 -----------
+* Update to match mingw.org offerings
+* First cygwin.com release
+
+---------- mingw-binutils-2.20.51-1 -- 2010 Nov 22 -----------
+* Initial release (but only via cygutils.fruitbat.org)
+
+========================================================================
+Cygwin port maintained by: Chuck Wilson <cygwin@cygwin.com>
+

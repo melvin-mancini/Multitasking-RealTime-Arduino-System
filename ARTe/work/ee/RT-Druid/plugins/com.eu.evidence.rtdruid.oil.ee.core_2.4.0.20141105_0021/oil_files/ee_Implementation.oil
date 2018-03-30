@@ -1,0 +1,270 @@
+OIL_VERSION = "2.4";
+
+IMPLEMENTATION ee {
+    OS {
+        STRING EE_OPT[];
+        STRING CFLAGS[];
+        STRING ASFLAGS[];
+        STRING LDFLAGS[];
+        STRING LDDEPS[];
+        STRING LIBS[];
+        
+                
+        // -------------------------------------
+// OSEK-only ??
+        
+
+        BOOLEAN STARTUPHOOK = FALSE;
+        BOOLEAN ERRORHOOK = FALSE;
+        BOOLEAN SHUTDOWNHOOK = FALSE;
+        BOOLEAN PRETASKHOOK = FALSE;
+        BOOLEAN POSTTASKHOOK = FALSE;
+        
+        ENUM [STANDARD, EXTENDED] STATUS = STANDARD;
+        BOOLEAN USEGETSERVICEID = FALSE;
+        BOOLEAN USEPARAMETERACCESS = FALSE;
+        BOOLEAN USERESSCHEDULER = TRUE;
+        
+        BOOLEAN STACKMONITORING = TRUE;
+                
+        BOOLEAN PROTECTIONHOOK = FALSE;
+        BOOLEAN TIMEFRAMERECLAMATION = TRUE;
+        
+        
+        
+        // multi-cpu parameters
+        BOOLEAN STARTUPSYNC = FALSE;
+        ENUM [USE_RN] REMOTENOTIFICATION = USE_RN;
+        ENUM [ALWAYS, IFREQUIRED] USEREMOTETASK = IFREQUIRED;
+        ENUM [ALWAYS, IFREQUIRED] USEREMOTEEVENT = IFREQUIRED;
+        STRING MP_SHARED_RAM = "";
+        STRING MP_SHARED_ROM = "";
+        
+        ENUM [SIMPLE, QUEUED] SPINLOCKS = SIMPLE;
+
+        // -------------------------------------
+
+		STRING MASTER_CPU = "default_cpu";
+		BOOLEAN CUSTOM_STARTUP_CODE : "If true, disable default boot files. Usually also linkerscripts should be customized.";
+        
+        ENUM [
+        ] CPU_DATA[];
+
+        ENUM [
+		] MCU_DATA;
+
+		ENUM [
+			NO_BOARD
+		] BOARD_DATA = NO_BOARD;
+        // -------------------------------------
+
+		ENUM [
+			ENABLE {
+				STRING NAME[];
+			}
+		] LIB[];
+ 
+
+        ENUM [
+        ] KERNEL_TYPE;
+    };
+
+    APPMODE {
+    };
+
+    TASK {
+        BOOLEAN [
+            TRUE {
+                APPMODE_TYPE APPMODE[];
+            },
+            FALSE
+        ] AUTOSTART;
+        UINT32 ACTIVATION = 1;
+        
+        EVENT_TYPE EVENT[];
+        RESOURCE_TYPE RESOURCE[];
+        
+        // EE specific values
+        ENUM [
+            SHARED,
+            PRIVATE {
+                UINT32 SYS_SIZE;
+            }            
+        ] STACK = SHARED;
+        STRING CPU_ID = "default_cpu";
+        STRING APP_SRC[];
+        
+        // current task could send a notification to this list of task:
+        TASK_TYPE LINKED[];
+        
+        BOOLEAN [
+        	TRUE {
+        		FLOAT MAXALLINTERRUPTLOCKTIME;
+        		FLOAT EXECUTIONBUDGET;
+        		FLOAT MAXOSINTERRUPTLOCKTIME;
+        		FLOAT TIMEFRAME;
+        		
+        		ENUM [
+        			RESOURCELOCK {
+        				FLOAT RESOURCELOCKTIME;
+        				RESOURCE_TYPE RESOURCE;
+        			}
+        		] RESOURCE[];
+        	},
+        	FALSE
+        ] TIMING_PROTECTION;
+     };
+
+    RESOURCE {
+        ENUM [
+            STANDARD  {
+		        STRING APP_SRC[];        
+            },
+            LINKED {
+                RESOURCE_TYPE LINKEDRESOURCE;
+            },
+            INTERNAL
+        ] RESOURCEPROPERTY;
+    };
+
+    EVENT {
+        UINT32 WITH_AUTO MASK = AUTO;
+    };
+
+	ISR {
+		UINT32 [1, 2, 3] CATEGORY : "Isr category. <br/> 1 = internal interrupt<br/> 2 = standard interrupt<br/> 3 = trap";
+		RESOURCE_TYPE RESOURCE[];
+		MESSAGE_TYPE MESSAGE[];
+		STRING ENTRY: "the interrupt source id or source number (arch. dependent). Equivalent to LEVEL.";
+		STRING LEVEL: "the interrupt source id or source number (arch. dependent). Equivalent to ENTRY.";
+		UINT32 PRIORITY: "the interrupt priority";
+		STRING HANDLER: "if defined, this is the name of the function, otherwise the isr name is used as function name";
+
+		BOOLEAN TRAP = FALSE: "If TRUE, identifies a TRAP.<br/> In this case CATEGORY and PRIORITY are ignored.";
+
+        STRING CPU_ID = "default_cpu";
+        
+        BOOLEAN [
+        	TRUE {
+        		FLOAT MAXALLINTERRUPTLOCKTIME;
+        		FLOAT EXECUTIONTIME;
+        		FLOAT MAXOSINTERRUPTLOCKTIME;
+        		FLOAT TIMEFRAME;
+        		
+        		ENUM [
+        			LOCKINGTIME {
+        				FLOAT MAXRESOURCELOCKTIME;
+        				RESOURCE_TYPE RESOURCE;
+        			}
+        		] RESOURCE[];
+        	},
+        	FALSE
+        ] TIMING_PROTECTION;
+	};
+
+    COUNTER {
+        UINT32 MINCYCLE;
+        UINT32 MAXALLOWEDVALUE;
+        UINT32 TICKSPERBASE;
+        
+        
+        ENUM [
+        	HARDWARE {
+        		BOOLEAN SYSTEM_TIMER = FALSE;
+				UINT32 PRIORITY: "the priority of related interrupt";
+        		STRING DEVICE;
+        		STRING HANDLER;
+        	},
+        	SOFTWARE
+        ] TYPE;
+        FLOAT SECONDSPERTICK;
+        
+        STRING CPU_ID = "default_cpu";
+    };
+
+    ALARM {
+        COUNTER_TYPE COUNTER;
+        ENUM [
+            ACTIVATETASK {
+                TASK_TYPE TASK;
+            },
+            SETEVENT {
+                TASK_TYPE TASK;
+                EVENT_TYPE EVENT;
+            },
+            ALARMCALLBACK {
+                STRING ALARMCALLBACKNAME;
+            },
+            INCREMENTCOUNTER {
+            	COUNTER_TYPE COUNTER;
+            }
+        ] ACTION;
+
+        BOOLEAN [
+            TRUE {
+                UINT32 ALARMTIME;
+                UINT32 CYCLETIME;
+                APPMODE_TYPE APPMODE[];
+            },
+            FALSE
+        ] AUTOSTART;
+    };
+    
+    SPINLOCK {
+    	SPINLOCK_TYPE NEXT_SPINLOCK;
+    };
+    
+    SCHEDULETABLE {
+    	STRING CPU_ID = "default_cpu";
+    
+		UINT64 DURATION;
+		BOOLEAN REPEATING = FALSE;
+		COUNTER_TYPE COUNTER;
+		
+		BOOLEAN [
+			TRUE {
+				ENUM [ABSOLUTE, RELATIVE, SYNCHRON] TYPE;
+				UINT64 START_VALUE;
+				APPMODE_TYPE APPMODE[];
+			},
+			FALSE
+		] AUTOSTART;
+		
+		ENUM [
+			ACTION {
+				UINT64 EXPIRE_VALUE;
+				ENUM [
+					ACTIVATETASK {
+		                TASK_TYPE TASK;
+		            },
+		            SETEVENT {
+		                TASK_TYPE TASK;
+		                EVENT_TYPE EVENT;
+		            }
+				] ACTION[];
+				
+				BOOLEAN [
+					TRUE {
+						UINT64 MAX_POSOSITIVE_ADJ;
+						UINT64 MAX_NEGATIVE_ADJ;
+					},
+					FALSE
+				] SYNC_ADJUSTMENT;
+			}
+		] EXPIRE_POINT[];
+		
+		BOOLEAN [
+			TRUE {
+				UINT64 EXPLICIT_PRECISION;
+				ENUM [
+					EXPLICIT,
+					IMPLICIT,
+					NONE
+				] SYNC_STRATEGY;
+			},
+			FALSE
+		] 
+		LOCAL_TO_GLOBAL_TIME_SYNCHRONIZATION;
+    };
+    
+};

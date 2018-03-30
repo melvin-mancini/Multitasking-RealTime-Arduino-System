@@ -1,0 +1,95 @@
+CPU m3 {                                         
+
+  OS EE {                                        
+
+//  EE_OPT = "DEBUG";                          
+    EE_OPT = "__ASSERT__";
+    EE_OPT = "__USE_SYSTICK__";
+    EE_OPT = "__ADD_LIBS__";
+    EE_OPT = "__USE_ATMEL_CMSIS__";
+    EE_OPT = "__USE_ATMEL_SAM_DEV__";
+    EE_OPT = "__USE_ATMEL_SAM_DEV_ALL__";
+
+    CPU_DATA = CORTEX_MX {
+      MODEL = M3;
+      COMPILER_TYPE = GNU;
+      MULTI_STACK = FALSE;
+    };                       
+
+    MCU_DATA = SAM3 {
+      MODEL = SAM3X8E;
+    };
+
+    STATUS = EXTENDED;
+    STARTUPHOOK = FALSE;
+    ERRORHOOK = FALSE;
+    SHUTDOWNHOOK = FALSE;
+    PRETASKHOOK = FALSE;
+    POSTTASKHOOK = FALSE;
+    USEGETSERVICEID = FALSE;
+    USEPARAMETERACCESS = FALSE;
+    USERESSCHEDULER = FALSE;
+
+    KERNEL_TYPE = FP {
+     NESTED_IRQ = TRUE;
+     };
+     LIB = ENABLE { NAME = "ATMEL_CMSIS"; };
+     LIB = ENABLE { NAME = "ATMEL_SAM_DEV"; };
+  
+	};
+	
+  COUNTER TaskCounter;            
+
+  TASK loop4 {                              
+    PRIORITY = 4;                 
+    SCHEDULE = FULL;                               
+    AUTOSTART = FALSE;                             
+    ACTIVATION = 1;                                
+    STACK = SHARED;                                
+  };                                               
+                                                   
+  ALARM Alarmloop4 {                            
+    COUNTER = TaskCounter;          
+    ACTION = ACTIVATETASK { TASK = loop4; };
+  };                                               
+                                                   
+  TASK loop1 {                              
+    PRIORITY = 3;                 
+    SCHEDULE = FULL;                               
+    AUTOSTART = FALSE;                             
+    ACTIVATION = 1;                                
+    STACK = SHARED;                                
+  };                                               
+                                                   
+  ALARM Alarmloop1 {                            
+    COUNTER = TaskCounter;          
+    ACTION = ACTIVATETASK { TASK = loop1; };
+  };                                               
+                                                   
+  TASK loop2 {                              
+    PRIORITY = 2;                 
+    SCHEDULE = FULL;                               
+    AUTOSTART = FALSE;                             
+    ACTIVATION = 1;                                
+    STACK = SHARED;                                
+  };                                               
+                                                   
+  ALARM Alarmloop2 {                            
+    COUNTER = TaskCounter;          
+    ACTION = ACTIVATETASK { TASK = loop2; };
+  };                                               
+                                                   
+  TASK loop3 {                              
+    PRIORITY = 1;                 
+    SCHEDULE = FULL;                               
+    AUTOSTART = FALSE;                             
+    ACTIVATION = 1;                                
+    STACK = SHARED;                                
+  };                                               
+                                                   
+  ALARM Alarmloop3 {                            
+    COUNTER = TaskCounter;          
+    ACTION = ACTIVATETASK { TASK = loop3; };
+  };                                               
+                                                   
+};

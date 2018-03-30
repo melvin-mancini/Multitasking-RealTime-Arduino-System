@@ -1,0 +1,553 @@
+This is a description of the Perl 5.14.2 package for Cygwin.
+
+Runtime requirements: (versions given or later)
+
+  libgdbm4 
+  libdb4.5
+  crypt
+  libexpat1
+  libbz2_1
+  libssp0 
+  libgcc1
+  
+Non-base build requirements: (versions given or later)
+  gcc-4.x
+  libbz2-devel
+  zlib-1.2.x
+  binutils
+  make
+  libgdbm-devel
+  libdb4.5-devel
+  libexpat-devel
+
+Build instructions:
+  tar xfvj perl-5.14.2-2-src.tar.bz2
+    if you use setup to install this src package, it will be
+	 unpacked under /usr/src automatically
+  cd perl-5.14.2-2
+  ./build all
+
+  This will create:
+    perl-5.14.2-2-src.tar.bz2
+    perl-5.14.2-2.tar.bz2
+    perl_manpages-5.14.2-2.tar.bz2
+    perl_vendor-5.14.2-2.tar.bz2
+    perl_debuginfo-5.14.2-2.tar.bz2
+
+Canonical homepages:
+  http://www.perl.org/
+  http://search.cpan.org/dist/perl-5.14.2/
+Canonical download:
+  http://www.cpan.org/src/5.0/perl-5.14.2.tar.bz2
+
+--------------------
+
+NEWS:
+
+5.14.2-3
+  - added postinstall script to properly initialize cpan
+  - fix deps and a syntax error in modules which caused rm -rf /
+
+5.14.2-2 (test version only)
+  - added DESTDIR support to EU::MM_Cygwin (Yaakov)
+  - added new LWP deps to perl_vendor: HTML::Parser HTTP::Date HTTP::Message
+    File::Listing HTTP::Daemon WWW::RobotRules HTTP::Negotiate
+
+5.14.2-1 (test version only)
+  - no usemymalloc, changed archname i686-cygwin-threads-64int
+  - improved rebase handling of dll's in EUMM while building and testing
+    with global rebase.db and private next perl imagebase.
+  - removed mad (Misc Attribute Decoration) support, Data::Alias fails
+  - more thread fixes
+
+5.14.0-1 (never released)
+  - static_ext=Cwd Win32CORE
+  - no usemymalloc
+  - seperate perl_vendor package
+
+5.10.1-5
+   - fixed perlrebase
+
+5.10.1-4
+  - $Config{cc} changed from gcc to gcc-4
+  - /usr/bin/perlrebase: fixed baseaddr. 
+	fallback to cygcheck on broken ldd (cygwin-1.7.6)
+  - Net::DNS Enable Cygwin resolver. Do not depend on Win32::IPHelper and Win32::API
+    on cygwin. RT #60725
+  - CPAN::Reporter 2.0 switch from SMTP to Metabase via HTTP
+    To enable it, create a unique profile, or associate it with your CPAN id:
+
+	$ metabase-profile
+	Enter full name: John Doe
+        Enter email address: jdoe@example.com
+        Enter password/secret: zqxjkh
+        Writing profile to 'metabase_id.json'
+
+	$ mkdir ~/.cpanreporter; cp metabase_id.json ~/.cpanreporter/ && \
+	    chmod 400 ~/.cpanreporter/metabase_id.json
+	$ vi ~/.cpanreporter/config.ini
+
+	email_from = John Doe <jdoe@example.com>
+	transport = Metabase uri https://metabase.cpantesters.org/api/v1/ id_file ~/.cpanreporter/metabase_id.json
+
+  - vendor_perl modules updated:
+    Net-DNS-0.66_01 Pod-Simple-3.13 Digest-SHA-5.48 Test-Reporter-1.57 
+    B-Generate-1.29 Module-Build-0.36_13 CPAN-Reporter-1.1800 PadWalker-1.92
+  - new vendor modules for CPAN Reporter 2.0:
+    XML-LibXML-Common-0.13 YAML-Tiny-1.44 Software-License-0.102340
+    Net-IP-1.25 Crypt-SSLeay-0.58 common-sense-3.3 JSON-XS-2.3 JSON-2.22
+    Metabase-Client-Simple-0.008 Data-UUID-1.215 Data-GUID-0.045 CPAN-DistnameInfo-0.10 
+    Metabase-Fact-0.017 Config-Perl-V-0.12 CPAN-Testers-Report-1.999001
+    Test-Reporter-Transport-Metabase-1.999008
+
+5.10.1-3
+  - removed CYG26-Cwd-svk patch by Elliot Moss for svk. svk has to be fixed instead
+  - re-added CYG25-rebase_privlib.patch to use the same image-base when exchanging
+    privlib's
+  - added helperscript /usr/bin/perlrebase
+  - vendor_perl modules updated: 
+    Test-Pod-1.41 YAML-0.71 IO-CaptureOutput-1.1102 File-HomeDir-0.89 URI-1.52
+    Net-DNS-0.66 CPAN-Reporter-1.1711 File-Find-Rule-0.32 Data-Compare-1.22
+    PAR-Dist-0.47 Module-Build-0.3603
+
+5.10.1-2
+  - fixed setup.hint requires libexpat1, and the docs in README to libexpat-devel.
+  - re-added XML::Parser missed from 5.10.1-1 because of that failure.
+
+5.10.1-1
+  - first cygwin-1.7 release, with gcc-4. Binary incompatible to any 
+    cygwin-1.5 perl-5.10.0 release.
+  - added CYG23-544-stat.patch to fix a -w stat() if being a member of the 
+    group 544 Administrators.
+  - added CYG24-man.patch to generate man pages for ExtUtils::MakeMaker modules
+  - added CYG25-rebase_privlib.patch to use the same image-base when exchanging privlib's
+  - added debuginfo package with the symbols exported to /usr/lib/debug, 
+    which are picked up by gdb automatically.
+  - forced chmod +x usr/bin/*
+  - vendor_perl modules added: 
+    Net-IP-1.25 Text-Glob-0.08 Number-Compare-0.01 File-Find-Rule-0.30 
+    Data-Compare-1.2101 CPAN-Checksums-2.02 File-Remove-1.42 File-chmod-0.32 
+    Params-Util-1.00 Test-Script-1.03 CPAN-Inject-0.11 Socket6-0.23 IO-Socket-INET6-2.56
+  - vendor_perl modules updated: 
+    Pod-Simple-3.08 Test-Pod-1.40 Pod-Coverage-0.20
+    Compress-Raw-Bzip2-2.021 IO-Compress-2.021 File-Temp-0.22 Archive-Zip-1.30 
+    Term-ReadLine-Gnu-1.19 XML-NamespaceSupport-1.10 XML-SAX-0.96 XML-LibXML-1.69 
+    Proc-ProcessTable-0.45 YAML-0.70 File-Copy-Recursive-0.38 IPC-Run3-0.043 
+    IO-CaptureOutput-1.1101 File-HomeDir-0.86
+  - installsitescript and installsitebin changed from /usr/bin to /usr/local/bin
+
+5.10.0-5
+  - fixed serious Win32CORE issue with 5.10.0-4. This was statically linked, 
+    but never initialized at run-time.
+  - fixed failing .dll linkage in ExtUtils::LibUtils::Kid. Broke gtk2-perl
+  - softlink all /usr/bin longver binaries to versionless links
+  - added Term::ReadKey (lost with 5.10.0-4)
+  - based on 5.10.x patchlevel 34065
+  - added Net-DNS-0.63 for Test::Reporter
+  - more modules upgrades: Compress-Bzip2-2.011, File-HomeDir-0.80, 
+    libwww-perl-5.813, Test-Reporter-1.4002, B-Generate-1.12_09
+
+5.10.0-4
+  - removed -Dusesitecustomize for performance reasons
+  - changed build.sh:
+    - use DESTDIR with cleanup, install relative, no makepkg.sh and 
+      seperate.pl anymore
+    - install unstripped, strip before pkg
+    - rebase with fixed 0x52000000
+  - added DynaLoader.o to libperl (static and dynamic)
+  - added Win32CORE.a
+  - fixed ExtUtil::Install v1.45 not to use //var/cache or such like
+  - Module updates: File-Temp-0.20, HTML-Tagset-3.20, CPAN-Reporter-1.11
+  - added: Digest::SHA, Math::BigInt::FastCalc
+
+5.10.0-3
+  - use i686-cygwin as archlib instead of simply cygwin.
+  - remove -Uusemymalloc as reported faster by Jerry Hedden. threads pass all tests.
+    http://www.xray.mpe.mpg.de/mailing-lists/perl5-porters/2008-01/msg01388.html
+  - updated CPAN::Reporter to 1.08
+  - added blead patches: 32891 aassign_common, 32909 smartmatch-deparse, 
+    32933 clone-seen_eval, 32938 refcount-reg_curpm, 33239 unpack-in-scalar-context
+
+5.10.0-2
+  - fixed @INC: remove doublettes, include site_perl/5.8
+
+5.10.0-1
+  - Several CPAN vendor_perl updates. Included are e.g. CPAN, LWP, XML::LibXML, 
+    Test::Pod, CPAN::Reporter, and its dependencies:
+    Pod::Escapes Pod::Simple Test::Pod Devel::Symdump Pod::Coverage
+    Test::Pod::Coverage Compress::Raw::Bzip2 IO::Compress::Bzip2
+    Compress::Bzip2 IO::String Archive::Zip Math::BigInt::FastCalc
+    Term::ReadLine::Perl Term::ReadLine::Gnu Term::ReadLine
+    XML::NamespaceSupport XML::SAX XML::LibXML::Common XML::LibXML
+    XML::Parser Proc::ProcessTable YAML Config::Tiny 
+    File::Copy::Recursive IPC::Run3 Probe::Perl Tee IO::CaptureOutput
+    File::pushd File::HomeDir Digest::SHA Module::Signature URI
+    HTML::Tagset HTML::Parser LWP CPAN Test::Reporter CPAN::Reporter
+    Net::Telnet Module::ScanDeps PAR::Dist B::Generate PadWalker Alias
+
+5.8.8-5 (never released)
+  - added missing Win32 for perl-libwin-0.27
+  - REGEXP0 - fix for UTF-8 recoding in regexps - CVE-2007-5116
+  - several CPAN vendor_perl updates
+
+5.8.8-4
+  - removed $Config{versiononly}. This fixes e.g. perldoc
+
+5.8.8-3
+  - Maintainer change from Gerrit Haase to Reini Urban.
+  - fixed installperl for the pl-CYG04major.version.cygwin.sh.patch (skipping lib and pods).
+  - added #40103 - File-Spec-case_tolerant.patch from 5.9.5
+  - added #38628 Cwd->cwd() patch, but not the full cygwin-path.patch posted to p5p
+  - added File-Spec-Cygwin-TMPDIR.patch
+  - added several backports for failing testsuite cases.
+  - Adjust the perlcygwin documentation for ntsec, cygserver and Unicode limitations.
+  - included more vendor_perl packages compared to 5.8.7 (without comment they are all new):
+    rationale: Same local vendor_perl packages included as in 5.8.7, plus some of the new CPAN 
+    packages which went to core with 5.9.5, Bundle::CPAN, CPAN::Reporter, Module::Build, 
+    Par::Dist, for a full CPAN bootstrap, the new libXML packages, and some almost-core 
+    dependencies.
+
+	Win32API-File-0.1001
+	Pod-Simple-3.05 Test-Pod-1.26 Pod-Coverage-0.18 Test-Pod-Coverage-1.08
+	IO-Compress-Base-2.005
+	Compress-Raw-Zlib-2.005 IO-Compress-Zlib-2.005 Compress-Zlib-2.005 (updated from 1.41)
+	Compress-Raw-Bzip2-2.005 IO-Compress-Bzip2-2.005 Compress-Bzip2-2.09 (same)
+        IO-Zlib-1.05 (updated from 1.04)
+        IO-String-1.08 (updated from 1.07)
+        Archive-Tar-1.32 (updated from 1.26, but without bin) Archive-Zip-1.20
+        MD5-2.03 (same)
+	Term-ReadLine-Perl-1.0302 (updated from 1.0203) Term-ReadLine-Gnu-1.16 TermReadKey-2.30 (same)
+        XML-NamespaceSupport-1.09 XML-SAX-0.15 XML-LibXML-Common-0.13 XML-LibXML-1.63
+	XML-Parser-2.34 (same)
+	Proc-ProcessTable-0.41 (updated from 0.40)
+	File-Temp-0.18 YAML-0.62
+	Config-Tiny-2.10 File-Copy-Recursive-0.33 IPC-Run3-0.037 Probe-Perl-0.01
+    	Tee-0.13 IO-CaptureOutput-1.03 File-pushd-0.99 File-HomeDir-0.65
+	Digest-SHA-5.45
+	Module-Signature-0.55 Devel-Symdump-2.07
+        URI-1.35 HTML-Tagset-3.10 HTML-Parser-3.56 libwww-perl-5.805
+	CPAN-1.9102
+	Test-Reporter-1.27 CPAN-Reporter-0.44
+	Net-Telnet-3.03 (same)
+	Module-ScanDeps-0.75 PAR-Dist-0.23
+	ExtUtils-CBuilder-0.19 ExtUtils-ParseXS-2.18 Regexp-Common-2.120
+	version-0.7203 podlators-2.0.5 Pod-Readme-0.09 Module-Build-0.2808
+	B-Generate-1.09 PadWalker-1.5 Alias-2.32
+  - removed /usr/bin/ptar and /usr/bin/ptardiff, and subsequently 
+    Algorithm-Diff-1.1902 Text-Diff-0.35. If you want these binaries install Archive::Tar via cpan
+  - PAR is not included because of /usr/bin/pp: impolite namespace pollution. But since the PAR::Dist 
+    is included the tight version dependency problems should have gone.
+
+5.8.8-1 and 5.8.8-2 never uploaded
+  - Maintainer change from Gerrit Haase to Reini Urban.
+  - This is based on the latest stable perl release, with the same local patches
+    and local vendor_perl packages included as in 5.8.7, plus some of the new CPAN 
+    packages which went to core with 5.9.5, plus some CPAN and CPAN::Reporter 
+    dependencies to be able for a full CPAN bootstrap, plus the new libXML packages, 
+    plus some almost-core dependencies.
+
+NEWS in previous releases:
+
+  - inc_version_list="5.8/cygwin 5.8 cygwin" added to Policy.sh to 
+    work around an @INC problem reported here: 
+    http://cygwin.com/ml/cygwin/2005-11/msg00098.html
+  - modules updated/version: Archive-Tar-1.26, IO-String-1.07,
+    Proc-ProcessTable-0.40, Compress-Bzip2-2.09, Compress-Zlib-1.41
+  - new module included: Text-Diff-0.35
+  - perldoc.com seems to be down, new website with docs is now 
+    available at http://perldoc.perl.org/.
+  - Now using --enable-auto-image-base to link DLL and extensions.
+    This should address the problem with loading extension DLLs in
+    subprocesses.
+  - New builtin functions:
+     Cygwin::winpid_to_pid, Cygwin::pid_to_winpid
+  - Configured with -Dusesitecustomize.  See "-f" in perlrun how to 
+    disable this feature:
+    http://search.cpan.org/~nwclark/perl-5.8.7/pod/perlrun.pod#%2Df
+
+Perl 5.10.0 announcement:
+
+    http://dev.perl.org/perl5/news/2007/perl-5.10.0.html
+
+Please see the perldelta http://perldoc.perl.org/perl5100delta.html
+for the full details. Please report bugs using the perlbug utility. If the
+build or regression tests fail, make nok. If the build fails to early
+to run this, please mail perlbug at perl.org directly.
+
+Excerpt:
+
+ - new smart match operator, new switch statement, new say function
+ - changed regular expression engine. Recursive patterns, named captures, 
+   and more
+ - state variables that allow variables to persist between calls 
+   to subroutines
+ - new defined-or operator; 
+ - field hashes for inside-out objects 
+ - better error messages
+ - removal of the B compiler suite from CORE
+
+TAINT
+
+Since perl-5.10 perl runnning tainted (perl -T or -t) requires that the 
+binaries and libraries must not contain the group-writable bit.
+This is fixed in cygwin with the following bash line:
+
+  chmod -R g-w /usr/bin /usr/lib/perl5/5.10 /usr/lib/perl5/site_perl/5.10
+
+OLDER NEWS:
+
+ - New DLL naming schema: only the major release number is included in
+   the DLL name so extensions compiled with this release doesn't need to
+   be recompiled immediatly for future updates of perl 5.8.
+ - New directory naming: extensions are now under /usr/lib/perl5/5.8,
+   /usr/lib/perl5/site_perl/5.8 (/usr/lib/perl5/vendor_perl/5.8 for all
+   extensions distributed with this release) and the archive directory
+   is simply named 'cygwin' instead of 'cygwin-thread-multi-64int'.
+ - This release includes the Win32CORE extension statically.
+ - IPC support is enabled, however to make use of it, it is required
+   to have cygserver running and CYGWIN=server in your env. See the 
+   cygserver README in /usr/doc/Cygwin how to setup / run cygserver.
+ - There are still some issues with PERLIO and textmode.
+ - Perl 5.8.x should be binary compatible with Cygwin perl >= 5.8.2,
+   if you are seeing problems with older extensions, please try to
+   recompile these at first.
+- Fixed a bug in the buildscript (Compress::Zlib extension was not 
+  included due to this bug).
+- Moved distributed addon extensions from site_perl under vendor_perl
+  path.
+- The CPAN repository and build directory *must* reside in a path 
+  mounted in binmode.
+
+--------------------
+
+GENERAL:
+
+- This package is configured to support dynamic loading. Binaries 
+  are stripped. Self-compiled libraries are not stripped.
+  Run `perl -V' to see a summary of the configuration.
+  Some of the Perl features that require optional libraries are 
+  enabled (crypt, GDBM_File).
+
+- The CPAN repository and build directory *must* reside in a path 
+  mounted in binmode.
+
+--------------------
+
+PERLIO:
+
+PerlIO thinks it lives on a unix system, therefore perl generated 
+output contains no longer CRLF's, instead it is like on unix, just LF's
+at the lineending in the textfiles (every file is a binary).  You can 
+override this by setting PERLIO=crlf in your environment, please read 
+the PERLIO docu for details how to use the layers in your scripts for
+the runtime.
+
+E.g. add this to your ~/.bashrc file if you want Perl to do conversion 
+from LF to CRLF automatically all the time (not recommended): 
+
+    export PERLIO=crlf
+
+--------------------
+
+The CPAN module and all its dependencies is included in the standard Perl 
+package now so that you can easily access the Comprehensive Perl Archive 
+Network (CPAN).  See `perldoc CPAN' or just run the `cpan' script.
+
+CPAN will configure itself the first time it runs. 
+
+See above for prerequisites.
+
+--------------------
+
+64 bit integers support:
+
+This version of perl is configured with -Duse64bitint which leads to 
+this statement during the 'make' step:
+
+        Making Storable (dynamic)
+Checking if your kit is complete...
+Looks good
+Writing Makefile for Storable
+
+You appear to have a perl configured to use 64 bit integers in its scalar
+variables.  If you have existing data written with an earlier version of
+Storable which this version of Storable refuses to load with a
+
+   Byte order is not compatible
+
+error, then please read the section "64 bit data in perl 5.6.0 and 5.6.1"
+in the Storable documentation for instructions on how to read your data.
+
+(You can find the documentation at the end of Storable.pm in POD format)
+
+--------------------
+
+To access the local Perl "pod" documentation, use `perldoc':
+
+  perldoc perl.pod (perldoc perl without the suffix .pod is broken)
+
+  perldoc perlfaq (other perldoc calls are working without the suffix)
+
+  perldoc File::Temp
+
+***NOTE: you may want to set LESS=-R for less output in your global 
+         Cygwin environment because the escape characters are not 
+         expanded without this setting.
+  
+Perl manpages are also provided, they are in a separate package.
+
+--------------------
+
+MORE DOCS:
+
+If you prefer HTML, comprehensive documentation can be found at:
+  http://perldoc.perl.org/
+
+Search CPAN online:  http://search.cpan.org/ 
+                     http://kobesearch.cpan.org/
+  
+Additional information about CPAN modules:  http://www.annocpan.org/
+
+Does a module work on Cygwin?  See CPAN Testers for information:
+  http://testers.cpan.org/
+
+Japanese perl documentation, latest version online is 5.8.3 - go
+and support this project:  http://perldoc.jp/docs/
+
+--------------------
+
+Other sites of interest:
+
+Perl mongers: http://www.pm.org/
+
+Perl Monks: http://www.perlmonks.org/
+
+Planet Perl: http://planet.perl.org/ (This site is powered by Python ;)
+
+use Perl;: http://use.perl.org/
+
+The Perl foundation: http://www.perlfoundation.org/
+
+YAPC: http://www.yapc.org/
+
+Directory of Perl training companies in the world: 
+  http://www.perltraining.org/
+
+Perl Development: 
+  Perl 5: http://dev.perl.org/perl5/
+
+--------------------
+
+Other distributions (Windows):
+
+Vanilla Perl has a bundled mingw compiler.
+  http://vanillaperl.com/
+
+Strawberry Perl extends Vanilla Perl with Bundle::CPAN and Bundle::LWP
+(as the cygwin package) and some win32 specific fixed modules.
+  http://strawberryperl.com/
+
+PXPerl is an easy-to-use, all-in-one, full-featured Perl stuff
+package for Windows 2000/XP, includes Parrot, Pugs and an editor:
+  http://pxperl.com
+
+IndigoPerl is a binary build of Perl, Apache, Mod_perl and PHP, 
+includes a browser based GUI Package Manager: 
+  http://www.indigostar.com/indigoperl.htm
+
+ActivePerl: 
+  http://www.activestate.com/Products/ActivePerl/
+
+--------------------
+
+Notes:
+
+Multiple versions of Perl can be installed at the same time, although
+there can only be one "/usr/bin/perl".  If a specific version is
+required, refer to the versioned executable, e.g. "perl5.8.2".  See
+`perldoc perlrun' for more details.  In particular, it explains the
+"#!/usr/bin/env perl" trick as well as other tips on what you should
+use as the first line of your program.  Currently you cannot use 
+Setup to install more than one Perl, so you need to grab the tarball
+and extract it manually from the Cygwin root.  Note that this will 
+overwrite an existing installation and needs to be repeated when you
+use Setup to uninstall a version which was installed by Setup. The
+last package installed / extracted this way will be the one which 
+will be used when calling "/usr/bin/perl" now.
+
+If you have general Perl questions there are many places to look for
+answers: web pages, mailing lists, books, magazines, news groups,
+archives, etc.  Good places to start are `perldoc perlfaq',
+http://www.perl.org/ or http://www.perl.com/ .  Vanilla Perl
+questions do not belong in the Cygwin mailing lists, hint:
+http://lists.perl.org/ .
+
+If you have questions about Perl for Cygwin, many details can be
+found in `perldoc perlcygwin'.  Also, the Cygwin mailing lists and
+archives are invaluable:
+
+  http://www.cygwin.com/lists.html
+
+------------------
+
+Build Instructions
+
+  The primary document for the Cygwin Perl port is the README.cygwin
+  file in the Perl source (aka `perldoc perlcygwin').
+
+  In particular, to recreate the runtime and source tarballs:
+
+    # unpack canonical Perl tarball
+    tar jxf perl-X.Y.Z-src.tar.bz2
+
+  In the source tarball there is this README, a Policy.sh file and a
+  build.sh script:
+
+    cd perl-X.Y.Z
+    ./build all
+    # this runs for a long time
+
+  The logs captured while building Perl are also
+  saved and included in the source tarball.
+
+--------------------
+
+PORT NOTES:
+
+Vendor modules included in this distribution (mainly needed for CPAN):
+
+        Pod-Escapes-1.04 Pod-Simple-3.08 Test-Pod-1.40 
+	Devel-Symdump-2.08 Pod-Coverage-0.20 Test-Pod-Coverage-1.08 
+	Compress-Raw-Bzip2-2.020 IO-Compress-2.020 Compress-Bzip2-2.09 
+        IO-String-1.08	
+        File-Temp-0.22 Archive-Zip-1.30 
+	Math-BigInt-FastCalc-0.19 
+	TermReadKey-2.30 Term-ReadLine-Perl-1.0302 Term-ReadLine-Gnu-1.19 
+        XML-NamespaceSupport-1.10 XML-SAX-0.96 XML-LibXML-Common-0.13 
+	  XML-LibXML-1.69 
+	XML-Parser-2.36 
+	Proc-ProcessTable-0.45 
+	YAML-0.70 
+	Config-Tiny-2.12 File-Copy-Recursive-0.38 IPC-Run3-0.043 Probe-Perl-0.01 
+    	Tee-0.13 IO-CaptureOutput-1.1101 File-pushd-1.00 File-HomeDir-0.86 
+	Digest-SHA-5.47 
+	Module-Signature-0.55 
+        URI-1.40 HTML-Tagset-3.20 HTML-Parser-3.62 libwww-perl-5.831 
+	CPAN-1.9402 
+	Net-IP-1.25 Net-DNS-0.65 Test-Reporter-1.54 CPAN-Reporter-1.1708 
+        Text-Glob-0.08 Number-Compare-0.01 File-Find-Rule-0.30 Data-Compare-1.2101 
+	  CPAN-Checksums-2.02 File-Remove-1.42 File-chmod-0.32 Params-Util-1.00 
+	  Test-Script-1.03 CPAN-Inject-0.11 
+	Net-Telnet-3.03 
+	Module-ScanDeps-0.94 PAR-Dist-0.46 
+	Socket6-0.23 IO-Socket-INET6-2.56 
+	B-Generate-1.20 
+        PadWalker-1.9 
+        Alias-2.32
+
+------------------
+
+Reini Urban <rurban@x-ray.at>
+All questions should be directed to <cygwin@cygwin.com>
+
+Last Updated: 2010-11-27

@@ -1,0 +1,55 @@
+OIL_VERSION = "2.4";
+
+IMPLEMENTATION ee {
+    OS {
+        ENUM [
+        	//srl added
+            MSP430 {
+                STRING ID = "default_cpu";
+                STRING APP_SRC[];
+                BOOLEAN [
+                    TRUE {
+                        BOOLEAN [
+                            TRUE {
+                                UINT32 SYS_SIZE;
+                            },
+                            FALSE
+                        ] IRQ_STACK;
+                    },
+                    FALSE
+                ] MULTI_STACK = FALSE;
+            }
+        ] CPU_DATA[];
+
+        ENUM [
+        	//srl added 
+        	MSP430 {
+                ENUM [
+                    CUSTOM {
+                        STRING MODEL;
+                    },
+                    MSP430_1611 {
+                    	ENUM [
+                    		PORT0,
+                    		PORT1
+                    	] ENABLE_PORTS[] = PORT0;
+                    	BOOLEAN USE_UART;
+                    	BOOLEAN USE_I2C;
+                    	BOOLEAN USE_SPI;
+                    	BOOLEAN USE_TIMER;
+	                    BOOLEAN ENABLE_INTERRUPTS;
+                    }
+             	] MODEL;
+       		}
+     	] MCU_DATA[];
+        
+    
+        STRING EE_OPT[];
+        STRING CFLAGS[];
+        STRING ASFLAGS[];
+        STRING LDFLAGS[];
+        STRING LDDEPS[];
+        STRING LIBS[];
+        
+   };
+};

@@ -1,0 +1,49 @@
+CPU test_application {
+
+	OS EE {
+		EE_OPT = "DEBUG";
+		EE_OPT = "__USE_LEDS__";
+		EE_OPT = "__USE_TIMERS__";
+		
+		/* specify optimisation level */
+		CFLAGS = "-O2 -Wall";
+		ASFLAGS = "-O2";
+				
+		/* select lightweight startup code */
+		LDFLAGS = "-mcrt0s";
+
+		CPU_DATA = ESI_RISC {
+			APP_SRC = "main.c";
+			MULTI_STACK = FALSE;
+		};
+		
+		MCU_DATA = ESI_RISC {
+			MODEL = CUSTOM {
+				MODEL = "-msoc=esi3200_cycloneiiidemo";
+			};
+		};
+
+		STATUS = EXTENDED;
+		STARTUPHOOK = FALSE;
+		ERRORHOOK = FALSE;
+		SHUTDOWNHOOK = FALSE;
+		PRETASKHOOK = FALSE;
+		POSTTASKHOOK = FALSE;
+		USEGETSERVICEID = FALSE;
+		USEPARAMETERACCESS = FALSE;
+		USERESSCHEDULER = FALSE;
+    };
+   
+    TASK ledUpdate {
+		PRIORITY = 0x01;   /* Low priority */
+		AUTOSTART = FALSE;
+		STACK = PRIVATE;
+		ACTIVATION = 1;    /* only one pending activation */
+	};	
+
+    OS EE {
+    	KERNEL_TYPE = FP {
+    		NESTED_IRQ = FALSE;
+    	};
+    }; 	
+};

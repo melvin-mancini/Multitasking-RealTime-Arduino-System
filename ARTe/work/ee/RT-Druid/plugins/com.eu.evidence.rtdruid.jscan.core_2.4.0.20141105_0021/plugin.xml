@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.3"?>
+<plugin>
+
+   <!-- Tasks -->
+   <extension
+         point="org.eclipse.ant.core.antTasks">
+      <antTask
+            library="rtd_jscan_ant_task.jar"
+            name="rtdruid.Schedulability"
+            class="com.eu.evidence.rtdruid.ant.jscan.SchedWithoutOffset"/>
+   </extension>
+   <extension
+         point="org.eclipse.ant.core.antTasks">
+      <antTask
+            library="rtd_jscan_ant_task.jar"
+            name="rtdruid.OffsetSchedulability.Sufficient"
+            class="com.eu.evidence.rtdruid.ant.jscan.Sufficient"/>
+   </extension>
+   <extension
+         point="org.eclipse.ant.core.antTasks">
+      <antTask
+            library="rtd_jscan_ant_task.jar"
+            name="rtdruid.OffsetSchedulability.Exact"
+            class="com.eu.evidence.rtdruid.ant.jscan.Exact"/>
+   </extension>
+   <extension
+         point="org.eclipse.ant.core.antTasks">
+      <antTask
+            library="rtd_jscan_ant_task.jar"
+            name="rtdruid.Convert"
+            class="com.eu.evidence.rtdruid.ant.jscan.Convert"/>
+   </extension>
+   <!-- Extra Classpath -->
+   <extension
+         point="org.eclipse.ant.core.extraClasspathEntries">
+      <extraClasspathEntry library="rtd_jscan_ant_task.jar"/>
+   </extension>
+   
+
+</plugin>

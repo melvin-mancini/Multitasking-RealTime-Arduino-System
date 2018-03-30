@@ -1,0 +1,9 @@
+// $Id: green.vsl 6405 2003-05-24 15:27:46Z apg $
+// Green background.  Use this with a self-defined button
+// associated with the command `graph apply green.vsl "()"'.
+
+#pragma override old_value_box
+old_value_box(...) = value_box(...);
+
+#pragma override value_box
+value_box(value) -> color(old_value_box(value), "black", "#c0ffc0");

@@ -1,0 +1,147 @@
+$Id: README,v 1.7 2004/09/07 12:14:15 jt Exp $
+
+Abstract:
+
+This is the README for the Cygwin procmail distribution.
+
+The procmail program is used by Red Hat Linux for all local mail
+delivery. In addition to just delivering mail, procmail can be used
+for automatic filtering, presorting, and other mail handling jobs.
+Procmail is also the basis for the SmartList mailing list processor.
+
+I would like to thank Madoka Machitani for his pre-compiled fetchmail
+and procmail binaries and for the patches necessary for proper operation
+under Windows 9x/Me.  His work on the Cygwin ports made it much easier
+for me to become the Cygwin maintainer.
+
+Requirements:
+
+The following packages or later are required to build and/or execute
+Cygwin procmail:
+
+    binutils 20040312-1
+    cygwin 1.5.10-3
+    gcc 3.3.1-3
+
+Install:
+
+Create a procmail run control file, ~/.procmailrc.  The contents of
+this file are extremely user specific and (way) beyond the scope of
+this README file.
+
+procmail is usually invoked by your mail transfer agent (MTA).
+Under Cygwin, I recommend using fetchmail to to retrieve your email.
+Cygwin fetchmail will automatically invoke procmail.
+
+I strongly encourage you to test your procmail recipes before for using
+them in an unattended mode.  Use a command like to following:
+
+    $ procmail VERBOSE=yes new-procmailrc <test.mail
+
+and examine your procmail log file.
+
+The following may be helpful with creating your run control file and/or
+finding other (possible) ways to invoke procmail:
+
+    http://www.ii.com/internet/robots/procmail/qs/
+
+Source:
+
+Unfortunately procmail does not build OOTB under Cygwin, so a patch has
+been applied to correct this problem.  Additionally, other patches have
+been applied to:
+
+    o disable the run control file (i.e., ~/.procmailrc) permission
+      check on FAT, FAT32, and NTFS with CYGWIN=nontsec so procmail
+      works properly in those environments
+    o define the root UID to be 18 so that procmail will attempt to
+      setuid when running under the LocalSystem account
+    o open run control files in text mode so they are parsed correctly
+      on binary mode mounts
+
+The first patch has been submitted to procmail CVS for consideration
+and can be found at:
+
+    http://sources.redhat.com/ml/cygwin/2002-04/msg00221.html
+
+If the first patch is accepted into procmail CVS, then I will submit
+the others for consideration too.
+
+I also added the following files to the source archive:
+
+    CYGWIN-PATCHES/README
+    CYGWIN-PATCHES/build.sh
+    CYGWIN-PATCHES/procmail.patch
+
+and renamed the original source archive to match Cygwin's setup.exe
+naming conventions.
+
+To restore the procmail source to its original state, perform the
+following:
+
+    $ cd procmail-$version-$package
+    $ patch -R -p1 <CYGWIN-PATCHES/procmail.patch
+    $ rm -fr CYGWIN-PATCHES
+
+where $version is the procmail version (e.g., 3.22) and $package is the
+Cygwin package number.
+
+Build:
+
+This distribution has been configured (not in the autoconf sense of the
+word) as follows:
+
+    Locking strategies:     dotlocking, fcntl()
+    Default rcfile:         $HOME/.procmailrc
+    Your system mailbox:    /var/spool/mail/$LOGNAME
+
+where:
+
+    $HOME is your home directory
+    $LOGNAME = `id -un`
+
+See CYGWIN-PATCHES/build.sh in the source archive for my exact build
+recipe for making and packaging this distribution.
+
+Test:
+
+procmail does not contain any regression tests.
+
+Issues:
+
+The following are the known Cygwin procmail issues:
+
+1. Although procmail has been patch to build cleaning under Cygwin,
+the build still needs to be "hot-wired" to enable fcntl() locking.
+
+2. Extremely occasionally, Cygwin procmail will leave a stray .lock file
+around which can cause a misfiling of mail messages.  I am attempting
+to track down the root cause of this problem.  Any help would be greatly
+appreciated.
+
+Note that I now have some evidence that the stray .lock files are
+actually caused by abruptly terminated remote (via ssh) mutt processes.
+
+Homepage:
+
+The primary procmail web site is:
+
+    http://www.procmail.org/
+
+Download:
+
+The primary procmail ftp site is:
+
+    ftp://ftp.procmail.net/pub/procmail/
+
+Mailing Lists:
+
+Please report problems, suggestions, etc. dependent on their nature to
+one of the following:
+
+    procmail@informatik.rwth-aachen.de (eventually procmail-users@procmail.org)
+    cygwin@cygwin.com
+
+Maintainer:
+
+    Jason Tishler <jason@tishler.net>

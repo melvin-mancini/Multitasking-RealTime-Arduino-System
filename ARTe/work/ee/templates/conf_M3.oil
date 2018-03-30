@@ -1,0 +1,44 @@
+CPU m3 {                                         
+
+  OS EE {                                        
+  
+    //EE_OPT = "DEBUG";                          
+    EE_OPT = "__ASSERT__";
+    EE_OPT = "__USE_SYSTICK__";
+    EE_OPT = "__ADD_LIBS__";
+    EE_OPT = "__USE_ATMEL_CMSIS__";
+    EE_OPT = "__USE_ATMEL_SAM_DEV__";
+    EE_OPT = "__USE_ATMEL_SAM_DEV_ALL__";
+    EE_OPT = "__LIB_ARTE__";
+
+    CPU_DATA = CORTEX_MX {
+      MODEL = M3;
+      COMPILER_TYPE = GNU;
+      MULTI_STACK = FALSE;
+    };                       
+
+    MCU_DATA = SAM3 {
+      MODEL = SAM3X8E;
+    };
+
+    STATUS = EXTENDED;
+    STARTUPHOOK = FALSE;
+    ERRORHOOK = FALSE;
+    SHUTDOWNHOOK = FALSE;
+    PRETASKHOOK = FALSE;
+    POSTTASKHOOK = FALSE;
+    USEGETSERVICEID = FALSE;
+    USEPARAMETERACCESS = FALSE;
+	
+    USERESSCHEDULER = TRUE;
+
+    KERNEL_TYPE = FP {
+      NESTED_IRQ = TRUE;
+    };
+    
+    LIB = ENABLE { NAME = "ATMEL_CMSIS"; };
+    LIB = ENABLE { NAME = "ATMEL_SAM_DEV"; };
+	 
+    LIB = ENABLE { NAME = "ARTE"; };
+  };
+	

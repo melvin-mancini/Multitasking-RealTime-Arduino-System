@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.3"?>
+<plugin>
+
+<!--
+	Extentions to CVS
+-->
+  <extension point="org.eclipse.team.core.fileTypes">
+	<fileTypes extension="rtd" type="text"/>
+	<fileTypes extension="ertd" type="text"/>
+  </extension>
+
+<!--
+	Extentions to File types
+-->
+  <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser type="rtd"  class="com.eu.evidence.rtdruid.io.RTD_XMI_Factory"/>
+      <parser type="rtD"  class="com.eu.evidence.rtdruid.io.RTD_XMI_Factory"/>
+      <parser type="rTd"  class="com.eu.evidence.rtdruid.io.RTD_XMI_Factory"/>
+      <parser type="Rtd"  class="com.eu.evidence.rtdruid.io.RTD_XMI_Factory"/>
+      <parser type="rTD"  class="com.eu.evidence.rtdruid.io.RTD_XMI_Factory"/>
+      <parser type="RtD"  class="com.eu.evidence.rtdruid.io.RTD_XMI_Factory"/>
+      <parser type="RTd"  class="com.eu.evidence.rtdruid.io.RTD_XMI_Factory"/>
+      <parser type="RTD"  class="com.eu.evidence.rtdruid.io.RTD_XMI_Factory"/>
+      
+      <parser type="ertd" class="com.eu.evidence.rtdruid.io.RTD_XMI_Factory"/>
+  </extension>
+
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://www.evidence.eu.com/rtdruid/data"
+            class="com.eu.evidence.rtdruid.epackage.RtdEPackage"/>
+   </extension>
+
+
+<!--
+	EMF Factories
+-->
+
+   <extension-point
+   		id="rtdruidEPackages"
+   		name="RT-Druid Extention to collect EPackage"
+   		schema="schema/requiredEPackages.exsd"/>
+
+   <extension-point
+   		id="data_tranformation"
+   		name="RT-Druid data importer and exporter"
+   		schema="schema/data_tranformation.exsd"/>
+
+   <!-- Tasks -->
+   <extension
+         point="org.eclipse.ant.core.antTasks">
+      <antTask
+            library="rtdruid_core_ant.jar"
+            name="rtdruid.Convert"
+            class="com.eu.evidence.rtdruid.ant.vartree.Convert"/>
+   </extension>
+   <!-- Ant Extra Classpath -->
+   <extension
+         point="org.eclipse.ant.core.extraClasspathEntries">
+      <extraClasspathEntry library="rtdruid_core_ant.jar"/>
+   </extension>
+   
+
+ <extension
+       point="com.eu.evidence.rtdruid.core.data_tranformation">
+    <exporter
+          case_sensitive="false"
+          class="com.eu.evidence.rtdruid.internal.io.RTDXsltImportExport"
+          type="rtd">
+    </exporter>
+    <importer
+          case_sensitive="false"
+          class="com.eu.evidence.rtdruid.internal.io.RTDXsltImportExport"
+          type="rtd">
+    </importer>
+ </extension>
+ <extension
+       point="com.eu.evidence.rtdruid.core.rtdruidEPackages">
+    <ecoreFile
+          auto_contribute="true"
+          file="emf_model/rtdruid_base_model.ecore"
+          pkg_id="RT-Druid Core - Base contribution">
+    </ecoreFile>
+ </extension>
+
+</plugin>

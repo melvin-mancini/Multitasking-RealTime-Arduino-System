@@ -1,0 +1,230 @@
+mingw-pthreads
+========================================================================
+The mingw-pthreads package provides Pthreads-W32, for use with the
+MinGW cross toolchain.  Pthreads-W32 provides a POSIX-compliant pthreads
+implementation for the Win32 platform.
+
+Two versions are supplied:
+  1. pthreadGC2.dll    (C cleanup code)
+  2. pthreadGCE2.dll   (C++ cleanup code)
+The first version is used by default. To use the C++ version, link
+with -lpthreadGCE2 rather than -lpthreadGC or -lpthread.  Note that most
+platforms' pthread implementations, even when used with C++, follow
+the C cleanup model. Read the pthreads-win32 documentation before
+experimenting with the C++ version.
+
+The preferred way to link to this library is by using the -lpthread link
+flag.
+
+
+Runtime requirements:
+  mingw-runtime
+  mingw-gcc-core                       [*]
+  mingw-gcc-g++                        [*]
+  QueueUserAPCEx-install.exe (optional [**])
+
+Build requirements:
+  mingw-gcc
+  mingw-binutils
+  mingw-runtime
+  mingw-w32api
+  make
+  cygport-0.12.2
+
+[*]  pthreadGCE2.dll requires libgcc_s_dw2-1.dll and libstdc++-6.dll,
+     which are provided by the mingw-gcc cross compiler.  However, we
+     don't want to add this extra dependency solely for this little-
+     used variant -- especially when doing so pulls in the entire 
+     compiler and all of ITS dependencies.
+
+[**] QueueUserAPCEx-install.exe -- this package installs the
+     alertdrv.sys driver and starts it.  This kernel mode driver is
+     used by pthreads-win32, if available, to work around some issues
+     related to canceling pthreads during "non interruptible" win32
+     calls.  Supposedly this improves the behavior of the GCE
+     implementation, but the difference is slight -- see Test Results
+     below.
+
+     For more information, see
+       http://www.codeproject.com/KB/threads/QueueUserAPCEx_v2.aspx
+     and the release notes accompanying QueueUserAPCEx-install.exe.
+
+     QueueUserAPCEx-install.exe is available from mingw.org.
+
+
+Canonical homepage:
+  http://sourceware.org/pthreads-win32/
+
+Canonical download:
+  cvs -d:pserver:anoncvs@sourceware.org:/cvs/pthreads-win32 co -D 2011-05-07 pthreads
+  ##mirror://sourceforge/mingw-w64/pthreads-w32-20100619.tar.xz
+
+License:
+  LGPLv2.1
+
+Language:
+  C
+
+========================================================================
+
+Files included in the packages:
+
+  usr/i686-pc-mingw32/sys-root/mingw/bin/pthreadGC2.dll
+  usr/i686-pc-mingw32/sys-root/mingw/bin/pthreadGCE2.dll
+  usr/i686-pc-mingw32/sys-root/mingw/bin/quserex.dll
+  usr/i686-pc-mingw32/sys-root/mingw/bin/quserex-test.exe
+  usr/i686-pc-mingw32/sys-root/mingw/include/pthread.h
+  usr/i686-pc-mingw32/sys-root/mingw/include/sched.h
+  usr/i686-pc-mingw32/sys-root/mingw/include/semaphore.h
+  usr/i686-pc-mingw32/sys-root/mingw/lib/libpthread.a
+  usr/i686-pc-mingw32/sys-root/mingw/lib/libpthread.dll.a
+  usr/i686-pc-mingw32/sys-root/mingw/lib/libpthreadGC2.dll.a
+  usr/i686-pc-mingw32/sys-root/mingw/lib/libpthreadGCE2.dll.a
+  usr/i686-pc-mingw32/sys-root/mingw/lib/libquserex.dll.a
+  usr/share/doc/Cygwin/mingw-pthreads.README
+  usr/share/doc/mingw-pthreads/*
+
+========================================================================
+
+FYI: None of the tests below were performed with the alertdrv device
+driver installed. Under W7, which is my test machine, drivers can't be
+installed unless they are signed, and as I don't have a key...
+
+Test suite results (GC)
+------------------------------------------------------------
+TEST SUMMARY: 133 tests passed, and 2 tests failed or were skipped
+FAILED TESTS: once3 once4
+
+
+Test suite results (GCX)
+------------------------------------------------------------
+Note that the 'GCX' test uses the GC pthreads library (that is, C-style
+cleanup code), in conjunction C++ clients that throw exceptions.  Good
+performance on this test demonstrates that the GCE library is not stricly
+necessary for C++ applications.
+
+TEST SUMMARY: 132 tests passed, and 3 tests failed or were skipped
+FAILED TESTS: once3 once4 openmp1
+
+
+Test suite results (GCE)
+------------------------------------------------------------
+TEST SUMMARY: 117 tests passed, and 18 tests failed or were skipped
+FAILED TESTS: once3 once4 condvar7 condvar8 condvar9 context1 cancel3
+              cancel4 cancel5 cancel6a cancel6d cleanup0 cleanup1
+	      cleanup2 cleanup3 exception1 exception2 exception3
+
+However, some of these tests WOULD have passed, if they hadn't been
+skipped due to failures of earlier tests.  Here's the breakdown:
+
+REAL FAILS:      once3 once4 context1 cancel3 cancel5 cancel6a
+                 cleanup1 exception1 exception3
+SKIPS THAT PASS: condvar7 condvar8 condvar9 cancel4 cancel6d cleanup0
+                 cleanup2 cleanup3 exception2
+TEST SUMMARY: 126 tests passed, and 9 tests failed.
+
+Supposedly, the GCE library registers an exception handler that is supposed
+to catch these special exceptions -- which are thrown by the GCE library on
+pthread_exit() and thread termination, and handle the stack unwinding. As far
+as I can tell, that simply doesn't happen: the ptw32_exception_cancel is never
+caught, the stack is never (gracefully) unwound, and the program always just
+terminates with an uncaught exception.
+
+========================================================================
+Port Notes:
+
+There are a few things worth noting, with regards to the GCE library:
+
+First, MOST things work -- but its compliance is definitely inferior to
+the GC library, *even* when the GC library is used by C++ clients.
+
+Second, the alertdrv appears not to have ANY beneficial effect AT ALL.
+Now, we know that the alertdrv, when properly installed and started, CAN
+be communicated with -- the difference in the output of cancel9.exe, when
+linked with GCE demonstrates that:
+   with alertdrv:    throws an unhandled exception
+   without alertdrv: reports 'Alertable async cancel not available.'
+cancel9 determines this by querying the pthread library -- which will only
+return true when (a) the quserex.dll library was successfully loaded,
+(b) the appropriate symbols FROM that library were located, and (c)
+calling the initialization function IN that library returned success --
+and THAT function will only return success if it was able to open a
+handle to the driver.  So, we KNOW that cancel9.exe was able to verify
+that the driver was installed and started...but it appears that it doesn't
+actually solve any of the problems GCE has!
+
+The same tests that failed, in GCE w/o alertdrv, continue to fail; the
+ones that pass continue to pass -- with the exception of cancel9 itself,
+because it "skips" the meat of the test when alertdrv is not present (and,
+apparently, when alertdrv IS present...the meat of the test fails.)
+
+Not good.
+
+I'd suspect that alertdrv was broken, except that its own test program
+passes, on the same machine.  Unless you really enjoy debugging kernel-
+mode drivers, then I suggest sticking with the GC library...
+
+FYI -- quserex-test.exe results (without alertdrv.sys):
+
+        $ ./quserex_test.exe
+        QueueUserAPCEx_Init failed: Can't get a handle to the ALERT driver
+        XXX [Thread 6196] Starting
+        [Thread 6196] Sending an APC to myself
+        [Thread 6196] Inside APC routine with argument (33)
+        [Thread 4944] Calling Sleep...
+        [Thread 6196] Sending an APC to the thread that called Sleep
+        QueueUserAPCEx failed!
+
+...and it hangs, so you have to CTRL-C it.  However, the results with
+alertdrv.sys are as expected:
+
+        $ ./quserex_test.exe
+        XXX [Thread 3768] Starting
+        [Thread 3768] Sending an APC to myself
+        [Thread 3768] Inside APC routine with argument (33)
+        [Thread 6984] Calling Sleep...
+        [Thread 3768] Sending an APC to the thread that called Sleep
+        [Thread 6984] Inside APC routine with argument (44)
+        [Thread 6984] Exiting!
+        [Thread 7864] Calling WaitForSingleObject...
+        [Thread 3768] Sending an APC to the thread that called WaitForSingleObject
+        [Thread 7864] Inside APC routine with argument (55)
+        [Thread 7864] WaitForSingleObject returned 192
+        [Thread 7864] Exiting!
+        [Thread 3768] Exiting
+
+BTW, don't run quserex-test.exe from a pty cygwin terminal (like mintty,
+rxvt, etc).  Only run it from a normal cmd prompt, or perhaps a console2
+window -- otherwise, you won't see the output.
+
+========================================================================
+Change History:
+
+---------- mingw-pthreads-20110507-2 -- 2013 Jul 10 -----------
+* Rebuild as part of mingw-gcc refresh
+* Rely on cygport-generated setup.hint
+* First cygwin64 build
+
+---------- mingw-pthreads-20110507-1 -- 2011 May 20 -----------
+* Update to more recent snapshot (after upstream merge of 'robust mutexes')
+* Test also pthreadGC2 (C cleanup) with C++ clients.
+* Expand documentation
+* Add quserex-test.exe application
+* Make sure to provide 'libpthread.dll.a' and 'libpthread.a' copies
+  of the GC import library, so that -lpthread works even when -static.
+* First cygwin.com release
+
+---------- mingw-pthreads-20110312-1 (unreleased) -- 2011 May 02 -----------
+* Update to latest upstream
+* Build both GC (setjmp/longjmp 'cleanup' code) and GCE variants (C++
+  exception handling).  GC is and will remain the default.
+* Both libraries now built in their "inlined" mode, to better align with
+  the official upstream releases.
+* Include fedora patch to force use of ms-bitfields flag
+
+---------- mingw-pthreads-20100619-1 -- 2010 Nov 22 -----------
+* Initial release (but only via cygutils.fruitbat.org)
+
+========================================================================
+Cygwin port maintained by: Chuck Wilson <cygwin@cygwin.com>
+

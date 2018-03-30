@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.3"?>
+<plugin >
+   <extension-point id="RtosWriter" name="A main writer for a specific RT-OS" schema="schema/RtosWriter.exsd"/>
+   <extension-point id="oil_implementation" name="Oil Implementation ring" schema="schema/oil_implementation.exsd"/>
+   <extension-point id="oilTransform" name="Oil Transformer" schema="schema/oilTransform.exsd"/>
+   <extension-point id="builderOptions" name="Configuration option for the OilBuilder" schema="schema/builderOptions.exsd"/>
+   <extension-point id="oil_library_path" name="Oil library path" schema="schema/oil_library_path.exsd"/>
+   <extension-point id="xsltWriterStep" name="A single transformation used to compose a Xslt Section Writer" schema="schema/xsltWriterStep.exsd"/>
+
+
+   <!-- Tasks -->
+   <extension
+         point="org.eclipse.ant.core.antTasks">
+      <antTask
+            library="rtdruid_oil_ant.jar"
+            name="rtdruid.Oil.Configurator"
+            class="com.eu.evidence.rtdruid.modules.oil.ant.OilConfWriter"/>
+      <antTask
+            library="rtdruid_oil_ant.jar"
+            name="rtdruid.Code.Configurator"
+            class="com.eu.evidence.rtdruid.modules.oil.ant.ConfWriter"/>
+      <antTask
+            library="rtdruid_oil_ant.jar"
+            name="rtdruid.Oil.Example"
+            class="com.eu.evidence.rtdruid.modules.oil.ant.OilExampleWriter"/>
+      <antTask
+            library="rtdruid_oil_ant.jar"
+            name="rtdruid.Oil.Examples"
+            class="com.eu.evidence.rtdruid.modules.oil.ant.OilExamplesWriter"/>
+      <antTask
+            class="com.eu.evidence.rtdruid.modules.oil.ant.AddTemplatePath"
+            library="rtdruid_oil_ant.jar"
+            name="rtdruid.templates.path.add">
+      </antTask>
+   </extension>
+   <!-- Extra Classpath -->
+   <extension
+         point="org.eclipse.ant.core.extraClasspathEntries">
+      <extraClasspathEntry library="rtdruid_oil_ant.jar"/>
+   </extension>
+
+	<extension id="com.eu.evidence.rtdruid.oil.standalone" point="org.eclipse.core.runtime.products"> 
+      <product name="RT-Druid oil standalone" application="com_eu_evidence_rtdruid_oil_standalone" description="RT-Druid entry point for oil standalone application"/> 
+   </extension>
+ <extension
+       id="com_eu_evidence_rtdruid_oil_standalone"
+       point="org.eclipse.core.runtime.products">
+    <product
+          application="com.eu.evidence.rtdruid.oil.standalone.writer"
+          name="RT-Druid">
+       <property
+             name="appName"
+             value="RT-Druid">
+       </property>
+    </product>
+ </extension>
+ <extension
+       id="com.eu.evidence.rtdruid.oil.standalone.templates"
+       point="org.eclipse.core.runtime.applications">
+    <application
+          cardinality="singleton-global"
+          thread="main"
+          visible="true">
+       <run
+             class="com.eu.evidence.rtdruid.modules.oil.product.StdApplTemplates">
+       </run>
+    </application>
+ </extension> 
+ <extension
+       id="com.eu.evidence.rtdruid.oil.standalone.writer"
+       point="org.eclipse.core.runtime.applications">
+    <application
+          cardinality="singleton-global"
+          thread="main"
+          visible="true">
+       <run
+             class="com.eu.evidence.rtdruid.modules.oil.product.StdApplWriter">
+       </run>
+    </application>
+ </extension>
+ <extension
+       point="com.eu.evidence.rtdruid.core.data_tranformation">
+    <importer
+          case_sensitive="false"
+          class="com.eu.evidence.rtdruid.modules.oil.transform.OilIO"
+          type="oil">
+    </importer>
+    <exporter
+          case_sensitive="false"
+          class="com.eu.evidence.rtdruid.modules.oil.transform.OilIO"
+          type="oil">
+    </exporter>
+ </extension>
+ <extension
+       point="com.eu.evidence.templates.core.template">
+    <templatePathProvider
+          provider="com.eu.evidence.rtdruid.internal.modules.oil.templates.ConfigurationTemplateProvider">
+    </templatePathProvider>
+    <templatePathProvider
+          provider="com.eu.evidence.rtdruid.internal.modules.oil.templates.DynamicTemplateProvider">
+    </templatePathProvider>
+ </extension>
+ <extension
+       point="com.eu.evidence.rtdruid.core.rtdruidEPackages">
+    <loader
+          auto_contribute="true"
+          class="com.eu.evidence.rtdruid.internal.modules.oil.implementation.OilEPackageProvider"
+          pkg_id="RT-Druid Oil - Oil implementations">
+    </loader>
+ </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://com.eu.evidence.rtdruid.oil.xtext.model"
+            class="com.eu.evidence.rtdruid.oil.xtext.model.OilPackage"
+            genModel="src_xtext/emf_model/osek_simple.genmodel"/>
+   </extension>
+ 
+</plugin>

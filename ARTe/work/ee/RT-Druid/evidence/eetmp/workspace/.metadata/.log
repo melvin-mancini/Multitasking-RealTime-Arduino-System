@@ -1,0 +1,40 @@
+!SESSION 2015-03-19 16:32:35.214 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_40
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -application com.eu.evidence.rtdruid.oil.standalone.writer --inputFile conf.oil --outputDir eetmp
+Command-line arguments:  -data eetmp/workspace -application com.eu.evidence.rtdruid.oil.standalone.writer --inputFile conf.oil --outputDir eetmp
+
+!ENTRY org.eclipse.osgi 4 0 2015-03-19 16:32:36.186
+!MESSAGE Bundle reference:file:org.eclipse.equinox.launcher.win32.win32.x86_1.1.200.v20120522-1813/@4 not found.
+!SESSION 2015-03-19 16:34:14.258 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_40
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -application com.eu.evidence.rtdruid.oil.standalone.writer --inputFile conf.oil --outputDir eetmp
+Command-line arguments:  -data eetmp/workspace -application com.eu.evidence.rtdruid.oil.standalone.writer --inputFile conf.oil --outputDir eetmp
+
+!ENTRY org.eclipse.osgi 4 0 2015-03-19 16:34:15.108
+!MESSAGE Bundle reference:file:org.eclipse.equinox.launcher.win32.win32.x86_1.1.200.v20120522-1813/@4 not found.
+!SESSION 2015-03-24 14:16:13.369 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_40
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -application com.eu.evidence.rtdruid.oil.standalone.writer --inputFile conf.oil --outputDir eetmp
+Command-line arguments:  -data eetmp/workspace -application com.eu.evidence.rtdruid.oil.standalone.writer --inputFile conf.oil --outputDir eetmp
+
+!ENTRY org.eclipse.osgi 4 0 2015-03-24 14:16:14.445
+!MESSAGE Bundle reference:file:org.eclipse.equinox.launcher.win32.win32.x86_1.1.200.v20120522-1813/@4 not found.
+!SESSION 2015-03-26 11:14:05.078 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_40
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -application com.eu.evidence.rtdruid.oil.standalone.writer --inputFile conf.oil --outputDir eetmp
+Command-line arguments:  -data eetmp/workspace -application com.eu.evidence.rtdruid.oil.standalone.writer --inputFile conf.oil --outputDir eetmp
+
+!ENTRY org.eclipse.osgi 4 0 2015-03-26 11:14:06.003
+!MESSAGE Bundle reference:file:org.eclipse.equinox.launcher.win32.win32.x86_1.1.200.v20120522-1813/@4 not found.

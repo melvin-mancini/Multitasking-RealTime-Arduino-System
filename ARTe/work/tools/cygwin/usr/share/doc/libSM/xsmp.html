@@ -1,0 +1,1204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>X Session Management Protocol</title><meta name="generator" content="DocBook XSL Stylesheets V1.77.1" /><meta name="description" content="This document specifies a protocol that facilitates the management of groups of client applications by a session manager. The session manager can cause clients to save their state, to shut down, and to be restarted into a previously saved state. This protocol is layered on top of the X.Org ICE protocol." /><style xmlns="" type="text/css">/*
+ * Copyright (c) 2011 Gaetan Nadon
+ * Copyright (c) 2010, Oracle and/or its affiliates. All rights reserved.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice (including the next
+ * paragraph) shall be included in all copies or substantial portions of the
+ * Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ * DEALINGS IN THE SOFTWARE.
+ */
+
+/*
+ * Shared stylesheet for X.Org documentation translated to HTML format
+ * http://www.sagehill.net/docbookxsl/UsingCSS.html
+ * http://www.w3schools.com/css/default.asp
+ * https://addons.mozilla.org/en-US/firefox/addon/web-developer/developers
+ * https://addons.mozilla.org/en-US/firefox/addon/font-finder/
+ */
+
+/*
+ * The sans-serif fonts are considered more legible on a computer screen
+ * http://dry.sailingissues.com/linux-equivalents-verdana-arial.html
+ *
+ */
+body {
+  font-family: "Bitstream Vera Sans", "DejaVu Sans", Tahoma, Geneva, Arial, Sans-serif;
+  /* In support of using "em" font size unit, the w3c recommended method */
+  font-size: 100%;
+}
+
+/*
+ * Selection: all elements requiring mono spaced fonts.
+ *
+ * The family names attempt to match the proportionally spaced font
+ * family names such that the same font name is used for both.
+ * We'd like to use Bitstream, for example, in both proportionally and
+ * mono spaced font text.
+ */
+.command,
+.errorcode,
+.errorname,
+.errortype,
+.filename,
+.funcsynopsis,
+.function,
+.parameter,
+.programlisting,
+.property,
+.screen,
+.structname,
+.symbol,
+.synopsis,
+.type
+{
+  font-family:  "Bitstream Vera Sans Mono", "DejaVu Sans Mono", Courier, "Liberation Mono", Monospace;
+}
+
+/*
+ * Books have a title page, a preface, some chapters and appendices,
+ * a glossary, an index and a bibliography, in that order.
+ *
+ * An Article has no preface and no chapters. It has sections, appendices,
+ * a glossary, an index and a bibliography.
+ */
+
+/*
+ * Selection: book main title and subtitle
+ */
+div.book>div.titlepage h1.title,
+div.book>div.titlepage h2.subtitle {
+  text-align: center;
+}
+
+/*
+ * Selection: article main title and subtitle
+ */
+div.article>div.titlepage h2.title,
+div.article>div.titlepage h3.subtitle,
+div.article>div.sect1>div.titlepage h2.title,
+div.article>div.section>div.titlepage h2.title {
+  text-align: center;
+}
+
+/*
+ * Selection: various types of authors and collaborators, individuals or corporate
+ *
+ * These authors are not always contained inside an authorgroup.
+ * They can be contained inside a lot of different parent types where they might
+ * not be centered.
+ * Reducing the margin at the bottom makes a visual separation between authors
+ * We specify here the ones on the title page, others may be added based on merit.
+ */
+div.titlepage .authorgroup,
+div.titlepage .author,
+div.titlepage .collab,
+div.titlepage .corpauthor,
+div.titlepage .corpcredit,
+div.titlepage .editor,
+div.titlepage .othercredit {
+  text-align: center;
+  margin-bottom: 0.25em;
+}
+
+/*
+ * Selection: the affiliation of various types of authors and collaborators,
+ * individuals or corporate.
+ */
+div.titlepage .affiliation {
+  text-align: center;
+}
+
+/*
+ * Selection: product release information (X Version 11, Release 7)
+ *
+ * The releaseinfo element can be contained inside a lot of different parent
+ * types where it might not be centered.
+ * We specify here the one on the title page, others may be added based on merit.
+ */
+div.titlepage p.releaseinfo {
+  font-weight: bold;
+  text-align: center;
+}
+
+/*
+ * Selection: publishing date
+ */
+div.titlepage .pubdate {
+  text-align: center;
+}
+
+/*
+ * The legal notices are displayed in smaller sized fonts
+ * Justification is only supported in IE and therefore not requested.
+ *
+ */
+.legalnotice {
+  font-size: small;
+  font-style: italic;
+}
+
+/*
+ * For documentation having multiple licenses, the copyright and legalnotice
+ * elements sequence cannot instantiated multiple times.
+ * The copyright notice and license text are therefore coded inside a legalnotice
+ * element. The role attribute on the paragraph is used to allow styling of the
+ * copyright notice text which should not be italicized.
+ */
+p.multiLicensing {
+  font-style: normal;
+  font-size: medium;
+}
+
+/*
+ * Selection: book or article main ToC title
+ * A paragraph is generated for the title rather than a level 2 heading.
+ * We do not want to select chapters sub table of contents, only the main one
+ */
+div.book>div.toc>p,
+div.article>div.toc>p {
+  font-size: 1.5em;
+  text-align: center;
+}
+
+/*
+ * Selection: major sections of a book or an article
+ *
+ * Unlike books, articles do not have a titlepage element for appendix.
+ * Using the selector "div.titlepage h2.title" would be too general.
+ */
+div.book>div.preface>div.titlepage h2.title,
+div.book>div.chapter>div.titlepage h2.title,
+div.article>div.sect1>div.titlepage h2.title,
+div.article>div.section>div.titlepage h2.title,
+div.book>div.appendix>div.titlepage h2.title,
+div.article>div.appendix h2.title,
+div.glossary>div.titlepage h2.title,
+div.index>div.titlepage h2.title,
+div.bibliography>div.titlepage h2.title {
+   /* Add a border top over the major parts, just like printed books */
+   /* The Gray color is already used for the ruler over the main ToC. */
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: Gray;
+  /* Put some space between the border and the title */
+  padding-top: 0.2em;
+  text-align: center;
+}
+
+/*
+ * A Screen is a verbatim environment for displaying text that the user might
+ * see on a computer terminal. It is often used to display the results of a command.
+ *
+ * http://www.css3.info/preview/rounded-border/
+ */
+.screen {
+  background: #e0ffff;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #B0C4DE;
+  border-radius: 1.0em;
+  /* Browser's vendor properties prior to CSS 3 */
+  -moz-border-radius: 1.0em;
+  -webkit-border-radius: 1.0em;
+  -khtml-border-radius: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 1.0em;
+  padding: 0.5em;
+}
+
+/*
+ * Emphasis program listings with a light shade of gray similar to what
+ * DocBook XSL guide does: http://www.sagehill.net/docbookxsl/ProgramListings.html
+ * Found many C API docs on the web using like shades of gray.
+ */
+.programlisting {
+  background: #F4F4F4;
+  border-width: 1px;
+  border-style: solid;
+  border-color: Gray;
+  padding: 0.5em;
+}
+
+/*
+ * Emphasis functions synopsis using a darker shade of gray.
+ * Add a border such that it stands out more.
+ * Set the padding so the text does not touch the border.
+ */
+.funcsynopsis, .synopsis {
+  background: #e6e6fa;
+  border-width: 1px;
+  border-style: solid;
+  border-color: Gray;
+  clear: both;
+  margin: 0.5em;
+  padding: 0.25em;
+}
+
+/*
+ * Selection: paragraphs inside synopsis
+ *
+ * Removes the default browser margin, let the container set the padding.
+ * Paragraphs are not always used in synopsis
+ */
+.funcsynopsis p,
+.synopsis p {
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * Selection: variable lists, informal tables and tables
+ *
+ * Note the parameter name "variablelist.as.table" in xorg-xhtml.xsl
+ * A table with rows and columns is constructed inside div.variablelist
+ *
+ * Set the left margin so it is indented to the right
+ * Display informal tables with single line borders
+ */
+table {
+  margin-left: 0.5em;
+  border-collapse: collapse;
+}
+
+/*
+ * Selection: paragraphs inside tables
+ *
+ * Removes the default browser margin, let the container set the padding.
+ * Paragraphs are not always used in tables
+ */
+td p {
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * Add some space between the left and right column.
+ * The vertical alignment helps the reader associate a term
+ * with a multi-line definition.
+ */
+td, th {
+  padding-left: 1.0em;
+  padding-right: 1.0em;
+  vertical-align: top;
+}
+
+.warning {
+  border: 1px solid red;
+  background: #FFFF66;
+  padding-left: 0.5em;
+}
+</style></head><body><div class="book"><div class="titlepage"><div><div><h1 class="title"><a id="xsmp"></a>X Session Management Protocol</h1></div><div><h2 class="subtitle">X Consortium Standard</h2></div><div><div class="authorgroup"><div class="author"><h3 class="author"><span class="firstname">Mike</span> <span class="surname">Wexler</span></h3><div class="affiliation"><span class="orgname">Kubota Pacific Computer, Inc<br /></span></div></div></div></div><div><p class="releaseinfo">X Version 11, Release 7.7</p></div><div><p class="releaseinfo">Version 1.0</p></div><div><p class="copyright">Copyright © 1992, 1993, 1994, 2002 The Open Group</p></div><div><div class="legalnotice"><a id="idp864757364"></a><p>
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation files
+(the “Software”), to deal in the Software without
+restriction, including without limitation the rights to use, copy,
+modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished
+to do so, subject to the following conditions:
+     </p><p>
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+     </p><p>
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY
+OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT.  IN NO EVENT SHALL THE X CONSORTIUM BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+     </p><p>
+Except as contained in this notice, the name of the X Consortium
+shall not be used in advertising or otherwise to promote the sale, use
+or other dealings in this Software without prior written authorization
+from the X Consortium.
+     </p><p>
+X Window System is a trademark of The Open Group.
+     </p></div></div><div><div class="abstract"><p>
+This document specifies a protocol that facilitates the management of
+groups of client applications by a session manager.  The session
+manager can cause clients to save their state, to shut down, and to be
+restarted into a previously saved state.  This protocol is layered on
+top of the X.Org <acronym class="acronym">ICE</acronym> protocol.
+     </p></div></div></div><hr /></div><div class="toc"><p><strong>Table of Contents</strong></p><dl><dt><span class="chapter"><a href="#Acknowledgments">1. Acknowledgments</a></span></dt><dt><span class="chapter"><a href="#Definitions_and_Goals">2. Definitions and Goals</a></span></dt><dt><span class="chapter"><a href="#Overview_of_the_Protocol">3. Overview of the Protocol</a></span></dt><dt><span class="chapter"><a href="#Data_Types">4. Data Types</a></span></dt><dt><span class="chapter"><a href="#Protocol_Setup_and_Message_Format">5. Protocol Setup and Message Format</a></span></dt><dt><span class="chapter"><a href="#Client_Identification_String">6. Client Identification String</a></span></dt><dt><span class="chapter"><a href="#Protocol">7. Protocol</a></span></dt><dt><span class="chapter"><a href="#Errors">8. Errors</a></span></dt><dt><span class="chapter"><a href="#State_Diagrams">9. State Diagrams</a></span></dt><dd><dl><dt><span class="sect1"><a href="#Client_State_Diagram">Client State Diagram</a></span></dt><dt><span class="sect1"><a href="#Session_Manager_State_Diagram">Session Manager State Diagram</a></span></dt></dl></dd><dt><span class="chapter"><a href="#Protocol_Encoding">10. Protocol Encoding</a></span></dt><dd><dl><dt><span class="sect1"><a href="#Types">Types</a></span></dt><dt><span class="sect1"><a href="#Messages">Messages</a></span></dt></dl></dd><dt><span class="chapter"><a href="#Predefined_Properties">11. Predefined Properties</a></span></dt></dl></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="Acknowledgments"></a>Chapter 1. Acknowledgments</h1></div></div></div><p>
+First I would like to thank the entire <acronym class="acronym">ICCCM</acronym> and Intrinsics
+working groups for the comments and suggestions. I would like to make special
+thanks to the following people (in alphabetical order), Jordan Brown,
+Ellis Cohen, Donna Converse, Vania Joloboff, Stuart Marks, Ralph Mor
+and Bob Scheifler.
+  </p></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="Definitions_and_Goals"></a>Chapter 2. Definitions and Goals</h1></div></div></div><p>
+The purpose of the X Session Management Protocol (<acronym class="acronym">XSMP</acronym>) is
+to provide a uniform mechanism for users to save and restore their sessions.
+A <em class="firstterm">session</em> is a group of clients, each
+of which has a particular state.  The session is controlled by a
+network service called the <em class="firstterm">session manager</em>.
+The session manager issues commands to its
+clients on behalf of the user.  These commands may cause clients to
+save their state or to terminate.  It is expected that the client will
+save its state in such a way that the client can be restarted at a
+later time and resume its operation as if it had never been
+terminated.  A client's state might include information about the file
+currently being edited, the current position of the insertion point
+within the file, or the start of an uncommitted transaction.  The
+means by which clients are restarted is unspecified by this
+protocol.
+  </p><p>
+For purposes of this protocol, a <em class="firstterm">client</em>
+of the session manager is defined as a connection to the session
+manager.  A client is typically, though not necessarily, a process
+running an application program connected to an X Window System
+display.  However, a client may be connected to more than one X
+display or not be connected to any X displays at all.
+  </p><p>
+This protocol is layered on top of the X Consortium's <acronym class="acronym">ICE</acronym> protocol and
+relies on the <acronym class="acronym">ICE</acronym> protocol to handle connection management and authentication.
+  </p></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="Overview_of_the_Protocol"></a>Chapter 3. Overview of the Protocol</h1></div></div></div><p>
+Clients use XSMP to register themselves with the session manager (SM).
+When a client starts up, it should connect to the SM.  The client
+should remain connected for as long as it runs.  A client may resign
+from the session by issuing the proper protocol messages before
+disconnecting.  Termination of the connection without notice will be
+taken as an indication that the client died unexpectedly.
+  </p><p>
+Clients are expected to save their state in such a way as to allow
+multiple instantiations of themselves to be managed independently.  A
+unique value called a <em class="firstterm">client-ID</em> is
+provided by the protocol for the purpose of disambiguating multiple
+instantiations of clients.  Clients may use this ID, for example, as
+part of a filename in which to store the state for a particular
+instantiation.  The client-ID should be saved as part of the command
+used to restart this client
+(the <span class="property">RestartCommand</span>) so that the client
+will retain the same ID after it is restarted.  Certain small pieces
+of state might also be stored in the RestartCommand.  For example, an
+X11 client might place a '-twoWindow' option in its RestartCommand to
+indicate that it should start up in two window mode when it is
+restarted.
+  </p><p>
+The client finds the network address of the SM in a system-dependent
+way.  On <acronym class="acronym">POSIX</acronym> systems an environment
+variable called <code class="envar">SESSION_MANAGER</code>
+will contain a list of network IDs.  Each id will contain the
+transport name followed by a slash and the (transport-specific)
+address.  A TCP/IP address would look like this:
+    </p><div class="informalexample"><p>
+      <code class="literal">tcp/</code><em class="replaceable"><code>hostname</code></em><code class="literal">:</code><em class="replaceable"><code>portnumber</code></em>
+    </p></div><p>
+where the hostname is a fully qualified domain name.
+A Unix Domain address looks like this:
+    </p><div class="informalexample"><p>
+	<code class="literal">local/</code><em class="replaceable"><code>hostname</code></em><code class="literal">:</code><em class="replaceable"><code>path</code></em>
+    </p></div><p>
+A DECnet address would look like this:
+    </p><div class="informalexample"><p>
+	<code class="literal">decnet/</code><em class="replaceable"><code>nodename</code></em><code class="literal">::</code><em class="replaceable"><code>objname</code></em>
+    </p></div><p>
+  </p><p>
+If multiple network IDs are specified, they should be separated by commas.
+  </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Rationale</h3><p>
+There was much discussion over whether the XSMP protocol should use X
+as the transport protocol or whether it should use its own independent
+transport.  It was decided that it would use an independent protocol
+for several reasons.  First, the Session Manager should be able to
+manage programs that do not maintain an X connection.  Second, the X
+protocol is not appropriate to use as a general-purpose transport
+protocol.  Third, a session might span multiple displays.
+    </p><p>
+The protocol is connection based, because there is no other way for
+the SM to determine reliably when clients terminate.
+    </p><p>
+It should be noted that this protocol introduces another single point
+of failure into the system.  Although it is possible for clients to
+continue running after the SM has exited, this will probably not be
+the case in normal practice.  Normally the program that starts the SM
+will consider the session to be terminated when the SM exits (either
+normally or abnormally).
+    </p><p>
+To get around this would require some sort of rendezvous server that
+would also introduce a single point of failure.  In the absence of a
+generally available rendezvous server, XSMP is kept simple in the
+hopes of making simple reliable SMs.
+    </p></div><p>
+Some clients may wish to manage the programs they start.  For example,
+a mail program could start a text editor for editing the text of a
+mail message.  A client that does this is a session manager itself; it
+should supply the clients it starts with the appropriate connection
+information (i.e., the <code class="envar">SESSION_MANAGER</code> environment variable)
+that specifies a connection to itself instead of to the top level session
+manager.
+  </p><p>
+Each client has associated with it a list of properties.  A property
+set by one client is not visible to any other client.  These
+properties are used for the client to inform the SM of the client's
+current state.  When a client initially connects to the SM, there are
+no properties set.
+  </p></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="Data_Types"></a>Chapter 4. Data Types</h1></div></div></div><p>
+XSMP messages contain several types of data.  Both the SM and the
+client always send messages in their native byte order.  Thus, both
+sides may need to byte-swap the messages received.  The need to do
+byte-swapping is determined at run-time by the <acronym class="acronym">ICE</acronym> protocol.
+  </p><p>
+If an invalid value is specified for a field of any of the enumerated
+types, a <span class="errorname">BadValue</span> error message must be sent by
+the receiver of the message to the sender of the message.
+  </p><div class="informaltable"><table border="1"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /></colgroup><thead><tr><th align="left">Type Name</th><th align="left">Description</th></tr></thead><tbody><tr><td align="left">BOOL</td><td align="left"><p><code class="constant">False</code> or <code class="constant">True</code></p></td></tr><tr><td align="left">INTERACT_STYLE</td><td align="left"><code class="function">None</code> <code class="function">Errors</code> or <code class="function">Any</code></td></tr><tr><td align="left">DIALOG_TYPE</td><td align="left"><code class="function">Error</code> or <code class="function">Normal</code></td></tr><tr><td align="left">SAVE_TYPE</td><td align="left"><code class="function">Global</code> <code class="function">Local</code> or <code class="function">Both</code></td></tr><tr><td align="left">CARD8</td><td align="left">a one-byte unsigned integer</td></tr><tr><td align="left">CARD16</td><td align="left">a two-byte unsigned integer</td></tr><tr><td align="left">CARD32</td><td align="left">a four-byte unsigned integer</td></tr><tr><td align="left">ARRAY8</td><td align="left">a sequence of CARD8s</td></tr><tr><td align="left">LISTofARRAY8</td><td align="left">a sequence of ARRAY8s</td></tr><tr><td align="left">PROPERTY</td><td align="left">a property name (an ARRAY8), a type name, and a value of that type</td></tr><tr><td align="left">LISTofPROPERTY</td><td align="left">a counted collection of ­PROPERTYs.</td></tr></tbody></table></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="Protocol_Setup_and_Message_Format"></a>Chapter 5. Protocol Setup and Message Format</h1></div></div></div><p>
+To start the XSMP protocol, the client sends the server an
+<acronym class="acronym">ICE</acronym> <code class="function">ProtocolSetup</code> message.  All XSMP messages are
+in the standard <acronym class="acronym">ICE</acronym> message format.  The message's major opcode is
+assigned to XSMP by <acronym class="acronym">ICE</acronym> at run-time.  The different parties (client
+and SM) may be assigned different major opcodes for XSMP.  Once
+assigned, all XSMP messages issued by this party will use the same
+major opcode.  The message's minor opcode specifies which protocol
+message this message contains.
+  </p></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="Client_Identification_String"></a>Chapter 6. Client Identification String</h1></div></div></div><p>
+A client ID is a string of XPCS characters encoded in ISO Latin 1 (ISO
+8859-1).  No null characters are allowed in this string.  The client
+ID string is used in the <code class="function">Register­Client</code>
+and <code class="function">Register­ClientReply</code> messages.
+  </p><p>
+Client IDs consist of the pieces described below.  The ID is formed by
+concatenating the pieces in sequence, without separator characters.
+All pieces are padded on the left with '<code class="literal">0</code>'
+characters so as to fill the specified length.  Decimal numbers are
+encoded using the characters '<code class="literal">0</code>' through
+'<code class="literal">9</code>', and hexadecimal numbers using the characters
+'<code class="literal">0</code>' through '<code class="literal">9</code>' and
+'<code class="literal">A</code>' through '<code class="literal">F</code>'.
+  </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; "><li class="listitem" style="list-style-type: disc"><p>
+Version.  This is currently the character '<code class="literal">1</code>'.
+     </p></li><li class="listitem" style="list-style-type: disc"><p>Address type and address.  The address type will be one of
+</p><div class="literallayout"><p><br />
+     '<code class="literal">1</code>'     a 4-byte IPv4 address encoded as 8 hexadecimal digits<br />
+     '<code class="literal">2</code>'     a 6-byte DECNET address encoded as 12 hexadecimal digits<br />
+     '<code class="literal">6</code>'     a 16-byte IPv6 address encoded as 32 hexadecimal digits<br />
+</p></div><p>
+       </p><p>
+The address is the one of the network addresses of the machine where
+the session manager (not the client) is running.  For example, the IP
+address 198.112.45.11 would be encoded as the string
+"<code class="literal">QC6702D0B</code>".
+       </p></li><li class="listitem" style="list-style-type: disc"><p>
+	 Time stamp.  A 13-digit decimal number specifying
+	 the number of milliseconds since 00:00:00 UTC, January 1, 1970.
+     </p></li><li class="listitem" style="list-style-type: disc"><p>
+	Process-ID type and process-ID.  The process-ID type will be one of
+</p><div class="literallayout"><p><br />
+     '<code class="literal">1</code>'	a <acronym class="acronym">POSIX</acronym> process-ID encoded as a 10-digit decimal number.<br />
+</p></div><p>
+       </p><p>
+The process-ID is the process-ID of the session manager, not of a client.
+       </p></li><li class="listitem" style="list-style-type: disc"><p>
+Sequence number.  This is a four-digit decimal number.  It is
+incremented every time the session manager creates an ID.  After
+reaching "Q9999" it wraps to "Q0000".
+       </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Rationale</h3><p>
+Once a client ID has been assigned to the client, the client keeps
+this ID indefinitely.  If the client is terminated and restarted, it
+will be reassigned the same ID.  It is desirable to be able to pass
+client IDs around from machine to machine, from user to user, and from
+session manager to session manager, while retaining the identity of
+the client.  This, combined with the indefinite persistence of client
+IDs, means that client IDs need to be globally unique.  The
+construction specified above will ensure that any client ID created by
+any user, session manager, and machine will be different from any other.
+	 </p></div></li></ul></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="Protocol"></a>Chapter 7. Protocol</h1></div></div></div><p>
+The protocol consists of a sequence of messages as described below.
+Each message type is specified by an <acronym class="acronym">ICE</acronym> minor opcode.  A given
+message type is sent either from a client to the session manager or
+from the session manager to a client; the appropriate direction is
+listed with each message's description.  For each message type, the
+set of valid responses and possible error messages are listed.  The
+<acronym class="acronym">ICE</acronym> severity is given in parentheses following each error class.
+  </p><pre class="synopsis">
+<code class="function">RegisterClient</code> [Client → SM]
+
+  <em class="parameter"><code>previous-ID</code></em>: ARRAY8
+
+  Valid Responses: <code class="function">RegisterClientReply</code>
+
+  Possible Errors: <span class="errorname">BadValue</span> (<span class="symbol">CanContinue</span>)
+  </pre><p>
+The client must send this message to the SM to register the client's
+existence.  If a client is being restarted from a previous session,
+the <em class="parameter"><code>previous-ID</code></em> field must contain the client
+ID from the previous session.  For new clients,
+<em class="parameter"><code>previous-ID</code></em> should be of zero length.
+  </p><p>
+If <em class="parameter"><code>previous-ID</code></em> is not valid,
+the SM will send a <span class="errorname">BadValue</span>
+error message to the client.  At this point the SM reverts to the
+register state and waits for another <code class="function">RegisterClient</code>
+The client should then send a <code class="function">RegisterClient</code> with a
+null <em class="parameter"><code>previous-ID</code></em> field.
+  </p><pre class="synopsis">
+<code class="function">RegisterClientReply</code> [Client ← SM]
+
+  <em class="parameter"><code>client-ID</code></em>: <span class="type">ARRAY8</span>
+  </pre><p>
+The <em class="parameter"><code>client-ID</code></em> specifies a unique identification
+for this client.  If the client had specified an ID in the
+<em class="parameter"><code>previous-ID</code></em> field of the
+<code class="function">RegisterClient</code> message,
+<em class="parameter"><code>client-ID</code></em> will be identical to the previously
+specified ID.  If <em class="parameter"><code>previous-ID</code></em> was null,
+<em class="parameter"><code>client-ID</code></em> will be a unique ID freshly generated
+by the SM.  The <em class="parameter"><code>client-ID</code></em> format is specified in
+<a class="link" href="#Client_Identification_String" title="Chapter 6. Client Identification String">section 6</a>.
+  </p><p>
+If the client didn't supply a <em class="parameter"><code>previous-ID</code></em> field to
+the <code class="function">Register­Client</code> message, the SM must send
+a <code class="function">SaveYourself</code> message with type = Local,
+shutdown = False, interact-style = None, and fast = False immediately
+after the <code class="function">RegisterClientReply</code> The client should
+respond to this like any other <code class="function">Save­Yourself</code>
+message.
+  </p><pre class="synopsis">
+<code class="function">SaveYourself</code> [Client ← SM]
+
+  <em class="parameter"><code>type</code></em>: <span class="type">SAVE_TYPE</span>
+  <em class="parameter"><code>shutdown</code></em>: <span class="type">BOOL</span>
+  <em class="parameter"><code>interact-style</code></em>: <span class="type">INTERACT_STYLE</span>
+  <em class="parameter"><code>fast</code></em>: <span class="type">BOOL</span>
+
+  Valid Responses:
+    <code class="function">SetProperties</code>
+    <code class="function">DeleteProperties</code>
+    <code class="function">GetProperties</code>
+    <code class="function">SaveYourselfDone</code>
+    <code class="function">SaveYourselfPhase2Request</code>
+    <code class="function">InteractRequest</code>
+  </pre><p>
+The SM sends this message to a client to ask it to save its state.
+The client writes a state file, if necessary, and, if necessary,
+uses <code class="function">SetProperties</code> to inform the SM of how to
+restart it and how to discard the saved state.  During this process it
+can, if allowed by <em class="parameter"><code>interact-style</code></em>, request permission
+to interact with
+the user by sending an <code class="function">InteractRequest</code> message.
+After the state has been saved, or if it cannot be successfully saved,
+and the properties are appropriately set, the client sends
+a <code class="function">SaveYourselfDone</code> message.  If the client wants
+to save additional information after all the other clients have
+finished changing their own state, the client should
+send <code class="function">SaveYourselfPhase2Request</code> instead
+of <code class="function">SaveYourselfDone</code> The client must then freeze
+interaction with the user and wait until it receives
+a <code class="function">SaveComplete</code> <code class="function">Die</code> or
+a <code class="function">ShutdownCancelled</code> message.
+  </p><p>
+If <em class="parameter"><code>interact-style</code></em> is <code class="function">None</code> the
+client must not interact with the user while saving state.  If the
+<em class="parameter"><code>interact-style</code></em>
+is <code class="function">Errors</code> the client may interact with the user
+only if an error condition arises.  If <em class="parameter"><code>interact-style</code></em>
+is <code class="function">Any</code> then the client may interact with the user
+for any purpose.  This is done by sending
+an <code class="function">Interact­Request</code> message.  The SM will
+send an <code class="function">Interact</code> message to each client that sent
+an <code class="function">Interact­Request</code> The client must postpone
+all interaction until it gets the <code class="function">Interact</code>
+message.  When the client is done interacting it should send the SM
+an <code class="function">Interact­Done</code> message.
+The <code class="function">Interact­Request</code> message can be sent any
+time after a <code class="function">Save­Yourself</code> and before
+a <code class="function">Save­Yourself­Done</code>
+  </p><p>
+Unusual circumstances may dictate multiple interactions.  The client
+may initiate as many <code class="function">Interact­Request</code>
+- <code class="function">Interact</code> - <code class="function">InteractDone</code>
+sequences as it needs before it sends <code class="function">SaveYourselfDone</code>
+  </p><p>
+When a client receives <code class="function">Save­Yourself</code> and has
+not yet responded <code class="function">Save­Yourself­Done</code> to a
+previous <code class="function">Save­Yourself</code> it must send
+a <code class="function">Save­Yourself­Done</code> and may then begin
+responding as appropriate to the newly received
+<code class="function">Save­Yourself</code>
+</p><p>
+The <em class="parameter"><code>type</code></em> field specifies the type of information that
+should be saved: <code class="function">Global</code> <code class="function">Local</code>
+or <code class="function">Both</code> The <code class="function">Local</code> type
+indicates that the application must update the properties to reflect
+its current state, send
+a <code class="function">Save­Yourself­Done</code> and continue.
+Specifically it should save enough information to restore the state as
+seen by the user of this client.  It should not affect the state as
+seen by other users.  The <code class="function">Global</code> type indicates
+that the user wants the client to commit all of its data to permanent,
+globally-accessible storage.  <code class="function">Both</code> indicates that
+the client should do both of these.  If <code class="function">Both</code> is
+specified, the client should first commit the data to permanent
+storage before updating its SM properties.
+  </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Examples</h3><p>
+If a word processor was sent a <code class="function">SaveYourself</code> with
+a type of <code class="function">Local</code> it could create a temporary file
+that included the current contents of the file, the location of the
+cursor, and other aspects of the current editing session.  It would
+then update its <code class="function">Restart­Command</code> property with
+enough information to find the temporary file, and
+its <code class="function">Discard­Command</code> with enough information
+to remove it.
+    </p><p>
+If a word processor was sent a <code class="function">SaveYourself</code> with
+a type of <code class="function">Global</code> it would simply save the
+currently edited file.
+    </p><p>
+If a word processor was sent a <code class="function">SaveYourself</code> with
+a type of <code class="function">Both</code> it would first save the currently
+edited file.  It would then create a temporary file with information
+such as the current position of the cursor and what file is being
+edited.  It would then update
+its <code class="function">Restart­Command</code> property with enough
+information to find the temporary file, and
+its <code class="function">Discard­Command</code> with enough information
+to remove it.
+    </p><p>
+Once the SM has send <code class="function">SaveYourself</code> to a client, it
+can't send another <code class="function">SaveYourself</code> to that client until
+the client either responds with a <code class="function">SaveYourselfDone</code> or
+the SM sends a <code class="function">ShutdownCancelled</code>
+    </p></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Advice to Implementors</h3><p>
+If the client stores local any state in a file or similar "external"
+storage, it must create a distinct copy in response to
+each <code class="function">SaveYourself</code> message.
+It <span class="emphasis"><em>must not</em></span> simply refer to a previous
+copy, because the SM may discard that previous saved state using
+a <code class="function">DiscardCommand</code> without knowing that it is
+needed for the new checkpoint.
+    </p></div><p>
+The <em class="parameter"><code>shutdown</code></em> field specifies whether the system is
+being shut down.
+  </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Rationale</h3><p>
+The interaction may be different depending on whether or not shutdown is set.
+    </p></div><p>
+The client must save and then must prevent interaction until it
+receives a <code class="function">SaveComplete</code> <code class="function">Die</code>
+or a <code class="function">Shutdown­Cancelled</code> because anything the
+user does after the save will be lost.
+  </p><p>
+The <em class="parameter"><code>fast</code></em> field specifies whether or not the client
+should save its state as quickly as possible.  For example, if the SM knows
+that power is about to fail, it should set the <em class="parameter"><code>fast</code></em>
+field to <code class="constant">True</code>.
+  </p><pre class="synopsis">
+<code class="function">SaveYourselfPhase2</code> [Client → SM]
+
+  Valid Responses:
+    <code class="function">SetProperties</code>
+    <code class="function">DeleteProperties</code>
+    <code class="function">GetProperties</code>
+    <code class="function">SaveYourselfDone</code>
+    <code class="function">InteractRequest</code>
+  </pre><p>
+The SM sends this message to a client that has previously sent
+a <code class="function">SaveYourselfPhase2Request</code> message.  This
+message informs the client that all other clients are in a fixed state
+and this client can save state that is associated with other clients.
+  </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Rationale</h3><p>
+Clients that manager other clients (window managers, workspace
+managers, etc) need to know when all clients they are managing are
+idle, so that the manager can save state related to each of the
+clients without being concerned with that state changing.
+    </p></div><p>
+The client writes a state file, if necessary, and, if necessary,
+uses <code class="function">SetProperties</code> to inform the SM of how to
+restart it and how to discard the saved state.  During this process it
+can request permission to interact with the user by sending
+an <code class="function">InteractRequest</code> message.  This should only be
+done if an error occurs that requires user interaction to resolve.
+After the state has been saved, or if it cannot be successfully saved,
+and the properties are appropriately set, the client sends
+a <code class="function">SaveYourselfDone</code> message.
+  </p><pre class="synopsis">
+<code class="function">SaveYourselfRequest</code> [Client → SM]
+
+  <em class="parameter"><code>type</code></em>: <span class="type">SAVE_TYPE</span>
+  <em class="parameter"><code>shutdown</code></em>: <span class="type">BOOL</span>
+  <em class="parameter"><code>interact-style</code></em>: <span class="type">INTERACT_STYLE</span>
+  <em class="parameter"><code>fast</code></em>: <span class="type">BOOL</span>
+  <em class="parameter"><code>global</code></em>: <span class="type">BOOL</span>
+
+  Valid Responses: <code class="function">SaveYourself</code>
+  </pre><p>
+An application sends this to the SM to request a checkpoint.  When the
+SM receives this request it may generate a <code class="function">SaveYourself</code>
+message in response and it may leave the fields intact.
+  </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Example</h3><p>
+A vendor of a <acronym class="acronym">UPS</acronym> (Uninterruptible Power Supply)
+might include an SM client that would monitor the status of
+the <acronym class="acronym">UPS</acronym> and generate a fast shutdown if the power
+is about to be lost.
+  </p></div><p>
+If <em class="parameter"><code>global</code></em> is set to <code class="constant">True</code> then the
+resulting <code class="function">SaveYourself</code> should be sent to all
+applications.  If <em class="parameter"><code>global</code></em> is set to
+<code class="constant">False</code> then the
+resulting <code class="function">SaveYourself</code> should be sent to the
+application that sent the <code class="function">Save­Yourself­Request</code>
+  </p><pre class="synopsis">
+<code class="function">InteractRequest</code> [Client → SM]
+
+  <em class="parameter"><code>dialog-type</code></em>: <span class="type">DIALOG_TYPE</span>
+
+  Valid Responses: <code class="function">Interact</code> <code class="function">ShutdownCancelled</code>
+
+  Possible Errors: <span class="errorname">BadState</span> (<span class="symbol">CanContinue</span>)
+  </pre><p>
+During a checkpoint or session-save operation, only one client at a
+time might be granted the privilege of interacting with the user.
+The <code class="function">InteractRequest</code> message causes the SM to emit
+an <code class="function">Interact</code> message at some later time if the
+shutdown is not cancelled by another client first.
+  </p><p>
+The <em class="parameter"><code>dialog-type</code></em> field specifies either
+<code class="function">Errors</code> indicating that the client wants to start an
+error dialog or <code class="function">Normal</code> meaning the client wishes
+to start a non-error dialog.
+  </p><pre class="synopsis">
+<code class="function">Interact</code> [Client ← SM]
+
+  Valid Responses: <code class="function">InteractDone</code>
+  </pre><p>
+This message grants the client the privilege of interacting with the
+user.  When the client is done interacting with the user it must send
+an <code class="function">InteractDone</code> message to the SM unless a
+shutdown cancel is received.
+  </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Advice to Implementors</h3><p>If a client receives a ShutdownCancelled
+after receiving an <code class="function">Interact</code> message, but before
+sending a <code class="function">InteractDone</code> the client should abort
+the interaction and send a <code class="function">SaveYourselfDone</code>
+  </p></div><pre class="synopsis">
+<code class="function">InteractDone</code> [Client → SM]
+
+  <em class="parameter"><code>cancel-shutdown</code></em>: <span class="type">BOOL</span>
+
+  Valid Responses: <code class="function">ShutdownCancelled</code>
+  </pre><p>
+This message is used by a client to notify the SM that it is done interacting.
+  </p><p>
+Setting the <em class="parameter"><code>cancel-shutdown</code></em> field to <code class="constant">True</code>
+indicates that the user has requested that the entire shutdown be
+cancelled.  <em class="parameter"><code>Cancel-shutdown</code></em> may only be <code class="constant">True</code> if
+the corresponding <code class="function">SaveYourself</code> message
+specified <code class="constant">True</code> for the shutdown field
+and <code class="function">Any</code> or <code class="function">Errors</code> for the
+<em class="parameter"><code>interact-style</code></em> field.  Otherwise,
+<em class="parameter"><code>cancel-shutdown</code></em> must be <code class="constant">False</code>.
+  </p><pre class="synopsis">
+<code class="function">SaveYourselfDone</code> [Client → SM]
+
+  <em class="parameter"><code>success</code></em>: <span class="type">BOOL</span>
+
+  Valid Responses:
+    <code class="function">SaveComplete</code>
+    <code class="function">Die</code>
+    <code class="function">ShutdownCancelled</code>
+
+  </pre><p>
+This message is sent by a client to indicate that all of the
+properties representing its state have been updated.  After
+sending <code class="function">SaveYourselfDone</code> the client must wait for
+a <code class="function">SaveComplete</code> <code class="function">ShutdownCancelled</code>
+or <code class="function">Die</code> message before changing its state.  If
+the <code class="function">SaveYourself</code> operation was successful, then
+the client should set the <em class="parameter"><code>success</code></em> field to
+<code class="constant">True</code> otherwise the client should set it to
+<code class="constant">False</code>.
+  </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Example</h3><p>
+If a client tries to save its state and runs out of disk space, it
+should return <code class="constant">False</code> in the <em class="parameter"><code>success</code></em>
+field of the <code class="function">SaveYourselfDone</code> message.
+    </p></div><pre class="synopsis">
+<code class="function">SaveYourselfPhase2Request</code> [Client → SM]
+
+  Valid Responses:
+    <code class="function">ShutdownCancelled</code>
+    <code class="function">SaveYourselfPhase2</code>
+
+  </pre><p>
+This message is sent by a client to indicate that it needs to be informed
+when all the other clients are quiescent, so it can continue its state.
+  </p><pre class="synopsis">
+<code class="function">Die</code> [Client ← SM]
+
+  Valid Responses: <code class="function">ConnectionClosed</code>
+  </pre><p>
+When the SM wants a client to die it sends a <code class="function">Die</code>
+message.  Before the client dies it responds by sending
+a <code class="function">ConnectionClosed</code> message and may then close its
+connection to the SM at any time.
+  </p><pre class="synopsis">
+<code class="function">SaveComplete</code> [Client → SM]
+
+  Valid Responses:
+  </pre><p>
+When the SM is done with a checkpoint, it will send each of the
+clients a <code class="function">SaveComplete</code> message.  The client is
+then free to change its state.
+  </p><pre class="synopsis">
+<code class="function">ShutdownCancelled</code> [Client ← SM]
+  </pre><p>
+The shutdown currently in process has been aborted.  The client can
+now continue as if the shutdown had never happened.  If the client has
+not sent <code class="function">SaveYourselfDone</code> yet, the client can
+either abort the save and send <code class="function">SaveYourselfDone</code>
+with the success field set to <code class="constant">False</code> or it can
+continue with the save and send a <code class="function">SaveYourselfDone</code>
+with the success field set to reflect the outcome of the save.
+  </p><pre class="synopsis">
+<code class="function">ConnectionClosed</code> [Client → SM]
+
+  <em class="parameter"><code>reason</code></em>: <span class="type">LISTofARRAY8</span>
+  </pre><p>
+Specifies that the client has decided to terminate.  It should be
+immediately followed by closing the connection.
+  </p><p>
+The <em class="parameter"><code>reason</code></em> field specifies why the client is resigning
+from the session.  It is encoded as an array of Compound Text strings.  If the
+resignation is expected by the user, there will typically be zero
+ARRAY8s here.  But if the client encountered an unexpected fatal
+error, the error message (which might otherwise be printed on stderr
+on a <acronym class="acronym">POSIX</acronym> system) should be forwarded to the SM here, one ARRAY8 per
+line of the message.  It is the responsibility of the SM to display
+this reason to the user.
+  </p><p>
+After sending this message, the client must not send any additional
+XSMP messages to the SM.
+  </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Advice to Implementors</h3><p>
+If additional messages are received, they should be discarded.
+  </p></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Rationale</h3><p>
+The reason for sending the <code class="function">ConnectionClosed</code>
+message before actually closing the connections is that some transport
+protocols will not provide immediate notification of connection
+closure.
+  </p></div><pre class="synopsis">
+<code class="function">SetProperties</code> [Client → SM]
+
+  <em class="parameter"><code>properties</code></em>: <span class="type">LISTofPROPERTY</span>
+  </pre><p>
+Sets the specified <em class="parameter"><code>properties</code></em> to the specified values.
+Existing
+properties not specified in the <code class="function">Set­Properties</code>
+message are unaffected. Some properties have predefined semantics.
+See <a class="link" href="#Predefined_Properties" title="Chapter 11. Predefined Properties">section 11, 
+“Predefined Properties.”</a>
+  </p><p>
+The protocol specification recommends that property names used for
+properties not defined by the standard should begin with an
+underscore.  To prevent conflicts among organizations, additional
+prefixes should be chosen (for example, _KPC_FAST_SAVE_OPTION).  The
+organizational prefixes should be registered with the X Registry.  The
+XSMP reserves all property names not beginning with an underscore for
+future use.
+  </p><pre class="synopsis">
+<code class="function">DeleteProperties</code> [Client → SM]
+
+  <em class="parameter"><code>property-names</code></em>: <span class="type">LISTofARRAY8</span>
+  </pre><p>Removes the named properties.</p><pre class="synopsis">
+<code class="function">GetProperties</code> [Client → SM]
+
+  Valid Responses: <code class="function">GetPropertiesReply</code>
+  </pre><p>
+Requests that the SM respond with the values of all the properties for
+this client.
+  </p><pre class="synopsis">
+<code class="function">GetPropertiesReply</code> [Client ← SM]
+
+  <em class="parameter"><code>values</code></em>: <span class="type">LISTofPROPERTY</span>
+  </pre><p>
+This message is sent in reply to a <code class="function">GetProperties</code>
+message and includes the <em class="parameter"><code>values</code></em> of all the properties.
+  </p></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="Errors"></a>Chapter 8. Errors</h1></div></div></div><p>
+When the receiver of a message detects an error condition, the
+receiver sends an <acronym class="acronym">ICE</acronym> error message to the sender.  There are only two
+types of errors that are used by the XSMP:
+<span class="errorname">BadValue</span> and <span class="errorname">BadState</span>
+These are both defined in the <acronym class="acronym">ICE</acronym> protocol.
+  </p><p>
+Any message received out-of-sequence will generate
+a <span class="errorname">BadState</span> error message.
+  </p></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="State_Diagrams"></a>Chapter 9. State Diagrams</h1></div></div></div><div class="toc"><p><strong>Table of Contents</strong></p><dl><dt><span class="sect1"><a href="#Client_State_Diagram">Client State Diagram</a></span></dt><dt><span class="sect1"><a href="#Session_Manager_State_Diagram">Session Manager State Diagram</a></span></dt></dl></div><p>
+These state diagrams are designed to cover all actions of both the
+client and the SM.
+  </p><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="Client_State_Diagram"></a>Client State Diagram</h2></div></div></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>start:</em></span><br />
+     <acronym class="acronym">ICE</acronym> protocol setup complete → <span class="emphasis"><em>register</em></span></p></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>register:</em></span><br />
+     send <span class="emphasis"><em>RegisterClient</em></span> → <span class="emphasis"><em>collect-id</em></span></p></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>collect-id:</em></span><br />
+     receive <span class="emphasis"><em>RegisterClientReply</em></span> → <span class="emphasis"><em>idle</em></span></p></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>shutdown-cancelled:</em></span><br />
+     send <span class="emphasis"><em>SaveYourselfDone</em></span> → <span class="emphasis"><em>idle</em></span></p></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>idle:</em></span> [Undoes any freeze of interaction with user.]<br />
+     receive <span class="emphasis"><em>Die</em></span> → <span class="emphasis"><em>die</em></span><br />
+     receive <span class="emphasis"><em>SaveYourself</em></span> → <span class="emphasis"><em>freeze-interaction</em></span><br />
+     send <span class="emphasis"><em>GetProperties</em></span> → <span class="emphasis"><em>idle</em></span><br />
+     receive <span class="emphasis"><em>GetPropertiesReply</em></span> → <span class="emphasis"><em>idle</em></span><br />
+     send <span class="emphasis"><em>SetProperties</em></span> → <span class="emphasis"><em>idle</em></span><br />
+     send <span class="emphasis"><em>DeleteProperties</em></span> → <span class="emphasis"><em>idle</em></span><br />
+     send <span class="emphasis"><em>ConnectionClosed</em></span> → <span class="emphasis"><em>connection-closed</em></span><br />
+     send <span class="emphasis"><em>SaveYourselfRequest</em></span> → <span class="emphasis"><em>idle</em></span><br />
+</p></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>die:</em></span><br />
+     send <span class="emphasis"><em>ConnectionClosed</em></span> → <span class="emphasis"><em>connection-closed</em></span></p></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>freeze-interaction:</em></span><br />
+     freeze interaction with user → <span class="emphasis"><em>save-yourself</em></span></p></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>save-yourself:</em></span><br />
+     receive <span class="emphasis"><em>ShutdownCancelled</em></span> → <span class="emphasis"><em>shutdown-cancelled</em></span><br />
+     send <span class="emphasis"><em>SetProperties</em></span> → <span class="emphasis"><em>save-yourself</em></span><br />
+     send <span class="emphasis"><em>DeleteProperties</em></span> → <span class="emphasis"><em>save-yourself</em></span><br />
+     send <span class="emphasis"><em>GetProperties</em></span> → <span class="emphasis"><em>save-yourself</em></span><br />
+     receive <span class="emphasis"><em>GetPropertiesReply</em></span> → <span class="emphasis"><em>save-yourself</em></span><br />
+     send <span class="emphasis"><em>InteractRequest</em></span> → <span class="emphasis"><em>interact-request</em></span><br />
+     send <span class="emphasis"><em>SaveYourselfPhase2Request</em></span> → waiting-for-phase2<br />
+<br />
+<span class="emphasis"><em>save-yourself:</em></span><br />
+     if shutdown mode:<br />
+          send <span class="emphasis"><em>SaveYourselfDone</em></span> → <span class="emphasis"><em>save-yourself-done</em></span><br />
+     otherwise:<br />
+          send <span class="emphasis"><em>SaveYourselfDone</em></span> → <span class="emphasis"><em>idle</em></span></p></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>waiting-for-phase2:</em></span><br />
+     receive <span class="emphasis"><em>ShutdownCancelled</em></span> → <span class="emphasis"><em>shutdown-cancelled</em></span><br />
+     receive <span class="emphasis"><em>SaveYourselfPhase2</em></span> → <span class="emphasis"><em>phase2</em></span></p></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>phase2:</em></span><br />
+     receive <span class="emphasis"><em>ShutdownCancelled</em></span> → <span class="emphasis"><em>shutdown-cancelled</em></span><br />
+     send <span class="emphasis"><em>SetProperties</em></span> → <span class="emphasis"><em>save-yourself</em></span><br />
+     send <span class="emphasis"><em>DeleteProperties</em></span> → <span class="emphasis"><em>save-yourself</em></span><br />
+     send <span class="emphasis"><em>GetProperties</em></span> → <span class="emphasis"><em>save-yourself</em></span><br />
+     receive <span class="emphasis"><em>GetPropertiesReply</em></span> → <span class="emphasis"><em>save-yourself</em></span><br />
+     send <span class="emphasis"><em>InteractRequest</em></span> → <span class="emphasis"><em>interact-request</em></span> (errors only)<br />
+     if shutdown mode:<br />
+          send <span class="emphasis"><em>SaveYourselfDone</em></span> → <span class="emphasis"><em>save-yourself-done</em></span><br />
+     otherwise:<br />
+          send <span class="emphasis"><em>SaveYourselfDone</em></span> → <span class="emphasis"><em>idle</em></span></p></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>interact-request:</em></span><br />
+     receive <span class="emphasis"><em>Interact</em></span> → <span class="emphasis"><em>interact</em></span><br />
+     receive <span class="emphasis"><em>ShutdownCancelled</em></span> → <span class="emphasis"><em>shutdown-cancelled</em></span></p></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>interact:</em></span><br />
+     send <span class="emphasis"><em>InteractDone</em></span> → <span class="emphasis"><em>save-yourself</em></span><br />
+     receive <span class="emphasis"><em>ShutdownCancelled</em></span> → <span class="emphasis"><em>shutdown-cancelled</em></span></p></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>save-yourself-done:</em></span> (changing state is forbidden)<br />
+     receive <span class="emphasis"><em>SaveComplete</em></span> → <span class="emphasis"><em>idle</em></span><br />
+     receive <span class="emphasis"><em>Die</em></span> → <span class="emphasis"><em>die</em></span><br />
+     receive <span class="emphasis"><em>ShutdownCancelled</em></span> → <span class="emphasis"><em>idle</em></span></p></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>connection-closed:</em></span><br />
+     client stops participating in session </p></div></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="Session_Manager_State_Diagram"></a>Session Manager State Diagram</h2></div></div></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>start:</em></span><br />
+     receive <span class="emphasis"><em>ProtocolSetup</em></span> → <span class="emphasis"><em>protocol-setup</em></span></p></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>protocol-setup:</em></span><br />
+     send <span class="emphasis"><em>ProtocolSetupReply</em></span> → <span class="emphasis"><em>register</em></span></p></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>register:</em></span><br />
+     receive <span class="emphasis"><em>RegisterClient</em></span> → <span class="emphasis"><em>acknowledge-register</em></span><br />
+</p></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>acknowledge-register:</em></span><br />
+     send <span class="emphasis"><em>RegisterClientReply</em></span> → <span class="emphasis"><em>idle</em></span><br />
+</p></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>idle:</em></span><br />
+     receive <span class="emphasis"><em>SetProperties</em></span> → <span class="emphasis"><em>idle</em></span><br />
+     receive <span class="emphasis"><em>DeleteProperties</em></span> → <span class="emphasis"><em>idle</em></span><br />
+     receive <span class="emphasis"><em>ConnectionClosed</em></span> → <span class="emphasis"><em>start</em></span><br />
+     receive <span class="emphasis"><em>GetProperties</em></span> → <span class="emphasis"><em>get-properties</em></span><br />
+     receive <span class="emphasis"><em>SaveYourselfRequest</em></span> → <span class="emphasis"><em>save-yourself</em></span><br />
+     send <span class="emphasis"><em>SaveYourself</em></span> → <span class="emphasis"><em>saving-yourself</em></span><br />
+</p></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>save-yourself:</em></span><br />
+     send <span class="emphasis"><em>SaveYourself</em></span> → <span class="emphasis"><em>saving-yourself</em></span><br />
+</p></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>get-properties:</em></span><br />
+     send <span class="emphasis"><em>GetPropertiesReply</em></span> → <span class="emphasis"><em>idle</em></span><br />
+</p></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>saving-get-properties:</em></span><br />
+     send <span class="emphasis"><em>GetPropertiesReply</em></span> → <span class="emphasis"><em>saving-yourself</em></span><br />
+</p></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>saving-yourself:</em></span><br />
+     receive <span class="emphasis"><em>InteractRequest</em></span> → <span class="emphasis"><em>saving-yourself</em></span><br />
+     send <span class="emphasis"><em>Interact</em></span> → <span class="emphasis"><em>saving-yourself</em></span><br />
+     send <span class="emphasis"><em>ShutdownCancelled</em></span> → <span class="emphasis"><em>idle</em></span><br />
+     receive <span class="emphasis"><em>InteractDone</em></span> → <span class="emphasis"><em>saving-yourself</em></span><br />
+     receive <span class="emphasis"><em>SetProperties</em></span> → <span class="emphasis"><em>saving-yourself</em></span><br />
+      receive <span class="emphasis"><em>DeleteProperties</em></span> → <span class="emphasis"><em>saving-yourself</em></span><br />
+     receive <span class="emphasis"><em>GetProperties</em></span> → <span class="emphasis"><em>saving-get-properties</em></span><br />
+     receive <span class="emphasis"><em>SaveYourselfPhase2Request</em></span> → <span class="emphasis"><em>start-phase2</em></span><br />
+     receive <span class="emphasis"><em>SaveYourselfDone</em></span> → <span class="emphasis"><em>save-yourself-done</em></span><br />
+</p></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>start-phase2:</em></span><br />
+     If all clients have sent either SaveYourselfPhase2Request or SaveYourselfDone:<br />
+          send <span class="emphasis"><em>SaveYourselfPhase2</em></span> → <span class="emphasis"><em>phase2</em></span><br />
+     else<br />
+          → <span class="emphasis"><em>saving-yourself</em></span><br />
+</p></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>phase2:</em></span><br />
+     receive <span class="emphasis"><em>InteractRequest</em></span> → <span class="emphasis"><em>saving-yourself</em></span><br />
+     send <span class="emphasis"><em>Interact</em></span> → <span class="emphasis"><em>saving-yourself</em></span><br />
+     send <span class="emphasis"><em>ShutdownCancelled</em></span> → <span class="emphasis"><em>idle</em></span><br />
+     receive <span class="emphasis"><em>InteractDone</em></span> → <span class="emphasis"><em>saving-yourself</em></span><br />
+     receive <span class="emphasis"><em>SetProperties</em></span> → <span class="emphasis"><em>saving-yourself</em></span><br />
+      receive <span class="emphasis"><em>DeleteProperties</em></span> → <span class="emphasis"><em>saving-yourself</em></span><br />
+     receive <span class="emphasis"><em>GetProperties</em></span> → <span class="emphasis"><em>saving-get-properties</em></span><br />
+     receive <span class="emphasis"><em>SaveYourselfDone</em></span> → <span class="emphasis"><em>save-yourself-done</em></span><br />
+</p></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>save-yourself-done:</em></span><br />
+     If all clients are saved:<br />
+          If shutting down:<br />
+               send <span class="emphasis"><em>Die</em></span> → <span class="emphasis"><em>die</em></span><br />
+          otherwise<br />
+               send <span class="emphasis"><em>SaveComplete</em></span> → <span class="emphasis"><em>idle</em></span><br />
+<br />
+     If some clients are not saved:<br />
+     → <span class="emphasis"><em>saving-yourself</em></span><br />
+</p></div><div class="literallayout"><p><br />
+<span class="emphasis"><em>die:</em></span><br />
+     SM stops accepting connections<br />
+</p></div></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="Protocol_Encoding"></a>Chapter 10. Protocol Encoding</h1></div></div></div><div class="toc"><p><strong>Table of Contents</strong></p><dl><dt><span class="sect1"><a href="#Types">Types</a></span></dt><dt><span class="sect1"><a href="#Messages">Messages</a></span></dt></dl></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="Types"></a>Types</h2></div></div></div><div class="informaltable"><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /></colgroup><thead><tr><th colspan="2" align="left"><span class="bold"><strong>BOOL</strong></span></th></tr></thead><tbody><tr><td align="left">0</td><td align="left">False</td></tr><tr><td align="left">1</td><td align="left">True</td></tr></tbody></table><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /></colgroup><thead><tr><th colspan="2" align="left"><span class="bold"><strong>INTERACT_STYLE</strong></span></th></tr></thead><tbody><tr><td align="left">0</td><td align="left">None</td></tr><tr><td align="left">1</td><td align="left">Errors</td></tr><tr><td align="left">2</td><td align="left">Any</td></tr></tbody></table><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /></colgroup><thead><tr><th colspan="2" align="left"><span class="bold"><strong>DIALOG_TYPE</strong></span></th></tr></thead><tbody><tr><td align="left">0</td><td align="left">Error</td></tr><tr><td align="left">1</td><td align="left">Normal</td></tr></tbody></table><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /></colgroup><thead><tr><th colspan="2" align="left"><span class="bold"><strong>SAVE_TYPE</strong></span></th></tr></thead><tbody><tr><td align="left">0</td><td align="left">Global</td></tr><tr><td align="left">1</td><td align="left">Local</td></tr><tr><td align="left">2</td><td align="left">Both</td></tr></tbody></table><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /><col align="left" class="c3" /></colgroup><thead><tr><th colspan="2" align="left"><span class="bold"><strong>ARRAY8</strong></span></th><td class="auto-generated"> </td></tr></thead><tbody><tr><td align="left">4</td><td align="left">CARD32</td><td align="left">length</td></tr><tr><td align="left">n</td><td align="left">ListofCARD8, the array</td><td align="left">p = pad (4 + n, 8)</td></tr><tr><td align="left">2</td><td align="left">Both</td><td class="auto-generated"> </td></tr></tbody></table><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /><col align="left" class="c3" /></colgroup><thead><tr><th colspan="2" align="left"><span class="bold"><strong>LISTofARRAY8</strong></span></th><td class="auto-generated"> </td></tr></thead><tbody><tr><td align="left">4</td><td align="left">CARD32</td><td align="left">count</td></tr><tr><td align="left">4</td><td align="left"> </td><td align="left">unused</td></tr><tr><td align="left">a</td><td align="left">ARRAY8</td><td align="left">first array</td></tr><tr><td align="left">b</td><td align="left">ARRAY8</td><td align="left">second array</td></tr><tr><td align="left">.</td><td align="left"> </td><td align="left"> </td></tr><tr><td align="left">.</td><td align="left"> </td><td align="left"> </td></tr><tr><td align="left">.</td><td align="left"> </td><td align="left"> </td></tr><tr><td align="left">q</td><td align="left">ARRAY8</td><td align="left">last array</td></tr></tbody></table><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /><col align="left" class="c3" /></colgroup><thead><tr><th colspan="2" align="left"><span class="bold"><strong>PROPERTY</strong></span></th><td class="auto-generated"> </td></tr></thead><tbody><tr><td align="left">a</td><td align="left">ARRAY8</td><td align="left">name</td></tr><tr><td align="left">b</td><td align="left">ARRAY8</td><td align="left">type (XPCS encoded in Latin-1, case sensitive)</td></tr><tr><td align="left">c</td><td align="left">LISTofARRAY8</td><td align="left">values</td></tr></tbody></table><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /><col align="left" class="32" /></colgroup><thead><tr><th colspan="2" align="left"><span class="bold"><strong>LISTofPROPERTY</strong></span></th><td class="auto-generated"> </td></tr></thead><tbody><tr><td align="left">4</td><td align="left">CARD32</td><td align="left">count</td></tr><tr><td align="left">4</td><td align="left"> </td><td align="left">unused</td></tr><tr><td align="left">a</td><td align="left">PROPERTY</td><td align="left">first property</td></tr><tr><td align="left">b</td><td align="left">PROPERTY</td><td align="left">second property</td></tr><tr><td align="left">.</td><td align="left"> </td><td align="left"> </td></tr><tr><td align="left">.</td><td align="left"> </td><td align="left"> </td></tr><tr><td align="left">.</td><td align="left"> </td><td align="left"> </td></tr><tr><td align="left">q</td><td align="left">PROPERTY</td><td align="left">last property</td></tr></tbody></table></div></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="Messages"></a>Messages</h2></div></div></div><p>
+XSMP is a sub-protocol of <acronym class="acronym">ICE</acronym>.  The major opcode is
+assigned at run-time by <acronym class="acronym">ICE</acronym> and is represented here
+by '<code class="literal">?</code>'.
+    </p><p>
+To start the XSMP protocol, the client sends the server an
+<acronym class="acronym">ICE</acronym> <code class="function">ProtocolSetup</code> message.
+The protocol-name field should be specified as "<code class="literal">XSMP</code>",
+the major version of the protocol is 1, the minor version is 0.  These
+values may change if the protocol is revised.  The minor version
+number will be incremented if the change is compatible, otherwise the
+major version number will be incremented.
+    </p><p>
+In <code class="function">ProtocolReply</code> message sent by the session
+manager, the XSMP protocol defines the vendor parameter as product
+identification of the session manager, and defines the release
+parameter as the software release identification of the session
+manager.  The session manager should supply this information in the
+<acronym class="acronym">ICE</acronym> <code class="function">ProtocolReply</code> message.
+    </p><div class="informaltable"><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /><col align="left" class="c3" /></colgroup><thead><tr><th colspan="3" align="left"><span class="bold"><strong><code class="function">RegisterClient</code></strong></span></th></tr></thead><tbody><tr><td align="left">1</td><td align="left">?</td><td align="left">XSMP</td></tr><tr><td align="left">1</td><td align="left">1</td><td align="left">opcode</td></tr><tr><td align="left">2</td><td align="left"> </td><td align="left">unused</td></tr><tr><td align="left">4</td><td align="left">a/8</td><td align="left">length of remaining data in 8-byte units</td></tr><tr><td align="left">a</td><td align="left">ARRAY8</td><td align="left">previous-ID</td></tr></tbody></table><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /><col align="left" class="c3" /></colgroup><thead><tr><th colspan="3" align="left"><span class="bold"><strong><code class="function">RegisterClientReply</code></strong></span></th></tr></thead><tbody><tr><td align="left">1</td><td align="left">?</td><td align="left">XSMP</td></tr><tr><td align="left">1</td><td align="left">2</td><td align="left">opcode</td></tr><tr><td align="left">2</td><td align="left"> </td><td align="left">unused</td></tr><tr><td align="left">4</td><td align="left">a/8</td><td align="left">length of remaining data in 8-byte units</td></tr><tr><td align="left">a</td><td align="left">ARRAY8</td><td align="left">client-ID</td></tr></tbody></table><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /><col align="left" class="c3" /></colgroup><thead><tr><th colspan="3" align="left"><span class="bold"><strong><code class="function">SaveYourself</code></strong></span></th></tr></thead><tbody><tr><td align="left">1</td><td align="left">?</td><td align="left">XSMP</td></tr><tr><td align="left">1</td><td align="left">3</td><td align="left">opcode</td></tr><tr><td align="left">2</td><td align="left"> </td><td align="left">unused</td></tr><tr><td align="left">4</td><td align="left">1</td><td align="left">length of remaining data in 8-byte units</td></tr><tr><td align="left">1</td><td align="left">SAVE_TYPE</td><td align="left">type</td></tr><tr><td align="left">1</td><td align="left">BOOL</td><td align="left">shutdown</td></tr><tr><td align="left">1</td><td align="left">INTERACT_STYLE</td><td align="left">interact-style</td></tr><tr><td align="left">1</td><td align="left">BOOL</td><td align="left">fast</td></tr><tr><td align="left">4</td><td align="left"> </td><td align="left">unused</td></tr></tbody></table><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /><col align="left" class="c3" /></colgroup><thead><tr><th colspan="3" align="left"><span class="bold"><strong><code class="function">SaveYourselfRequest</code></strong></span></th></tr></thead><tbody><tr><td align="left">1</td><td align="left">?</td><td align="left">XSMP</td></tr><tr><td align="left">1</td><td align="left">4</td><td align="left">opcode</td></tr><tr><td align="left">2</td><td align="left"> </td><td align="left">unused</td></tr><tr><td align="left">4</td><td align="left">1</td><td align="left">length of remainning data in 8-byte units</td></tr><tr><td align="left">1</td><td align="left">SAVE_TYPE</td><td align="left">type</td></tr><tr><td align="left">1</td><td align="left">BOOL</td><td align="left">shutdown</td></tr><tr><td align="left">1</td><td align="left">INTERACT_STYLE</td><td align="left">interact-style</td></tr><tr><td align="left">1</td><td align="left">BOOL</td><td align="left">fast</td></tr><tr><td align="left">3</td><td align="left"> </td><td align="left">unused</td></tr></tbody></table><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /><col align="left" class="c3" /></colgroup><thead><tr><th colspan="3" align="left"><span class="bold"><strong><code class="function">InteractRequest</code></strong></span></th></tr></thead><tbody><tr><td align="left">1</td><td align="left">?</td><td align="left">XSMP</td></tr><tr><td align="left">1</td><td align="left">5</td><td align="left">opcode</td></tr><tr><td align="left">1</td><td align="left">DIALOG_TYPE</td><td align="left">dialog type</td></tr><tr><td align="left">1</td><td align="left"> </td><td align="left">unused</td></tr><tr><td align="left">4</td><td align="left">0</td><td align="left">length of remaining data in 8-byte units</td></tr></tbody></table><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /><col align="left" class="c3" /></colgroup><thead><tr><th colspan="3" align="left"><span class="bold"><strong><code class="function">Interact</code></strong></span></th></tr></thead><tbody><tr><td align="left">1</td><td align="left">?</td><td align="left">XSMP</td></tr><tr><td align="left">1</td><td align="left">6</td><td align="left">opcode</td></tr><tr><td align="left">2</td><td align="left"> </td><td align="left">unused</td></tr><tr><td align="left">4</td><td align="left">0</td><td align="left">length of remaining data in 8-byte units</td></tr></tbody></table><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /><col align="left" class="c3" /></colgroup><thead><tr><th colspan="3" align="left"><span class="bold"><strong><code class="function">InteractDone</code></strong></span></th></tr></thead><tbody><tr><td align="left">1</td><td align="left">?</td><td align="left">XSMP</td></tr><tr><td align="left">1</td><td align="left">7</td><td align="left">opcode</td></tr><tr><td align="left">1</td><td align="left">BOOL</td><td align="left">cancel-shutdown</td></tr><tr><td align="left">1</td><td align="left"> </td><td align="left">unused</td></tr></tbody></table><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /><col align="left" class="c3" /></colgroup><thead><tr><th colspan="3" align="left"><span class="bold"><strong><code class="function">InteractDone</code></strong></span></th></tr></thead><tbody><tr><td align="left">1</td><td align="left">?</td><td align="left">XSMP</td></tr><tr><td align="left">1</td><td align="left">7</td><td align="left">opcode</td></tr><tr><td align="left">1</td><td align="left">BOOL</td><td align="left">cancel-shutdown</td></tr><tr><td align="left">1</td><td align="left"> </td><td align="left">unused</td></tr><tr><td align="left">4</td><td align="left">0</td><td align="left">length of remaining data in 8-byte units</td></tr></tbody></table><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /><col align="left" class="c3" /></colgroup><thead><tr><th colspan="3" align="left"><span class="bold"><strong><code class="function">SaveYourselfDone</code></strong></span></th></tr></thead><tbody><tr><td align="left">1</td><td align="left">?</td><td align="left">XSMP</td></tr><tr><td align="left">1</td><td align="left">8</td><td align="left">opcode</td></tr><tr><td align="left">1</td><td align="left">BOOL</td><td align="left">success</td></tr><tr><td align="left">1</td><td align="left"> </td><td align="left">unused</td></tr><tr><td align="left">4</td><td align="left">0</td><td align="left">length of remaining data in 8-byte units</td></tr></tbody></table><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /><col align="left" class="c3" /></colgroup><thead><tr><th colspan="3" align="left"><span class="bold"><strong><code class="function">Die</code></strong></span></th></tr></thead><tbody><tr><td align="left">1</td><td align="left">?</td><td align="left">XSMP</td></tr><tr><td align="left">1</td><td align="left">9</td><td align="left">opcode</td></tr><tr><td align="left">1</td><td align="left"> </td><td align="left">unused</td></tr><tr><td align="left">4</td><td align="left">0</td><td align="left">length of remaining data in 8-byte units</td></tr></tbody></table><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /><col align="left" class="c3" /></colgroup><thead><tr><th colspan="3" align="left"><span class="bold"><strong><code class="function">ShutdownCancelled</code></strong></span></th></tr></thead><tbody><tr><td align="left">1</td><td align="left">?</td><td align="left">XSMP</td></tr><tr><td align="left">1</td><td align="left">10</td><td align="left">opcode</td></tr><tr><td align="left">2</td><td align="left"> </td><td align="left">unused</td></tr><tr><td align="left">4</td><td align="left">0</td><td align="left">length of remaining data in 8-byte units</td></tr></tbody></table><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /><col align="left" class="c3" /></colgroup><thead><tr><th colspan="3" align="left"><span class="bold"><strong><code class="function">ConnectionClosed</code></strong></span></th></tr></thead><tbody><tr><td align="left">1</td><td align="left">?</td><td align="left">XSMP</td></tr><tr><td align="left">1</td><td align="left">11</td><td align="left">opcode</td></tr><tr><td align="left">2</td><td align="left"> </td><td align="left">unused</td></tr><tr><td align="left">4</td><td align="left">a/8</td><td align="left">length of remaining data in 8-byte units</td></tr><tr><td align="left">a</td><td align="left">LISTofARRAY8</td><td align="left">reason</td></tr></tbody></table><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /><col align="left" class="c3" /></colgroup><thead><tr><th colspan="3" align="left"><span class="bold"><strong><code class="function">SetProperties</code></strong></span></th></tr></thead><tbody><tr><td align="left">1</td><td align="left">?</td><td align="left">XSMP</td></tr><tr><td align="left">1</td><td align="left">12</td><td align="left">opcode</td></tr><tr><td align="left">2</td><td align="left"> </td><td align="left">unused</td></tr><tr><td align="left">4</td><td align="left">a/8</td><td align="left">length of remaining data in 8-byte units</td></tr><tr><td align="left">a</td><td align="left">LISTofPROPERTY</td><td align="left">properties</td></tr></tbody></table><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /><col align="left" class="c3" /></colgroup><thead><tr><th colspan="3" align="left"><span class="bold"><strong><code class="function">DeleteProperties</code></strong></span></th></tr></thead><tbody><tr><td align="left">1</td><td align="left">?</td><td align="left">XSMP</td></tr><tr><td align="left">1</td><td align="left">13</td><td align="left">opcode</td></tr><tr><td align="left">2</td><td align="left"> </td><td align="left">unused</td></tr><tr><td align="left">4</td><td align="left">a/8</td><td align="left">length of remaining data in 8-byte units</td></tr><tr><td align="left">a</td><td align="left">LISTofPROPERTY</td><td align="left">properties</td></tr></tbody></table><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /><col align="left" class="c3" /></colgroup><thead><tr><th colspan="3" align="left"><span class="bold"><strong><code class="function">GetProperties</code></strong></span></th></tr></thead><tbody><tr><td align="left">1</td><td align="left">?</td><td align="left">XSMP</td></tr><tr><td align="left">1</td><td align="left">14</td><td align="left">opcode</td></tr><tr><td align="left">2</td><td align="left"> </td><td align="left">unused</td></tr><tr><td align="left">4</td><td align="left">0</td><td align="left">length of remaining data in 8-byte units</td></tr></tbody></table><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /><col align="left" class="c3" /></colgroup><thead><tr><th colspan="3" align="left"><span class="bold"><strong><code class="function">GetPropertiesReply</code></strong></span></th></tr></thead><tbody><tr><td align="left">1</td><td align="left">?</td><td align="left">XSMP</td></tr><tr><td align="left">1</td><td align="left">15</td><td align="left">opcode</td></tr><tr><td align="left">2</td><td align="left"> </td><td align="left">unused</td></tr><tr><td align="left">4</td><td align="left">a/8</td><td align="left">length of remaining data in 8-byte units</td></tr><tr><td align="left">a</td><td align="left">LISTofPROPERTY</td><td align="left">properties</td></tr></tbody></table><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /><col align="left" class="c3" /></colgroup><thead><tr><th colspan="3" align="left"><span class="bold"><strong><code class="function">SaveYourselfPhase2Request</code></strong></span></th></tr></thead><tbody><tr><td align="left">1</td><td align="left">?</td><td align="left">XSMP</td></tr><tr><td align="left">1</td><td align="left">16</td><td align="left">opcode</td></tr><tr><td align="left">2</td><td align="left"> </td><td align="left">unused</td></tr><tr><td align="left">4</td><td align="left">0</td><td align="left">length of remaining data in 8-byte units</td></tr></tbody></table><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /><col align="left" class="c3" /></colgroup><thead><tr><th colspan="3" align="left"><span class="bold"><strong><code class="function">SaveYourselfPhase2</code></strong></span></th></tr></thead><tbody><tr><td align="left">1</td><td align="left">?</td><td align="left">XSMP</td></tr><tr><td align="left">1</td><td align="left">17</td><td align="left">opcode</td></tr><tr><td align="left">2</td><td align="left"> </td><td align="left">unused</td></tr><tr><td align="left">4</td><td align="left">0</td><td align="left">length of remaining data in 8-byte units</td></tr></tbody></table><table border="0"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /><col align="left" class="c3" /></colgroup><thead><tr><th colspan="3" align="left"><span class="bold"><strong><code class="function">SaveComplete</code></strong></span></th></tr></thead><tbody><tr><td align="left">1</td><td align="left">?</td><td align="left">XSMP</td></tr><tr><td align="left">1</td><td align="left">18</td><td align="left">opcode</td></tr><tr><td align="left">2</td><td align="left"> </td><td align="left">unused</td></tr><tr><td align="left">4</td><td align="left">0</td><td align="left">length of remaining data in 8-byte units</td></tr></tbody></table></div></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="Predefined_Properties"></a>Chapter 11. Predefined Properties</h1></div></div></div><p>
+All property values are stored in a LISTofARRAY8.  If the type of the
+property is CARD8, the value is stored as a LISTofARRAY8 with one
+ARRAY8 that is one byte long.  That single byte contains the CARD8.
+If the type of the property is ARRAY8, the value is stored in the
+first element of a single element LISTofARRAY8.
+  </p><p>
+The required properties must be set each time a client connects with
+the SM.  The properties must be set after the client
+sends <code class="function">RegisterClient</code> and before the client
+sends <code class="function">SaveYourselfDone</code> Otherwise, the behavior of
+the session manager is not defined.
+  </p><p>
+Clients may set, get, and delete nonstandard properties.  The lifetime
+of stored properties does not extend into subsequent sessions.
+  </p><div class="informaltable"><table border="1"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /><col align="left" class="c3" /><col align="left" class="c4" /></colgroup><thead><tr><th align="left">Name</th><th align="left">Type</th><th align="left">Posix Type</th><th align="left">Required?</th></tr></thead><tbody><tr><td align="left">CloneCommand</td><td align="left">OS-specific</td><td align="left">LISTofARRAY8</td><td align="left">Yes</td></tr><tr><td align="left">CurrentDirectory</td><td align="left">OS-specific</td><td align="left">ARRAY8</td><td align="left">No</td></tr><tr><td align="left">DiscardCommand</td><td align="left">OS-specific</td><td align="left">LISTofARRAY8</td><td align="left">No*</td></tr><tr><td align="left">Environment</td><td align="left">OS-specific</td><td align="left">LISTofARRAY8</td><td align="left">No</td></tr><tr><td align="left">ProcessID</td><td align="left">OS-specific</td><td align="left">ARRAY8</td><td align="left">No</td></tr><tr><td align="left">Program</td><td align="left">OS-specific</td><td align="left">ARRAY8</td><td align="left">Yes</td></tr><tr><td align="left">RestartCommand</td><td align="left">OS-specific</td><td align="left">LISTofARRAY8</td><td align="left">Yes</td></tr><tr><td align="left">ResignCommand</td><td align="left">OS-specific</td><td align="left">LISTofARRAY8</td><td align="left">No</td></tr><tr><td align="left">RestartStyleHint</td><td align="left">CARD8</td><td align="left">CARD8</td><td align="left">No</td></tr><tr><td align="left">ShutdownCommand</td><td align="left">OS-specific</td><td align="left">LISTofARRAY8</td><td align="left">No</td></tr><tr><td align="left">UserID</td><td align="left">ARRAY8</td><td align="left">ARRAY8</td><td align="left">Yes</td></tr></tbody></table></div><p>
+* Required if any state is stored in an external repository (e.g., state file).
+  </p><div class="variablelist"><table border="0" class="variablelist"><colgroup><col align="left" valign="top" /><col /></colgroup><tbody><tr><td><p><span class="term">CloneCommand</span></p></td><td><p>
+This is like the <code class="function">RestartCommand</code> except it
+restarts a copy of the application.  The only difference is that the
+application doesn't supply its client id at register time.  On <acronym class="acronym">POSIX</acronym>
+systems the type should be a LISTofARRAY8.
+      </p></td></tr><tr><td><p><span class="term">CurrentDirectory</span></p></td><td><p>
+On <acronym class="acronym">POSIX</acronym>-based systems specifies the value of the current directory that
+needs to be set up prior to starting the program and should be of type ARRAY8.
+      </p></td></tr><tr><td><p><span class="term">DiscardCommand</span></p></td><td><p>
+The discard command contains a command that when delivered to the host
+that the client is running on (determined from the connection), will
+cause it to discard any information about the current state.  If this
+command is not specified, the SM will assume that all of the client's
+state is encoded in the <code class="function">Restart­Command</code> On
+<acronym class="acronym">POSIX</acronym> systems the type should be LISTofARRAY8.
+      </p></td></tr><tr><td><p><span class="term">Environment</span></p></td><td><p>
+On <acronym class="acronym">POSIX</acronym> based systems, this will be of type LISTofARRAY8 where the
+ARRAY8s alternate between environment variable name and environment
+variable value.
+      </p></td></tr><tr><td><p><span class="term">ProcessID</span></p></td><td><p>
+This specifies an OS-specific identifier for the process.  On <acronym class="acronym">POSIX</acronym>
+systems this should of type ARRAY8 and contain the return value of
+getpid() turned into a Latin-1 (decimal) string.
+      </p></td></tr><tr><td><p><span class="term">Program</span></p></td><td><p>
+The name of the program that is running.  On <acronym class="acronym">POSIX</acronym> systems this should
+be the first parameter passed to execve and should be of type ARRAY8.
+      </p></td></tr><tr><td><p><span class="term">RestartCommand</span></p></td><td><p>
+The restart command contains a command that when delivered to the host
+that the client is running on (determined from the connection), will
+cause the client to restart in its current state.  On <acronym class="acronym">POSIX</acronym>-based
+systems this is of type LISTofARRAY8 and each of the elements in the
+array represents an element in the argv array.  This restart command
+should ensure that the client restarts with the specified
+client-ID.
+      </p></td></tr><tr><td><p><span class="term">ResignCommand</span></p></td><td><p>
+A client that sets the <code class="function">RestartStyleHint</code>
+to <code class="function">RestartAnyway</code> uses this property to specify a
+command that undoes the effect of the client and removes any saved
+state.
+	</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Example</h3><p>
+A user runs xmodmap.  xmodmap registers with the SM,
+sets <code class="function">Restart­Style­Hint</code>
+to <code class="function">Restart­Anyway</code> and then terminates.  In
+order to allow the SM (at the user's request) to undo this, xmodmap
+would register a <code class="function">Resign­Command</code> that undoes
+the effects of the xmodmap.
+	</p></div></td></tr><tr><td><p><span class="term">RestartStyleHint</span></p></td><td><p>
+If the RestartStyleHint property is present, it will contain the style
+of restarting the client prefers.  If this flag isn't
+specified, <code class="function">RestartIfRunning</code> is assumed.  The
+possible values are as follows:
+	</p><div class="informaltable"><table border="1"><colgroup><col align="left" class="c1" /><col align="left" class="c2" /></colgroup><thead><tr><th align="left">Name</th><th align="left">Value</th></tr></thead><tbody><tr><td align="left">RestartIfRunning</td><td align="left">0</td></tr><tr><td align="left">RestartAnyway</td><td align="left">1</td></tr><tr><td align="left">RestartImmediately</td><td align="left">2</td></tr><tr><td align="left">RestartNever</td><td align="left">3</td></tr></tbody></table></div><p>
+The <code class="function">RestartIfRunning</code> style is used in the usual
+case.  The client should be restarted in the next session if it is
+connected to the session manager at the end of the current session.
+	</p><p>
+The <code class="function">RestartAnyway</code> style is used to tell the SM
+that the application should be restarted in the next session even if
+it exits before the current session is terminated.  It should be noted
+that this is only a hint and the SM will follow the policies specified
+by its users in determining what applications to restart.
+	</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Rationale</h3><p>
+This can be specified by a client which supports (as MS-Windows
+clients do) a means for the user to indicate while exiting that
+restarting is desired.  It can also be used for clients that spawn
+other clients and then go away, but which want to be restarted.
+	</p></div><p>
+A client that uses <code class="function">RestartAnyway</code> should also set
+the <code class="function">ResignCommand</code> and <code class="function">ShutdownCommand</code>
+properties to commands that undo the state of the client after it exits.
+	</p><p>
+The <code class="function">RestartImmediately</code> style is
+like <code class="function">RestartAnyway</code> but in addition, the client is
+meant to run continuously.  If the client exits, the SM should try to
+restart it in the current session.
+	</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Advice to Implementors</h3><p>
+It would be wise to sanity-check the frequency which
+which <code class="function">RestartImmediately</code> clients are restarted,
+to avoid a sick client being restarted continuously.
+	</p></div><p>
+The <code class="function">RestartNever</code> style specifies that the client
+does not wish to be restarted in the next session.
+	</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Advice to Implementors</h3><p>
+This should be used rarely, if at all.  It will cause the client to be
+silently left out of sessions when they are restarted and will
+probably be confusing to users.
+	</p></div></td></tr><tr><td><p><span class="term">ShutdownCommand</span></p></td><td><p>
+This command is executed at shutdown time to clean up after a client
+that is no longer running but retained its state by
+setting <code class="function">RestartStyleHint</code>
+to <code class="function">RestartAnyway</code> The command must not remove any
+saved state as the client is still part of the session.
+	</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Example</h3><p>
+A client is run at start up time that turns on a camera.  This client
+then exits.  At session shutdown, the user wants the camera turned
+off.  This client would set the <code class="function">Restart­Style­Hint</code>
+to <code class="function">Restart­Anyway</code> and would register a
+<code class="function">Shutdown­Command</code> that would turn off the camera.
+	</p></div></td></tr><tr><td><p><span class="term">UserID</span></p></td><td><p>
+Specifies the user's ID.  On <acronym class="acronym">POSIX</acronym>-based systems
+this will contain the the user's name (the <em class="structfield"><code>pw_name</code></em>
+field of <span class="structname">struct passwd</span>).
+    </p></td></tr></tbody></table></div></div></div></body></html>

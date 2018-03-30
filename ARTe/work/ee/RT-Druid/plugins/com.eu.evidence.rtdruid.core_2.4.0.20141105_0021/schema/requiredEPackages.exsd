@@ -1,0 +1,190 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="com.eu.evidence.rtdruid.core" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="com.eu.evidence.rtdruid.core" id="rtdruidEPackages" name="RT-Druid Extention to collect EPackage"/>
+      </appInfo>
+      <documentation>
+         
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+         <documentation>
+            This extention is uset to add one or more EMF Adapter Factories to Required Factories List.
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence>
+            <choice minOccurs="1" maxOccurs="unbounded">
+               <element ref="loader"/>
+               <element ref="ecoreFile"/>
+            </choice>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="loader">
+      <annotation>
+         <documentation>
+            Contains the name of a class that builds the EPackage.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn=":com.eu.evidence.rtdruid.vartree.IEPackageProvider"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="pkg_id" type="string">
+            <annotation>
+               <documentation>
+                  If set, this value can be used to &quot;identify&quot; and retrive this epackage contribution
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="auto_contribute" type="boolean" use="required">
+            <annotation>
+               <documentation>
+                  This attribute is used to automatically include or not this contribute to the global epackage.
+It is a required attribute, but if missing it is considered to be false.
+
+Regardless to the value of this attribute, the contribute can be found at the EPackageFactory class.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="ecoreFile">
+      <annotation>
+         <documentation>
+            Contains the path of an ECore EPackage file inside a plugin
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="file" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The file position in the plugin
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="resource"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="pkg_id" type="string">
+            <annotation>
+               <documentation>
+                  If set, this value can be used to &quot;identify&quot; and retrive this epackage contribution
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="auto_contribute" type="boolean" use="required">
+            <annotation>
+               <documentation>
+                  This attribute is used to automatically include or not this contribute to the global epackage.
+It is a required attribute, but if missing it is considered to be false.
+
+Regardless to the value of this attribute, the contribute can be found at the EPackageFactory class.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         RT-Druid 2.0
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         [Enter extension point usage example here.]
+      </documentation>
+   </annotation>
+
+
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+         &lt;h1&gt;About RT-Druid&lt;/h1&gt;
+&lt;br&gt;
+30th June, 2004&lt;br&gt;
+&lt;h3&gt;More informations about RT-Druid&lt;/h3&gt;
+The latest informations about RT-Druid can be found on the &lt;a
+ href=&quot;http://www.evidence.eu.com&quot;&gt;Evidence Srl website&lt;/a&gt;.&lt;br&gt;
+&lt;br&gt;
+&lt;h3&gt;License&lt;/h3&gt;
+IMPORTANT-READ CAREFULLY: This License is a legal agreement between you
+(either an individual or a single entity) and Evidence Srl for the
+RT-Druid software that accompanies this license, which includes
+computer software and may include associated media, printed materials,
+&quot;online&quot; or electronic documentation (&quot;Software&quot;). &lt;span lang=&quot;EN-GB&quot;
+ style=&quot;&quot;&gt;Unless you
+have a different License Agreement signed by Evidence Srl, &lt;/span&gt;you&amp;nbsp;
+agree to be bound by the terms of this License by installing, copying,
+or otherwise using using the software. IF YOU DO NOT AGREE, DO NOT
+INSTALL, COPY, OR USE
+THE SOFTWARE.
+&lt;p&gt;1. Grant of License. Evidence
+Srl grants you the following rights provided that you comply with all
+terms and conditions of this License.&lt;/p&gt;
+&lt;p&gt;2. You may install, use, access, display and run one copy of the
+Software on a single computer.&lt;/p&gt;
+&lt;p&gt;3. Evidence Srl reserves all rights not expressly granted to you in
+this license. The Software is protected by copyright and other
+intellectual property laws and treaties. Evidence Srl own the title,
+copyright, and other intellectual property rights in the Software. The
+Software is licensed, not sold.&lt;/p&gt;
+&lt;p&gt;4. Limitations on reverse engineering, decompilation and
+disassembly. You may not reverse engineer, decompile, or disassemble
+the Software, except and only to the extent that such activity is
+expressly permitted by applicable law notwithstanding this limitation.&lt;/p&gt;
+&lt;p&gt;5. You may not sell, rent, lease, lend or provide commercial hosting
+services with the Software.&lt;/p&gt;
+      </documentation>
+   </annotation>
+
+</schema>

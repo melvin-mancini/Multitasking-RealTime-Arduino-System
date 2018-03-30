@@ -1,0 +1,2456 @@
+2013-06-28  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* include/tchar.h (_tcsclen): Add missing define.
+
+2013-06-27  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* include/wchar.h: Resolve issue to define all components of
+	_STAT_DEFINED
+	* Makefile.in (mingw.org-wsl): Change string to mingw_org_wsl for
+	package name consistency and to be repository name nescient.
+	* README (mingw.org-wsl): Ditto
+
+2013-06-25  Keith Marshall  <keithmarshall@users.sourceforge.net>
+
+	Correct ill advised use of non-standard shell syntax.
+
+	* Makefile.in (lib%.a): Remove bash/ksh/csh style logic construct;
+	replace it using standard Bourne shell "test" command syntax.
+
+2013-06-21  Mark Brand  <mabrand@mabrand.nl>
+
+	* include/time.h: Correct typecasts throughout.
+
+2013-06-18  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* include/io.h (_findfirst*, _findnext*): Remove the __NO_INLINE__
+	filter and change the signature to __CRT_MAYBE_INLINE.
+	* include/wchar.h (time_t): Remove definition.
+	* include/sys/types.h: Add comment for time_t indicating other files
+	where time_t is defined.
+
+2013-06-17  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* include/_mingw.h (__CRT_MAYBE_INLINE): When __NO_INLINE__ defined we
+	need to make it _CRTALIAS to avoid auto export issues.
+	* include/io.h (_wfindfirst*, _wfindnext*): Remove the __NO_INLINE__
+	filter and use __CRT_MAYBE_INLINE definitions.
+	* include/wchar.h (_wfindfirst*, _wfindnext*): Correct the declarations.
+	(_wfindfirst32i64, _wfindfirst64i32, _wfindnext32i64, _wfindnext64i32):
+	Define as __CRT_MAYBE_INLINE.
+
+2013-06-16  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* NEWS: Add text for MSVCRT_VERSION and for the _CRTALIAS 32bit time_t
+	definitions.
+	* include/_mingw.h (GCC system_header): Add a __CRT_TESTING__ filter.
+	* include/string.h (GCC system_header): Ditto.
+	* include/sys/stat.h (GCC system_header): Ditto.
+	(string.h): Move the include toward the top of the file.
+	(extern "C" {): Move above the filters so that it is not incorrectly
+	conditional.
+	Correct some comments and move the opening brace to the function
+	definition line throughout.
+	* include/sys/utime.h (utime): Move declaration to after the declaration
+	of _utime64().  Create a _CRTALIAS when _USE_32BIT_TIME_T is undefined.
+	Add datatype specifiers within the _CRTALIAS definitions throughout.
+	* include/wchar.h (GCC system_header): Add a __CRT_TESTING__ filter.
+	(FILENAME_MAX): Define macro if not already defined.
+	Correct comments throughout.
+	Correct #if...#endif misaligned pair.
+	(wcsicmp): Use _CRTALIAS instead of __CRT_INLINE since it is a one line
+	function definition.
+	(*wfinddata*): Use FILENAME_MAX throughout.
+	(_wstat32): Make a _CRTALIAS rather than a _CRTIMP.
+	(_wstat64i32): Use __CRT_MAYBE_INLINE instead of __CRT_INLINE.
+	(_wstat32i64): Define.
+	(_wstat, _wstati64): Remove the MSVCRT_VERSION >= 800 filter.
+
+2013-06-07  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* include/_mingw.h (_CRTALIAS): Add comments explaining its purpose.
+	(__CRT_MAYBE_INLINE): New macro that may be defined as __CRT_INLINE or
+	empty depending on __NO_INLINE__.
+	* include/stat.h (_fstat64i32(), _fstat32i64(), _stat64i32(),
+	_stat32i64(), _wstat64i32(), _wstat32i64()): Use __CRT_MAYBE_INLINE
+	instead of guarding with __NO_INLINE__ since the functions need to be
+	always created.
+	* include/wchar.h (_utimbuf, _utimbuf32, _utimbuf64, _wutime(),
+	_wutime32(), _wutime64()): MSDN declares these can be declared/defined
+	by including wchar.h.
+	* include/utime.h: Care for _USE_32BIT_TIME_T in same fashion as time.h.
+
+
+2013-06-07  Jan Nijtmans <nijtmans@users.sourceforge.net>
+
+	* include/time.h: Correct typos. Add MSVCRT_VERSION >= 800 guard for
+	_CRTALIAS of _wctime.
+
+2013-06-05  Keith Marshall  <keithmarshall@users.sourceforge.net>
+
+	Provide more robust inverse hyperbolic sine functions.
+
+	* src/libcrt/math/asinh.c: Rewritten; it now provides a generic
+	implementation for asinh(), asinhf(), and asinhl() functions; thus...
+	* src/libcrt/math/asinhf.c src/libcrt/math/asinhl.c: ...are obsolete;
+	delete them.
+
+	* Makefile.in (math_SOURCES): Remove references for asinh[fl].c
+	(libmingwex_a_OBJECTS): Add explicit references to create associated
+	object files, from the common generic source, together with build
+	rules to compile them.
+
+2013-06-05  Mark  <mabrand@users.sourceforge.net>
+
+	* include/shlobj.h (SHGetFolderPath): Correct typo for UNICODE define.
+
+2013-06-05  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* Makefile.in (libshell32.a): We needed to add src/libshell32/shell32.o
+	object to the library.
+	(lib/libshell32/shell32.o): Added a target to create this file.
+
+2013-06-04  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* include/_mingw.h (MSVCRT_VERSION): Determine a value based on the
+	_WIN32_WINNT value. Add a TODO for check to see if the older
+	__MSVCRT_VERSION__ macro is defined and use it as the value for
+	MSVCRT_VERSION.  Give an error if both MSVCRT_VERSION and
+	__MSVCRT_VERSION__ are defined and the values do not match.
+	Remove warnings for value when _USE_32BIT_TIME_T is defined.
+	* include/io.h (_wfindfirst32, _wfindfirst64): Correct declaration of
+	parameter data type. Create _CRTALIAS rather than declaring _CRTIMP.
+	(_findfirst32(), _findnext32()): Create _CRTALIAS rather than declaring
+	a _CRTIMP.
+	(_findfirst64i32, _findfirst32i64, _findnext64i32, _findnext32i64):
+	Remove the _CRTIMP from the declaration, these become inline functions.
+	Also guard for __NO_INLINE__ and make appropriate defined alternatives.
+	(_wfindfirst64i32, _wfindfirst32i64, _wfindnext64i32, _wfindnext32i64):
+	Ditto.
+	* include/sdkddkver.h (_WIN32_WINNT_WIN8): Add definition.
+	* include/sys/stat.h (_stat32, _fstat32, _wstat32): Define as a
+	_CRTALIAS.
+	(_fstat32i64, _stat32i64, _wstat32i64): Add as __CRT_INLINE functions
+	and make appropriate alternative macros for __NO_INLINE__ use.
+	* include/sys/timeb.h (_time32): Create _CRTALIAS when MSVCRT_VERSION
+	< 800.
+	* include/sys/types.h (MSVCRT_VERSION): Remove guard for >= 800 with
+	_USE_32BIT_TIME_T.
+	* include/time.h (_time32, _difftime32, _mktime32, _ctime32, _gmtime32,
+	_localtime32, _wctime32): Create _CRTALIAS when MSVCRT_VERSION < 800.
+	(_difftime64, _mkgtime64): Guard declaration for MSVCRT_VERSION > 800.
+	These functions do not exist in MSVCRT.DLL before Vista.
+	* include/wchar.h (_wctime32): Create _CRTALIAS when MSVCRT_VERSION
+	< 800.
+	(_wfindfirst32, _wfindnext32): Create _CRTALIAS.
+	* include/objdump.h: Move include of rpc.h and rpcndr.h due to
+	dependencies.
+	* include/rpc.h: Move include of windows.h due to dependencies.
+
+2013-05-28  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* include/time.h: Correct use of MSVCRT_VERSION.
+	Correct mistyped __MINGW_NOTHROW macro.
+
+2013-05-27  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* include/sys/types.h (_USE_32BIT_TIME_T): Rework the definitions
+	controlled by _USE_32BIT_TIME_T in light of MSVCRT_VERSION being
+	different with differing OS versions.
+	* include/time.h (_USE_32BIT_TIME_T): Ditto.
+	* include/sys/stat.h (_USE_32BIT_TIME_T): Ditto.
+	* include/wchar.h (_USE_32BIT_TIME_T): Ditto.
+	* include/_mingw.h (_USE_32BIT_TIME_T): Issue a warning when
+	_USE_32BIT_TIME_T is enabled and MSVCRT_VERSION value does not
+	support it.
+	* lib/lib32/msvcrt.def.in: Always define all definitions in light of
+	MSVCRT.DLL
+	being different versions on differing OS.
+	* TODO: Add a note about needing a warning when a function is being
+	used but not defined within the MSVCRT_VERSION value.
+
+2013-05-21  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* Makefile.in (clean-dist, clean-dist-mingwrt, clean-dist-w32api,
+	clean-dist-wsl): New targets.
+
+2013-05-15  Niels Kristian Bech Jensen  <nkbj@users.sourceforge.net>
+
+	* include/control.h: Correct inclusion of _mingw.h.  Issue: #1956.
+	* include/sys/stat.h: Include string.h as appropriate for memset
+	declaration.  Issue: #1956.
+	* include/wchar.h: Ditto.
+
+2013-05-15  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* .gitignore: Add nbproject folder.
+	* NEWS: Add note about the globbing change.
+	* include/_mingw.h: Correct check for GCC version >= 3.4.5. Issue: #1958.
+
+2013-05-11  Keith Marshall  <keithmarshall@users.sourceforge.net>
+
+	Avoid a potential SIGSEGV crash on CRT start-up.
+
+	* src/libcrt/misc/glob.c (glob_signed): Check only for pointer
+	aliasing, when validating a glob_t signature; checking signature
+	content via an uninitialised pointer may segfault.
+
+	* src/libcrt/crt/init.c (__mingw_setargv): Call __mingw_glob()
+	directly, then set GLOB_APPEND for later calls; do not delegate to...
+	(do_glob): ...this; it uselessly attempted to set GLOB_APPEND on the
+	basis of an uninitialised counter.  Function now unused; delete it.
+
+2013-05-11  Keith Marshall  <keithmarshall@users.sourceforge.net>
+
+	Install non-executable files with proper attributes.
+
+	* Makefile.in (INSTALL_DATA): New macro; define it per AC_SUBST;
+	substitute it at point of use, as appropriate, in place of...
+	(INSTALL): ...this.
+
+2013-05-07  Keith Marshall  <keithmarshall@users.sourceforge.net>
+
+	Update build-aux submodule reference for SF host migration.
+
+	* .gitmodules (url): Relocate to git://git.code.sourceforge.net/p/
+
+2013-04-10  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* Makefile.in: Add installation and delivery of library object files.
+
+2013-04-09  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* Makefile.in: Adjust distributed package names when RELEASE_STATUS is
+	not equal "dist".
+
+2013-03-13  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* LICENSE: Update copyright notice adding year 2013.
+	* README: Update copyright notice adding year 2013.
+	Add text to explain where release notes can be found.
+	* Makefile.in: Update copyright notice adding year 2013.
+	(mingwrtdocdir): New variable used in dist-mingwrt target.
+	(w32apidocdir): New variable used in dist-w32api target.
+	(doc_DOCUMENTS): Add ChangeLog, NEWS, TODO, and NOTES.
+	(install-mingwrt-dirs, install-w32api-dirs): Correct creation of doc
+	directory using mingwrtdocdir or w32apidocdir respectfully.
+	(install-mingwrt, install-w32api): Correct copy of historical
+	documentation.
+	(dist-mingwrt*, dist-w32api*): For RELEASE_STATUS != prod modify the
+	package name to include the RELEASE_STATUS to satisfy the rules of
+	mingw-get.
+
+2013-02-27  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* Makefile.in: Add variables for RELEASE_STATUS and RELEASE_REFERENCE.
+	Add conditionals for RELEASE_STATUS not equal "prod" for dist-mingwrt,
+	dist-w32api and dist-wsl targets.
+	* configure.ac: Add declaration of RELEASE_STATUS and RELEASE_REFERENCE
+	variables.
+
+2013-02-25  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* NEWS: Add and adjust release notes for 4.0.
+	* tests/Makefile.in: Correct order of libraries in LIBS.
+	* include/io.h: Correct declarations for _findfirst/_findnext when
+	not _HAVE_32BIT_TIME_T.
+
+2013-02-24  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* lib/lib32/ddk/ntoskrnl.def (KeQueryActiveProcessorCount): Correct
+	typo.
+	(KeQueryActiveProcessors): Add import.
+	* NEWS: Add and adjust release notes for 4.0.
+
+2013-02-23  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* README: Add references for reporting bugs and submitting patches.
+	Correct the @FILENAME@ cut/paste issue.
+	* NEWS: Add and adjust release notes for 4.0.
+
+2013-02-23  Johann Hanne  <jonnyh33@users.sourceforge.net>
+
+	Add missing UUID Interface Definitions.
+
+	* src/libuuid/cguid-uuid.c (CLSID_StdGlobalInterfaceTable): Define.
+	* src/libuuid/objidl-uuid.c (IID_IGlobalInterfaceTable): Define.
+	(FMTID_DocSummaryInformation): Ditto.
+	(FMTID_SummaryInformation): Ditto.
+	(FMTID_UserDefinedProperties): Ditto.
+
+2013-02-22  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* include/float.h (_MCW_DN, _DN_SAVE, _DN_FLUSH): Add definitions.
+	* include/winuser.h (POINTTOPOINTS, POINTSTOPOINT): Adjust parameters
+	with type specificity.
+	* include/windef.h(MAKEWORD, MAKELONG, LOWORD, HIWORD, LOBYTE, HIBYTE):
+	Ditto. Also use DWORD_PTR instead of DWORD.
+	* include/winuser.h (POINTTOPOINTS): Remove the cast to POINTS struct.
+	* include/winreg.h (reason.h): Include.
+	* include/oaidl.h (ICreateTypeInfo, ICreateTypeInfo2): Declare
+	INTERFACE.
+	(ICreateTypeLib, ICreateTypeLib2): Ditto.
+
+2013-02-21  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* include/oleauto.h (RegisterTypeLibForUser, UnRegisterTypeLibForUser):
+	Add declarations.
+	* lib/lib32/oleaut32.def: Ditto.
+	* include/fcntl.h (O_RAW): Add definition within ndef NO_MOLDAMES path.
+
+2013-02-20  F. Mensik  <pepezdepa@users.sourceforge.net>
+
+	* include/winnls.h (LONG_PTR): Add _WIN64 typedef.
+
+2013-02-16  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* include/stdlib.h (_MAX_ENV): Define if not __STRICT_ANSI__.
+
+2013-01-08  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* config.h.in, configure.ac, README, include/*, src/*, tests/*:
+	Modify "@copy 2012" to read "Copyright 2012, 2013".
+
+2013-01-07  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* include/complex.h, include/ddk/*.h, include/dir.h,
+	include/directx/*.h, include/gdiplus/*.h, include/getopt.h,
+	include/imagehlp.h, include/ntldap.h, include/psapi.h,
+	include/scrnsave.h, include/search.h, include/snmp.h,
+	include/tlhelp32.h, include/wctype.h, include/winber.h,
+	include/windows.h, include/winldap.h, include/winsnmp.h,
+	include/winsock2.h, src/libcrt/crt/crtmt.c, src/libcrt/crt/crtst.c,
+	src/libcrt/crt/mthr.c, src/libcrt/crt/mthr_init.c,
+	src/libcrt/crt/pseudo-reloc.c, src/libcrt/crt/tlsmcrt.c,
+	src/libcrt/crt/tlsmthread.c, src/libcrt/crt/tlssup.c,
+	src/libcrt/crt/tlsthrd.c, src/liblargeint/largeint.c,
+	src/libscrnsave/scrnsave.c: Insert removed author attribution.
+
+2012-11-10  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	https://sourceforge.net/tracker/?func=detail&aid=3572971&group_id=2435&atid=102435
+
+	* include/wchar.h (_vscwprintf): Add declaration.
+
+2012-11-09  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	https://sourceforge.net/tracker/?func=detail&aid=3559134&group_id=2435&atid=102435
+
+	* include/wincrypt.h (CertEnumCRLsInStore): Add declaration.
+	* lib/lib32/crypt32.def (CertEnumCRLsInStore): Add import definition.
+
+2012-11-09  Keith Marshall  <keithmarshall@users.sourceforge.net>
+
+	* include/_mingw.h (_MINGW_H): Revert to consistent use of...
+	(__MINGW_H): ...this, as multiple inclusion guard macro.
+
+2012-10-31  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	https://sourceforge.net/tracker/?func=detail&aid=3408074&group_id=2435&atid=102435
+
+	* Makefile.in (mingwrt_lib_LIBRARIES): Remove incorrect variable
+	assignment.
+	* src/libcrt/search/tdelete.c: Remove incorrect assertion about vkey.
+
+2012-10-31  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	Correct DllMain() declarations and definitions.
+
+	* src/libcrt/crt/dllcrt1.c: Correct DllMain declaration.
+	* src/libcrt/crt/dllmain.c: Correct DllMain definition.
+	* src/libcrt/crt/mthr_init.c: Remove DllMain declaration.
+	Correct DllMain definition.
+
+2012-10-31  Keith Marshall  <keithmarshall@users.sourceforge.net>
+
+	Work around Microsoft breakage of command line globbing.
+
+	* include/glob.h: New file; it declares the API for a (mostly) POSIX
+	compatible path name globbing facility for use in MinGW applications.
+
+	* src/libcrt/misc/glob.c: New file; it implements the glob API...
+	(__mingw_glob, __mingw_globfree): ...through this pair of functions.
+
+	* Makefile.in (misc_SOURCES): Add glob.c
+	(mingwrt_lib_INCLUDES): Add glob.h
+
+	* include/_mingw.h (BEGIN_C_DECLS, END_C_DECLS): New macros;
+	they facilitate...
+	[__cplusplus]: ...demarcation of 'extern "C"' declarations for this.
+	(__CRT_GLOB_ESCAPE_CHAR__): New manifest constant; define it.
+	(__CRT_GLOB_USE_MSVCRT__, __CRT_GLOB_USE_MINGW__): Likewise; these act
+	as mutually exclusive feature selectors for assignment in CRTglob.c
+	(__CRT_GLOB_USE_SINGLE_QUOTE__, __CRT_GLOB_BRACKET_GROUPS__):
+	(__CRT_GLOB_CASE_SENSITIVE__): New bit-flag definitions; with...
+	[_CRT_glob & __CRT_GLOB_USE_MINGW__]: ...they enable additional
+	command line globbing capabilities.
+
+	* src/libcrt/crt/CRTglob.c (_CRT_glob): New default value; enable...
+	[_CRT_glob & __CRT_GLOB_USE_MINGW__]: ...this feature preference.
+
+	* src/libcrt/crt/init.c (_CRT_GLOB_OPT, ARGV_INLINE): New macros.
+	(ARGV_ESCAPE, ARGV_SQUOTE, ARGV_NOGROUP): New manifest constants;
+	define them as aliases for the new bit-flags from _mingw.h
+	(do_glob, backslash, unquote, __mingw_setargv): New static functions.
+	(_mingw32_init_mainargs): Use them to implement globbing, when...
+	[_CRT_glob & __CRT_GLOB_USE_MINGW__]: ...this is enabled.
+
+2012-10-30  Keith Marshall  <keithmarshall@users.sourceforge.net>
+
+	Use C compiler selected by running configure script.
+
+	* Makefile.in (CC): Missing AC_SUBST definition; add it.
+	Adjust spacing within adjacent defines, for improved readability.
+	(DLLTOOL_FLAGS): Avoid unnecessary use of := operator.
+
+2012-10-30  Keith Marshall  <keithmarshall@users.sourceforge.net>
+
+	Rationalise .gitignore entries.
+
+	* .gitignore (build): Ignore local build directory.
+	(config.status): Ignore this; it is a build-time generated file.
+	(aclocal.m4): Do not ignore this; as a user maintained file, which
+	requires manual editing, (we do not use automake), it must be tracked.
+	(missing depcomp install-sh): Do not ignore; these should be tracked
+	as build-aux component files, within the scope of the appropriate
+	submodule; they do not appear as normal package component files.
+
+2012-10-30  Keith Marshall  <keithmarshall@users.sourceforge.net>
+
+	Add configuration files for Mercurial support.
+
+	* .hgsub: New file; it represents the equivalent of .gitmodules
+	* .hgignore: New file; it is the equivalent of .gitignore
+
+2012-10-30  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	https://sourceforge.net/tracker/?func=detail&aid=3567092&group_id=2435&atid=102435
+
+	* include/winbase.h (DllMain): Add declaration.
+
+2012-10-25  Frank Fesevur  <ffes@users.sourceforge.net>
+
+	https://sourceforge.net/tracker/?func=detail&aid=3367548&group_id=2435&atid=102435
+
+	* lib/scnsave.c: Multi-monitor support for Win95 and NT4.
+
+2012-10-23  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	https://sourceforge.net/tracker/?func=detail&aid=3166132&group_id=2435&atid=102435
+
+	* include/search.h (tdelete, tfind, tsearch): Correct declaration.
+
+2012-10-23  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	https://sourceforge.net/tracker/?func=detail&aid=3437558&group_id=2435&atid=102435
+
+	* include/amvideo.h (VIDEOINFO): Correct structure coding.
+
+2012-10-23  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	https://sourceforge.net/tracker/?func=detail&aid=3437216&group_id=2435&atid=102435
+
+	* include/objfwd.h (LPENUMSTATPROPSTG): Properly type define with as a
+	pointer.
+
+2012-10-22  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	https://sourceforge.net/tracker/?func=detail&aid=2567153&group_id=2435&atid=102435
+
+	* include/sys/types.h (off_t): Type define regardless of _NO_OLDNAMES.
+
+2012-10-21  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	https://sourceforge.net/tracker/?func=detail&aid=2004630&group_id=2435&atid=102435
+
+	* include/ddk/ntddk.h (KeQueryActiveProcessors): New VISTA declaration.
+	* lib/lib32/ddk/ntoskrnl.def: New VISTA import.
+
+2012-10-19  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	https://sourceforge.net/tracker/?func=detail&aid=3554826&group_id=2435&atid=102435
+
+	* include/mswsock.h (WSAPoll): New declaration.
+	* lib/lib32/ws2_32.def (WSAPoll@12): New import.
+
+2012-10-17  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* tests/Makefile.in (libcrt-test-asinh): Add test.
+
+2012-10-17  Keith Marshall  <keithmarshall@users.sourceforge.net>
+
+	https://sourceforge.net/tracker/index.php?func=detail&aid=2117590&group_id=2435&atid=102435
+
+	* tests/libcrt/test-asinh.c: New file.
+
+2012-10-16  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* include/sdkddkver.h (WINNTVER): New macro.
+	(_WIN32_WINNT): Correct default value based on NTDDI_VERSION.
+	* include/stdio.h (_get_output_format): Base declaration or define on
+	VISTA.
+	(_set_output_format): Ditto.
+	(_get_printf_count_output): Ditto.
+	(_set_printf_count_output): Ditto.
+	* misc/src/libcrt/stdio/pformat.c: Remove needless code since we only
+	care about Windows.
+
+2012-10-08  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* Makefile.in (dist-mingwrt-src, dist-mingw32-src, dist-wsl-src):
+	Copy top_srcdir to a specific mingw.org-wsl directory.
+
+2012-09-27  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	_USE_32BIT_TIME_T resolution and prepare for release.
+
+	* include/io.h: Add _HAVE_32BIT_TIME_T to filters.
+	* include/sys/stat.h: Ditto.
+	* include/sys/timeb.h: Ditto.
+	* include/sys/types.h: Ditto.
+	* include/wchar.h: Ditto.
+	* include/time.h: Rework _HAVE_32BIT_TIME_T to always use 64bit time_t
+	when not defined.
+	* Makefile.in (extra_OBJECTS): Move to the front of the dependency list.
+	(%.o : %.s): Create rules.
+	* lib/lib32/msvcrt.def.in: Remove needless __MSVCRT_VERSION__ filter
+	and previous endif to continue the previous filter.
+	* NEWS: New file.
+
+2012-09-26  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	Make the changes work.
+
+	* include/sys/stat.h (stat, fstat): Change __NO_INLINE__ filter to
+	_NO_OLDNAMES.
+	(_fstat64i32, _stat64i32): Define to be equal to _fstat64 and _stat64
+	respectively when __NO_INLINE__ is defined.
+	Remove _CRTIMP from declaration due to inline function.
+	(_wstat64i32): Define an inline function or define to _wstat64 since it
+	is missing from libmsvcrt.a.
+	Remove _CRTIMP from declaration due to inline function.
+	(xstat): Remove.
+	* include/commctrl.h (tagTVINSERTSTRUCTA, tagTVINSERTSTRUCTW): Move to
+	after the definition of TVITEMXA and TVITEMXW.
+	(TVINSERTSTRUCT, TV_INSERTSTRUCT): Move UNICODE amp to after the
+	definition of TVINSERTSTRUCTA and TVINSERTSTRUCTW.
+	* include/winuser.h (INPUT_MOUSE, INPUT_KEYBOARD, INPUT_HARDWARE):
+	Move to always define based on assumption of lowest supported OS.
+	These appeared in NT version 4 service pack 3.
+	(tagMOUSEINPUT, tagKEYBDINPUT, tagHARDWAREINPUT, tagINPUT): Ditto.
+	(SendInput): Ditto.
+	* include/time.h (_HAVE_32BIT_TIME_T): New macro stating that
+	msvcrt.dll contains the 32bit time functions.
+	(_USE_32BIT_TIME_T): If set then determine if _HAVE_32BIT_TIME_T is set
+	and use the 32bit time functions else use the 64bit time functions and
+	force datatype conversions.
+	* include/wchar.h: Match stat components to sys/stat.h.
+	* include/string.h (strcasecmp, strncasecmp): When __NO_INLINE__ defined
+	map functions to _stricmp and _strincmp respectfully.
+	* Makefile.in (libws2_32.a): Add src/libws2_32/ws2_32.o symbols to the
+	library.  Override global target with a specific one.
+	(libscrnsavw_a_OBJECTS): Correct typo.
+	(extra_OBJECTS): New variable containing extra objects to build.
+	(libdinput_a_OBJECTS, libdmoguids_a_OBJECTS, libdxguid_a_OBJECTS,
+	libstrmiids_a_OBJECTS, libws2_32_a_OBJECTS): Correctly define targets.
+
+2012-09-21  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	Make the changes work.
+
+	* Makefile.in (ofmt_stub.o): Add stub to libmsvcrt.a through
+	libmsvcr71d.a.
+	(libmoldname*.a): Change the DLLNAME to msvcr*.dll as appropriate.
+	* include/sdkddkver.h (_WARN_DEFAULTS): New macro filter for warning
+	about defaults to enable building binutils.
+	* include/sys/stat.h: Rework structure definitions and declarations to
+	allow building binutils.
+	(_fstat64i32): New inline function.
+	(_stat64i32): Ditto.
+	* include/winsock.h (_WARN_WINSOCK_H): New macro filter for warning
+	about inclusion of winsock.h to allow building binutils.
+
+2012-09-20  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	Redo the filters based on assumptions discussed in mingw-dvlpr list.
+
+	* include/_mingw.h: Remove default setting of __MSVCRT_VERSION__ since
+	it is no longer used.
+	* include/commdlg.h (PRINTDLGEX): Move to below definition of struct.
+	(PrintDlgEx): Move to below function declaration.
+	* include/ctype.h: Add FIXME.
+	* include/lmcons.h: Correct filter syntax.
+	* include/ras.h: Move definitions and declarations based on dependencies
+	of definition order.
+	* include/rpcdce.h: Add comments and remove unintentional filter for
+	UNICODE.
+	* include/sys/stat.h: Remove __MSVCRT_VERSION__ filters.
+	* include/sys/timeb.h: Remove FIXME.
+	* include/sys/utime.h: Ditto.
+	* include/sys/types.h: Clean code for defining time_t and
+	_TIME_T_DEFINED.
+	* include/winbase.h: Correct comment from RC_DEFINED to RC_INVOKED.
+	Add RC_INVOKED guards for SetThreadExecutionState and OpenThread.
+	(EXECUTION_STATE): Move definition to the _WIN32_WINNT_WIN98 guard.
+	* tests/Makefile.in (CFLAGS): Add -DNTDDI_VERSION=0x06010000 to get rid
+	of warnings and for maximum coverage of tests.
+
+2012-09-19  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	Redo the filters based on assumptions discussed in mingw-dvlpr list.
+
+	* include/ddk/atm.h (_mingw.h): Include.
+	* include/ddk/batclass.h: Ditto.
+	* include/ddk/cfg.h: Ditto.
+	* include/ddk/cfgmgr32.h: Ditto.
+	* include/ddk/d4drvif.h: Ditto.
+	* include/ddk/d4iface.h: Ditto.
+	* include/ddk/ddkmapi.h: Ditto.
+	* include/ddk/hidclass.h: Ditto.
+	* include/ddk/hidpi.h: Ditto.
+	* include/ddk/hidsdi.h: Ditto.
+	* include/ddk/hidusage.h: Ditto.
+	* include/ddk/kbdmou.h: Ditto.
+	* include/ddk/mcd.h: Ditto.
+	* include/ddk/miniport.h: Ditto.
+	* include/ddk/minitape.h: Ditto.
+	* include/ddk/mountdev.h: Ditto.
+	* include/ddk/mountmgr.h: Ditto.
+	* include/ddk/ndis.h: Ditto.
+	* include/ddk/ndisguid.h: Ditto.
+	* include/ddk/ndistapi.h: Ditto.
+	* include/ddk/ndiswan.h: Ditto.
+	* include/ddk/netevent.h: Ditto.
+	* include/ddk/netpnp.h: Ditto.
+	* include/ddk/newdev.h: Ditto.
+	* include/ddk/ntapi.h: Ditto.
+	* include/ddk/ntdd8042.h: Ditto.
+	* include/ddk/ntddbeep.h: Ditto.
+	* include/ddk/ntddcdrm.h: Ditto.
+	* include/ddk/ntddcdvd.h: Ditto.
+	* include/ddk/ntddchgr.h: Ditto.
+	* include/ddk/ntdddisk.h: Ditto.
+	* include/ddk/ntddk.h: Ditto.
+	* include/ddk/ntddkbd.h: Ditto.
+	* include/ddk/ntddmou.h: Ditto.
+	* include/ddk/ntddndis.h: Ditto.
+	* include/ddk/ntddpar.h: Ditto.
+	* include/ddk/ntddpcm.h: Ditto.
+	* include/ddk/ntddscsi.h: Ditto.
+	* include/ddk/ntddser.h: Ditto.
+	* include/ddk/ntddstor.h: Ditto.
+	* include/ddk/ntddtape.h: Ditto.
+	* include/ddk/ntddtdi.h: Ditto.
+	* include/ddk/ntddvdeo.h: Ditto.
+	* include/ddk/ntddvol.h: Ditto.
+	* include/ddk/ntifs.h: Ditto.
+	* include/ddk/ntpoapi.h: Ditto.
+	* include/ddk/ntstatus.h: Ditto.
+	* include/ddk/parallel.h: Ditto.
+	* include/ddk/pfhook.h: Ditto.
+	* include/ddk/poclass.h: Ditto.
+	* include/ddk/scsi.h: Ditto.
+	* include/ddk/scsiscan.h: Ditto.
+	* include/ddk/scsiwmi.h: Ditto.
+	* include/ddk/smbus.h: Ditto.
+	* include/ddk/srb.h: Ditto.
+	* include/ddk/storport.h: Ditto.
+	* include/ddk/tdi.h: Ditto.
+	* include/ddk/tdiinfo.h: Ditto.
+	* include/ddk/tdikrnl.h: Ditto.
+	* include/ddk/tdistat.h: Ditto.
+	* include/ddk/tvout.h: Ditto.
+	* include/ddk/upssvc.h: Ditto.
+	* include/ddk/usb.h: Ditto.
+	* include/ddk/usb100.h: Ditto.
+	* include/ddk/usbcamdi.h: Ditto.
+	* include/ddk/usbdi.h: Ditto.
+	* include/ddk/usbioctl.h: Ditto.
+	* include/ddk/usbiodef.h: Ditto.
+	* include/ddk/usbscan.h: Ditto.
+	* include/ddk/usbuser.h: Ditto.
+	* include/ddk/video.h: Ditto.
+	* include/ddk/videoagp.h: Ditto.
+	* include/ddk/win2k.h: Ditto.
+	* include/ddk/winddi.h: Ditto.
+	* include/ddk/winddk.h: Ditto.
+	* include/ddk/winnt4.h: Ditto.
+	* include/ddk/winxp.h: Ditto.
+	* include/ddk/ws2san.h: Ditto.
+	* include/ddk/xfilter.h: Ditto.
+
+	* include/ddk/cfgmgr32.h (UNICODE): Use __AW() macro for mapping
+	non-specific symbols.
+	* include/ddk/newdev.h: Ditto.
+
+	* include/ddk/kbdmou.h (GCC system_header): Add pragma.
+
+	* TODO: Add entries.
+
+2012-09-19  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	Redo the filters based on assumptions discussed in mingw-dvlpr list.
+
+	* include/sys/fcntl.h (_mingw.h): Include.
+	* include/sys/file.h: Ditto.
+	* include/sys/param.h: Ditto.
+	* include/sys/time.h: Ditto.
+	* include/sys/unistd.h: Ditto.
+	* include/directx/d3d9.h: Ditto.
+	* include/directx/d3d9caps.h: Ditto.
+	* include/directx/d3d9types.h: Ditto.
+	* include/directx/dxerr8.h: Ditto.
+	* include/directx/dxerr9.h: Ditto.
+	* include/gdiplus/gdiplus.h: Ditto.
+	* include/gdiplus/gdiplusbase.h: Ditto.
+	* include/gdiplus/gdiplusbrush.h: Ditto.
+	* include/gdiplus/gdipluscolor.h: Ditto.
+	* include/gdiplus/gdipluscolormatrix.h: Ditto.
+	* include/gdiplus/gdipluseffects.h: Ditto.
+	* include/gdiplus/gdiplusenums.h: Ditto.
+	* include/gdiplus/gdiplusflat.h: Ditto.
+	* include/gdiplus/gdiplusgpstubs.h: Ditto.
+	* include/gdiplus/gdiplusgraphics.h: Ditto.
+	* include/gdiplus/gdiplusheaders.h: Ditto.
+	* include/gdiplus/gdiplusimageattributes.h: Ditto.
+	* include/gdiplus/gdiplusimagecodec.h: Ditto.
+	* include/gdiplus/gdiplusimaging.h: Ditto.
+	* include/gdiplus/gdiplusimpl.h: Ditto.
+	* include/gdiplus/gdiplusinit.h: Ditto.
+	* include/gdiplus/gdipluslinecaps.h: Ditto.
+	* include/gdiplus/gdiplusmatrix.h: Ditto.
+	* include/gdiplus/gdiplusmem.h: Ditto.
+	* include/gdiplus/gdiplusmetafile.h: Ditto.
+	* include/gdiplus/gdiplusmetaheader.h: Ditto.
+	* include/gdiplus/gdipluspath.h: Ditto.
+	* include/gdiplus/gdipluspen.h: Ditto.
+	* include/gdiplus/gdipluspixelformats.h: Ditto.
+	* include/gdiplus/gdiplusstringformat.h: Ditto.
+	* include/gdiplus/gdiplustypes.h: Ditto.
+
+	* include/sys/locking.h (_mingw.h): Remove comment and move to top of
+	file.
+	* include/sys/stat.h: Ditto.
+	* include/sys/timeb.h: Ditto.
+	* include/sys/types.h: Ditto.
+	* include/sys/utime.h: Ditto.
+
+	* include/sys/locking.h (GCC system_header): Add pragma.
+	* include/sys/param.h: Ditto.
+	* include/sys/stat.h: Ditto.
+	* include/sys/time.h: Ditto.
+	* include/sys/timeb.h: Ditto.
+	* include/sys/types.h: Ditto.
+	* include/sys/unistd.h: Ditto.
+	* include/sys/utime.h: Ditto.
+
+	* include/directx/dxerr8.h (UNICODE): Use __AW() macro for mapping
+	non-specific symbols.
+	* include/directx/dxerr9.h: Ditto.
+
+	* include/sys/timeb.h (__MSVCRT_VERSION__): Remove needless filter.
+	* include/sys/types.h: Ditto.
+	* include/sys/utime.h: Ditto.
+
+	* include/sys/unistd.h (io.h): Replace with include next unistd.h.
+
+	* TODO: Add entries.
+
+2012-09-18  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	Redo the filters based on assumptions discussed in mingw-dvlpr list.
+
+	* include/shobjidl.h (_mingw.h): Include.
+	* include/shlwapi.h: Ditto.
+	* include/snmp.h: Ditto.
+	* include/specstrings.h: Ditto.
+	* include/sql.h: Ditto.
+	* include/sqlext.h: Ditto.
+	* include/sqltypes.h: Ditto.
+	* include/sqlucode.h: Ditto.
+	* include/sspi.h: Ditto.
+	* include/stm.h: Ditto.
+	* include/strings.h: Ditto.
+	* include/strmif.h: Ditto.
+	* include/subauth.h: Ditto.
+	* include/svcguid.h: Ditto.
+	* include/tchar.h: Ditto.
+	* include/tlhelp32.h: Ditto.
+	* include/tmschema.h: Ditto.
+	* include/unistd.h: Ditto.
+	* include/unknwn.h: Ditto.
+	* include/userenv.h: Ditto.
+	* include/usp10.h: Ditto.
+	* include/utime.h: Ditto.
+	* include/uxtheme.h: Ditto.
+	* include/values.h: Ditto.
+	* include/vfw.h: Ditto.
+	* include/vidcap.h: Ditto.
+	* include/vmr9.h: Ditto.
+	* include/vptype.h: Ditto.
+	* include/wtypes.h: Ditto.
+	* include/winable.h: Ditto.
+	* include/winbase.h: Ditto.
+	* include/winber.h: Ditto.
+	* include/wincon.h: Ditto.
+	* include/wincrypt.h: Ditto.
+	* include/windef.h: Ditto.
+	* include/windns.h: Ditto.
+	* include/windows.h: Ditto.
+	* include/windowsx.h: Ditto.
+	* include/winerror.h: Ditto.
+	* include/wingdi.h: Ditto.
+	* include/wininet.h: Ditto.
+	* include/winioctl.h: Ditto.
+	* include/winldap.h: Ditto.
+	* include/winnetwk.h: Ditto.
+	* include/winnls.h: Ditto.
+	* include/winnt.h: Ditto.
+	* include/winperf.h: Ditto.
+	* include/winreg.h: Ditto.
+	* include/winresrc.h: Ditto.
+	* include/winsnmp.h: Ditto.
+	* include/winsock.h: Ditto.
+	* include/winsock2.h: Ditto.
+	* include/winspool.h: Ditto.
+	* include/winsvc.h: Ditto.
+	* include/winuser.h: Ditto.
+	* include/winver.h: Ditto.
+	* include/ws2spi.h: Ditto.
+	* include/ws2tcpip.h: Ditto.
+	* include/wsahelp.h: Ditto.
+	* include/wsipx.h: Ditto.
+	* include/wsnetbs.h: Ditto.
+	* include/wtsapi32.h: Ditto.
+	* include/xprtdefs.h: Ditto.
+	* include/zmouse.h: Ditto.
+
+	* include/signal.h (_mingw.h): Remove comment and move to top of file.
+	* include/stdint.h: Ditto.
+	* include/stdio.h: Ditto.
+	* include/stdlib.h: Ditto.
+	* include/string.h: Ditto.
+	* include/time.h: Ditto.
+	* include/wchar.h: Ditto.
+	* include/wctype.h: Ditto.
+
+	* include/shlwapi.h (UNICODE): Use __AW() macro for mapping
+	non-specific symbols.
+	* include/sspi.h: Ditto.
+	* include/userenv.h: Ditto.
+	* include/vfw.h: Ditto.
+	* include/winbase.h: Ditto.
+	* include/wincon.h: Ditto.
+	* include/wincrypt.h: Ditto.
+	* include/windns.h: Ditto.
+	* include/wingdi.h: Ditto.
+	* include/wininet.h: Ditto.
+	* include/winldap.h: Ditto.
+	* include/winnetwk.h: Ditto.
+	* include/winnls.h: Ditto.
+	* include/winreg.h: Ditto.
+	* include/winsock2.h: Ditto.
+	* include/winspool.h: Ditto.
+	* include/winsvc.h: Ditto.
+	* include/winuser.h: Ditto.
+	* include/winver.h: Ditto.
+	* include/ws2tcpip.h: Ditto.
+
+	* include/stm.h (_WIN32_WINNT): Use MACRO constant for comparison
+	instead of integer and move filters to the end of the file.
+	* include/userenv.h: Ditto.
+	* include/winbase.h: Ditto.
+	* include/wincon.h: Ditto.
+	* include/wincrypt.h: Ditto.
+	* include/wingdi.h: Ditto.
+	* include/winnls.h: Ditto.
+	* include/winnt.h: Ditto.
+	* include/winreg.h: Ditto.
+	* include/winspool.h: Ditto.
+	* include/winuser.h: Ditto.
+	* include/ws2tcpip.h: Ditto.
+
+	* include/shlwapi.h (_OBJC_NO_COM): Move filters to the end of the file.
+
+	* include/stdlib.h (_UWIN): Remove filter since we assume only GCC.
+	* include/string.h: Ditto.
+
+	* include/stdio.h (__GNUC__): Remove filter since we assume only GCC.
+
+	* include/stdio.h (__MSVCRT_VERSION__): Remove needless filter.
+	* include/stdlib.h: Ditto.
+	* include/string.h: Ditto.
+	* include/tchar.h: Ditto.
+	* include/time.h: Ditto.
+	* include/wchar.h: Ditto.
+	* include/wctype.h: Ditto.
+
+	* include/winbase.h (_WIN32_WINDOWS): Use _WIN32_WINNT instead.
+	* include/wingdi.h: Ditto.
+	* include/winuser.h: Ditto.
+
+	* include/wincrypt.h (WINVER): Use _WIN32_WINNT instead.
+	* include/wingdi.h: Ditto.
+	* include/winnls.h: Ditto.
+	* include/winreg.h: Ditto.
+	* include/winuser.h: Dittol
+
+	* include/_mingw.h (__TEST_SQL_NOUNICODEMAP): Use to determine if
+	UNICODE should be considered.
+	(_ODBCINST_H): Changed to use __TEST_SQL_NOUNICODEMAP.
+	* include/odbcinst.h (__TEST_SQL_NOUNICODEMAP): Define before including
+	_mingw.h.
+	* include/sqlucode.h: Ditto.
+
+	* include/time.h (time_t): Logic fix for filters.
+	* (__time64_t): Remove the __STRICT_ANSI__ guard.
+
+	* include/winable.h: This file is deprecated by Microsoft due to
+	winuser.h containing all of the functionality of winable.h; therefore
+	issue a warning and include winuser.h.
+
+	* include/windows.h (Win32_Winsock): Remove filter logic and warning.
+	(winsock2.h): Do not include as doing so is not Microsoft compatible.
+	To use winsock2.h you need to include it instead of windows.h.
+	(__USE_W32_SOCKETS): Add a comment that it is __CYGWIN__ specific.
+
+	* include/winsock.h (_WIN32_WINNT_WIN95): Give a warning if winsock.h
+	is included for Windows versions greater than WIN95.
+
+	* include/winuser.h (MB_SERVICE_NOTIFICATION): We assume WIN95 or
+	greater so define based on this assumption.
+	(MB_SERVICE_NOTIFICATION_NT3X): Ditto.
+	(SM_CMETRICS): Ditto.
+	(MOUSEEVENTF_WHEEL): Ditto.
+	(ENDSESSION_LOGOFF): Ditto.
+
+	* TODO: Add entries.
+
+2012-09-13  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	Redo the filters based on assumptions discussed in mingw-dvlpr list.
+
+	* include/rapi.h (_mingw.h): Include.
+	* include/raserror.h: Ditto.
+	* include/rassapi.h: Ditto.
+	* include/regstr.h: Ditto.
+	* include/richole.h: Ditto.
+	* include/rpc.h: Ditto.
+	* include/rpcndr.h: Ditto.
+	* include/rpcnsip.h: Ditto.
+	* include/rpcnterr.h: Ditto.
+	* include/rpcproxy.h: Ditto.
+	* include/schannel.h: Ditto.
+	* include/schnlsp.h: Ditto.
+	* include/scrnsave.h: Ditto.
+	* include/security.h: Ditto.
+	* include/servprov.h: Ditto.
+	* include/rasdlg.h: Ditto.
+	* include/richedit.h: Ditto.
+	* include/rpcdce2.h: Ditto.
+	* include/rpcdcep.h: Ditto.
+	* include/rpcnsi.h: Ditto.
+	* include/setupapi.h: Ditto.
+	* include/reason.h: Ditto.
+	* include/routprot.h: Ditto.
+	* include/shellapi.h: Ditto.
+	* include/shldisp.h: Ditto.
+	* include/rpcdce.h: Ditto.
+	* include/shlobj.h: Ditto.
+
+	* include/search.h (_mingw.h): Remove comment and move to top of file.
+	* include/setjmp.h: Ditto.
+	* include/share.h: Ditto.
+
+	* include/rasdlg.h (UNICODE): Use __AW() macro for mapping
+	non-specific symbols.
+	* include/richedit.h: Ditto.
+	* include/rpcdce2.h: Ditto.
+	* include/rpcdcep.h: Ditto.
+	* include/rpcnsi.h: Ditto.
+	* include/setupapi.h: Ditto.
+	* include/shellapi.h: Ditto.
+	* include/rpcdce.h: Ditto.
+	* include/rtutils.h: Ditto.
+	* include/sddl.h: Ditto.
+	* include/secext.h: Ditto.
+	* include/shlguid.h: Ditto.
+	* include/ras.h: Ditto.
+	* include/shlobj.h: Ditto.
+
+	* include/reason.h (_WIN32_WINNT): Use MACRO constant for comparison
+	instead of integer and move filters to the end of the file.
+	* include/routprot.h: Ditto.
+	* include/shellapi.h: Ditto.
+	* include/shldisp.h: Ditto.
+	* include/rpcdce.h: Ditto.
+	* include/rtutils.h: Ditto.
+	* include/sddl.h: Ditto.
+	* include/secext.h: Ditto.
+	* include/shlguid.h: Ditto.
+	* include/ras.h: Ditto.
+	* include/shlobj.h: Ditto.
+
+	* include/ras.h (WINVER): Use _WIN32_WINNT instead.
+
+	* include/shlobj.h (_WIN32_IE): Move filters to the end of the file.
+
+	* include/sdkddkver.h (_WIN32_WINNT_WIN4E): Add new symbol.
+	(_mingw.h): Document to not include the file since _mingw.h includes
+	this file.
+
+	* TODO: Add entries.
+
+	* NOTES: New file.
+
+2012-09-12  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	Redo the filters based on assumptions discussed in mingw-dvlpr list.
+
+	* include/mshtml.h (_mingw.h): Include.
+	* include/mswsock.h: Ditto.
+	* include/mb30.h: Ditto.
+	* include/ntdef.h: Ditto.
+	* include/ntdll.h: Ditto.
+	* include/ntldap.h: Ditto.
+	* include/ntsecapi.h: Ditto.
+	* include/ntsecpkg.h: Ditto.
+	* include/oaidl.h: Ditto.
+	* include/objbase.h: Ditto.
+	* include/objfwd.h: Ditto.
+	* include/objidl.h: Ditto.
+	* include/objsafe.h: Ditto.
+	* include/ocidlh.: Ditto.
+	* include/odbcinst.h: Ditto.
+	* include/ole.h: Ditto.
+	* include/ole2.h: Ditto.
+	* include/ole2ver.h: Ditto.
+	* include/oleauto.h: Ditto.
+	* include/olectl.h: Ditto.
+	* include/olectlid.h: Ditto.
+	* include/oleidl.h: Ditto.
+	* include/pbt.h: Ditto.
+	* include/powrprof.h: Ditto.
+	* include/qedit.h: Ditto.
+	* include/mq.h: Ditto.
+	* include/ntdsapi.h: Ditto.
+	* include/ntdsbcli.h: Ditto.
+	* include/objsel.h: Ditto.
+	* include/msacm.h: Ditto.
+	* include/nddeapi.h: Ditto.
+	* include/nspapi.h: Ditto.
+	* include/oleacc.h: Ditto.
+	* include/oledlg.h: Ditto.
+	* include/prsht.h: Ditto.
+
+	* include/process.h (_mingw.h): Remove comment and move to top of file.
+
+	* include/mq.h (_WIN32_WINNT): Use MACRO constant for comparison
+	instead of integer and move filters to the end of the file.
+	* include/ntdsapi.h: Ditto.
+	* include/ntdsbcli.h: Ditto.
+	* include/objsel.h: Ditto.
+
+	* include/msacm.h (UNICODE): Use __AW() macro for mapping
+	non-specific symbols.
+	* include/nddeapi.h: Ditto.
+	* include/nspapi.h: Ditto.
+	* include/oleacc.h: Ditto.
+	* include/oledlg.h: Ditto.
+	* include/prsht.h: Ditto.
+
+	* include/_mingw.h (__AW): Add filters for SQL_NOUNICODEMAP.
+
+	* TODO: Add items to the list as needed.
+
+2012-09-11  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	Redo the filters based on assumptions discussed in mingw-dvlpr list.
+
+	* include/lm.h (_mingw.h): Include.
+	* include/lmaccess.h: Ditto.
+	* include/lmalert.h: Ditto.
+	* include/lmapibuf.h: Ditto.
+	* include/lmat.h: Ditto.
+	* include/lmaudit.h: Ditto.
+	* include/lmbrowsr.h: Ditto.
+	* include/lmchdev.h: Ditto.
+	* include/lmconfig.h: Ditto.
+	* include/lmerr.h: Ditto.
+	* include/lmerrlog.h: Ditto.
+	* include/lmmsg.h: Ditto.
+	* include/lmremutl.h: Ditto.
+	* include/lmrepl.h: Ditto.
+	* include/lmserver.h: Ditto.
+	* include/lmshare.h: Ditto.
+	* include/lmsname.h: Ditto.
+	* include/lmstats.h: Ditto.
+	* include/lmsvc.h: Ditto.
+	* include/lmuse.h: Ditto.
+	* include/lmuseflg.h: Ditto.
+	* include/lmwksta.h: Ditto.
+	* include/mapi.h: Ditto.
+	* include/mbctype.h: Ditto.
+	* include/mbstring.h: Ditto.
+	* include/mciavi.h: Ditto.
+	* include/mcx.h: Ditto.
+	* include/mem.h: Ditto.
+	* include/memory.h: Ditto.
+	* include/mgmtapi.h: Ditto.
+	* include/mlang.h: Ditto.
+	* include/mmreg.h: Ditto.
+	* include/mpegtype.h: Ditto.
+	* include/mgm.h: Ditto.
+	* include/mprapi.h: Ditto.
+	* include/lzexpand.h: Ditto.
+	* include/mmsystem.h: Ditto.
+
+	* include/locale.h (_mingw.h): Remove comment and move to top of file.
+	* include/malloc.h: Ditto.
+	* include/math.h: Ditto.
+
+	* include/mgm.h (_WIN32_WINNT): Use MACRO constant for comparison
+	instead of integer and move filters to the end of the file.
+	* include/mprapi.h: Ditto.
+	* include/mmsystem.h: Ditto.
+
+	* include/malloc.h (__MSVCRT_VERSION__): Remove as unneeded.
+	* include/math.h: Ditto.
+
+	* include/math.h (__GNUC__): Assume we are using a version >= 3.4.5
+
+	* include/lzexpand.h (UNICODE): Use __AW() macro for mapping
+	non-specific symbols.
+	* include/mmsystem.h: Ditto.
+
+	* include/lmcons.h (_mingw.h): Include.
+	(LMSTR): Correct filter for definition determination.
+	(LMCSTR): Ditto.
+
+	* include/mmsystem.h (WINVER): Use _WIN32_WINNT instead.
+
+	* include/_mingw.h (FORCE_UNICODE): Another filter for determining
+	UNICODE for __AW and __STR.
+
+	* TODO: New file.
+
+2012-09-11  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	Redo the filters based on assumptions discussed in mingw-dvlpr list.
+
+	* include/icm.h (_mingw.h): Include.
+	* include/iphlpapi.h (_mingw.h): Include.
+	* include/imagehlp.h (_mingw.h): Include.
+	* include/idispids.h (_mingw.h): Include.
+	* include/il21dec.h: Ditto.
+	* include/initguid.h: Ditto.
+	* include/ipexport.h: Ditto.
+	* include/ipifcons.h: Ditto.
+	* include/ipinfoid.h: Ditto.
+	* include/iprtrmib.h: Ditto.
+	* include/isguids.h: Ditto.
+	* include/ks.h: Ditto.
+	* include/ksmedia.h: Ditto.
+	* include/largeint.h: Ditto.
+	* include/ipxtfflt.h: Ditto.
+	* include/intshcut.h: Ditto.
+
+	* include/inttypes.h (_mingw.h): Remove comment and move to top of file.
+	* include/libgen.h: Ditto.
+	* include/io.h: Ditto.
+	* include/limits.h: Ditto.
+
+	* include/iphlpapi.h (_WIN32_WINNT): Use MACRO constant for comparison
+	instead of integer and move filters to the end of the file.
+	* include/icm.h: Ditto.
+	* include/iptypes.h: Ditto.
+	* include/ipxconst.h: Ditto.
+	* include/ipxrtdef.h: Ditto.
+
+	* include/imagehlp.h (UNICODE): Use __AW() macro for mapping
+	non-specific symbols.
+	* include/intshcut.h: Ditto.
+	* include/icm.h: Ditto.
+
+	* include/io.h (__MSVCRT_VERSION__): Removed throughout.
+
+	* include/io.h (_findfirst*): What a mess.  Reworked.
+	(_wfindfirst*): Ditto.
+	(_findnext*): Ditto.
+	(_wfindnext*): Ditto.
+	(_finddata*_t): Ditto.
+	(_wfinddata*_t): Ditto.
+	(_FINDDATA_T_DEFINED): Add filter.
+
+	* include/ipxtfflt.h (_IPX_TRAFFIC_FILTER_INFO): Add structure.
+	(_IPX_TRAFFIC_FILTER_GLOBAL_INFO): Ditto.
+
+	* include/limits.h (__STRICT_ANSI__): Remove filters as unneeded.
+	(_CHAR_UNSIGNED): Add as a user defined filter for unsigned char.
+
+	* include/sdkddkver.h (_WIN32_WINNT_WIN98): Correct value.
+	(_WIN32_WINNT_WINME): Ditto.
+
+2012-09-10  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	Redo the filters based on assumptions discussed in mingw-dvlpr list.
+
+	* include/commdlg.h (_mingw.h): Include.
+	(_WIN32_WINNT): Use MACRO constant for comparison instead of integer
+	and move filters to the end of the file.
+	(UNICODE): Use __AW() macro for mapping non-specific symbols.
+	* include/dbt.h: Ditto.
+	* include/dsclient.h: Ditto.
+	* include/dsgetdc.h: Ditto.
+	* include/errorrep.h: Ditto.
+
+	* include/complex.h (_mingw.h): Remove comment and move to top of file.
+	(__GNUC__): Remove filter since only GCC is used.
+
+	* include/conio.h (_mingw.h): Remove comment and move to top of file.
+	* include/ctype.h: Ditto.
+	* include/direct.h: Ditto.
+	* include/dirent.h: Ditto.
+	* include/dos.h: Ditto.
+	* include/errno.h: Ditto.
+	* include/excpt.h: Ditto.
+	* include/float.h: Ditto.
+	* include/getopt.h: Ditto.
+
+	* include/control.h (_mingw.h): Include.
+	* include/cplext.h: Ditto.
+	* include/dde.h: Ditto.
+	* include/devguid.h: Ditto.
+	* include/dlgs.h: Ditto.
+	* include/docobj.h: Ditto.
+	* include/dshow.h: Ditto.
+	* include/dvdevcod.h: Ditto.
+	* include/dvdmedia.h: Ditto.
+	* include/edevdefs.h: Ditto.
+	* include/evcode.h: Ditto.
+	* include/exdisp.h: Ditto.
+	* include/exdispid.h: Ditto.
+	* include/httpext.h: Ditto.
+
+	* include/cpl.h (_mingw.h): Include.
+	(UNICODE): Use __AW() macro for mapping non-specific symbols.
+	* include/custcntl.h: Ditto.
+	* include/ddeml.h: Ditto.
+	* include/errors.h: Ditto.
+
+	* include/dsadmin.h (_mingw.h): Include.
+	(_WIN32_WINNT): Use MACRO constant for comparison instead of integer
+	and move filters to the end of the file.
+	* include/dhcpcsdk.h: Ditto.
+	* include/dsquery.h: Ditto.
+	* include/dsrole.h: Ditto.
+	* include/fltdefs.h: Ditto.
+
+	* incldue/fcntl.h (_mingw.h): Include.
+	(__MSVCRT_VERSION__): Rename to _WIN32_WINNT and compare to
+	_WIN32_WINNT_WIN98.
+	(_WIN32_WINNT): Use MACRO constant for comparison instead of integer
+	and move filters to the end of the file.
+
+	* include/_mingw.h (__STR): Add macro for L"string" or "string".
+
+	* include/sdkddkver.h (_WIN32_WINNT_WIN95): Add constant definition.
+	(_WIN32_WINNT_WIN98): Ditto.
+	(_WIN32_WINNT_WINME): Ditto.
+
+2012-09-08  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	Redo the filters based on assumptions discussed in mingw-dvlpr list.
+
+	* include/_mingw.h: Add include of sdkddkver.h.
+	* include/accctrl.h (_WIN32_WINNT): Use MACRO constant for comparison
+	instead of integer.
+	* include/cmnquery.h (_WIN32_WINNT): Ditto.
+	* include/aclapi.h: Include _mingw.h.
+	(_WIN32_WINNT): Use MACRO constant for comparison instead of integer
+	and move filters to the end of the file.
+	(UNICODE): Use __AW() macro for mapping non-specific symbols.
+	* include/adsprop.h: Ditto.
+	* include/aclui.h: Include _mingw.h.
+	* include/afxres.h: Ditto.
+	* include/amaudio.h: Ditto.
+	* include/amvideo.h: Ditto.
+	* include/amdevcod.h: Ditto.
+	* include/aviriff.h: Ditto.
+	* include/aygshell.h: Ditto.
+	* include/basetsd.h: Ditto.
+	* include/basetyps.h: Ditto.
+	* include/bdatypes.h: Ditto.
+	* include cderr.h: Ditto.
+	* include/cguid.h: Ditto.
+	* include/comcat.h: Ditto.
+	* include/commctrl.h (_WIN32_IE): Remove commented out definition.
+	(_WIN32_IE): Move filters to the end of the file.
+	(UNICODE): Use __AW() macro for mapping non-specific symbols.
+	(_WIN32_WINNT): Use MACRO constant for comparison instead of integer.
+
+2012-09-07  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	Redo the filters based on assumptions discussed in mingw-dvlpr list.
+
+	* include/_mingw.h: Remove #ifdef __declspec filter since it will always
+	be defined.
+	(__DECLSPEC_SUPPORTED): Remove definition and documentation.
+	* include/windef.h (__declspec): No need to define it since it will
+	always be defined.
+	(_declspec): Modify the definition.
+	* include/ctype.h (__DECLSPEC_SUPPORTED): Remove filters since
+	__declspec is always supported.
+	* include/mbctype.h (__DECLSPEC_SUPPORTED): Ditto.
+	* include/stdio.h (__DECLSPEC_SUPPORTED): Ditto.
+	* include/stdlib.h (__DECLSPEC_SUPPORTED): Ditto.
+	* include/wctype.h (__DECLSPEC_SUPPORTED): Ditto.
+	* include/math.h (__DECLSPEC_SUPPORTED): Ditto.
+	(HUGE_VAL): Always use GCC's builin value.
+	* include/stdlib.h: Modify whitespace.
+	* include/_mingw.h: Remove __cdecl and __stdcall defines since they will
+	always be defined.
+	* include/windef.h: Remove definitions for _cdecl, __cdecl, _stdcall,
+	__stdcall, _fastcall, __fastcall, WIN32, _WIN32 since they will always
+	be defined.
+	* include/_mingw.h (__AW): New macro.
+	(__AW__): Ditto.
+	* include/accctrl.h: Include _mingw.h.
+	Move #if _WIN32_WINNT filters to the end.
+	Rework the UNICODE definition mappings to the non-specific types.
+
+2012-09-07  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	Remove filters for CRTDLL and __MSVCRT__.
+
+	* Makefile.in: Remove -[DU]__MSVCRT__ and -[DU]__CRTDLL__.
+	* crt1.o: Remove CRTDLL specific target.
+	* dllcrt1.o: Ditto.
+	* gcrt1.o: Ditto.
+	* include/assert.h: Modify documentation to remove the use of CRTDLL.
+	* include/setjmp.h: Ditto.
+	* src/libcrt/crt/ofmt_stub.s: Ditto.
+	* include/ctype.h: Ditto.
+	Remove filters for __MSVCRT__ and unneeded #else coding.
+	* include/dirent.h: Ditto.
+	* include/dos.h: Ditto.
+	* include/io.h: Ditto.
+	* include/math.h: Ditto.
+	* include/process.h: Ditto.
+	* include/stdio.h: Ditto.
+	* include/stdlib.h: Ditto.
+	* include/string.h: Ditto.
+	* include/sys/stat.h: Ditto.
+	* include/sys/types.h: Ditto.
+	* include/sys/utime.h: Ditto.
+	* include/tchar.h: Ditto.
+	* include/time.h: Ditto.
+	* include/wchar.h: Ditto.
+	* include/wctype.h: Ditto.
+	* src/libcrt/crt/crt1.c: Ditto.
+	* src/libcrt/crt/init.c: Ditto.
+	* lib/lib32/moldname.def.in: Remove filters for __CRTDLL__.
+	* src/libcrt/tlssup.c: Remove filter for CRTDLL.
+
+2012-09-07  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	Apply LICENSE to all files as appropriate.
+
+	* tests/Makefile.in: Add file preamble.
+	* tests/headers/directx.c: Ditto.
+	* tests/headers/test.c: Ditto.
+	* tests/libcrt/sitest.c: Ditto.
+	* tests/libcrt/testwmem.c: Ditto.
+	* tests/libcrt/tst-aligned-malloc.c: Ditto.
+
+2012-09-07  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	Manual resolution for LICENSE for files already containing a file
+	preamble as appropriate.
+
+	* src/libcrt/complex/cacos.c: Remove or modify the existing file
+	preamble.
+	* src/libcrt/complex/cacosf.c: Ditto.
+	* src/libcrt/complex/cacosh.c: Ditto.
+	* src/libcrt/complex/cacoshf.c: Ditto.
+	* src/libcrt/complex/cacoshl.c: Ditto.
+	* src/libcrt/complex/casin.c: Ditto.
+	* src/libcrt/complex/casinf.c: Ditto.
+	* src/libcrt/complex/casinh.c: Ditto.
+	* src/libcrt/complex/casinhf.c: Ditto.
+	* src/libcrt/complex/casinhl.c: Ditto.
+	* src/libcrt/complex/casinl.c: Ditto.
+	* src/libcrt/complex/catan.c: Ditto.
+	* src/libcrt/complex/catanf.c: Ditto.
+	* src/libcrt/complex/catanh.c: Ditto.
+	* src/libcrt/complex/catanhf.c: Ditto.
+	* src/libcrt/complex/catanhl.c: Ditto.
+	* src/libcrt/complex/catanl.c: Ditto.
+	* src/libcrt/complex/ccos.c: Ditto.
+	* src/libcrt/complex/ccosh.c: Ditto.
+	* src/libcrt/complex/ccoshf.c: Ditto.
+	* src/libcrt/complex/ccoshl.c: Ditto.
+	* src/libcrt/complex/ccosl.c: Ditto.
+	* src/libcrt/complex/cexp.c: Ditto.
+	* src/libcrt/complex/cexpf.c: Ditto.
+	* src/libcrt/complex/cexpl.c: Ditto.
+	* src/libcrt/complex/clog.c: Ditto.
+	* src/libcrt/complex/clogf.c: Ditto.
+	* src/libcrt/complex/clogl.c: Ditto.
+	* src/libcrt/complex/cpow.c: Ditto.
+	* src/libcrt/complex/cpowf.c: Ditto.
+	* src/libcrt/complex/cpowl.c: Ditto.
+	* src/libcrt/complex/cproj.c: Ditto.
+	* src/libcrt/complex/cprojf.c: Ditto.
+	* src/libcrt/complex/cprojl.c: Ditto.
+	* src/libcrt/complex/csin.c: Ditto.
+	* src/libcrt/complex/csinf.c: Ditto.
+	* src/libcrt/complex/csinh.c: Ditto.
+	* src/libcrt/complex/csinhf.c: Ditto.
+	* src/libcrt/complex/csinhl.c: Ditto.
+	* src/libcrt/complex/csinl.c: Ditto.
+	* src/libcrt/complex/csqrt.c: Ditto.
+	* src/libcrt/complex/csqrtl.c: Ditto.
+	* src/libcrt/complex/ctan.c: Ditto.
+	* src/libcrt/complex/ctanf.c: Ditto.
+	* src/libcrt/complex/ctanh.c: Ditto.
+	* src/libcrt/complex/ctanhf.c: Ditto.
+	* src/libcrt/complex/ctanhl.c: Ditto.
+	* src/libcrt/complex/ctanl.c: Ditto.
+	* src/libcrt/crt/CRT_fp10.c: Ditto.
+	* src/libcrt/crt/CRT_fp8.c: Ditto.
+	* src/libcrt/crt/CRT_noglob.c: Ditto.
+	* src/libcrt/crt/CRTfmode.c: Ditto.
+	* src/libcrt/crt/CRTglob.c: Ditto.
+	* src/libcrt/crt/CRTinit.c: Ditto.
+	* src/libcrt/crt/crt1.c: Ditto.
+	* src/libcrt/crt/crtmt.c: Ditto.
+	* src/libcrt/crt/crtst.c: Ditto.
+	* src/libcrt/crt/dllcrt1.c: Ditto.
+	* src/libcrt/crt/dllmain.c: Ditto.
+	* src/libcrt/crt/gccmain.c: Ditto.
+	* src/libcrt/crt/init.c: Ditto.
+	* src/libcrt/crt/isascii.c: Ditto.
+	* src/libcrt/crt/iscsym.c: Ditto.
+	* src/libcrt/crt/iscsymf.c: Ditto.
+	* src/libcrt/crt/main.c: Ditto.
+	* src/libcrt/crt/mthr.c: Ditto.
+	* src/libcrt/crt/mthr_init.c: Ditto.
+	* src/libcrt/crt/ofmt_stub.s: Ditto.
+	* src/libcrt/crt/pseudo-reloc-list.c: Ditto.
+	* src/libcrt/crt/pseudo-reloc.c: Ditto.
+	* src/libcrt/crt/strcasecmp.c: Ditto.
+	* src/libcrt/crt/strncasecmp.c: Ditto.
+	* src/libcrt/crt/tlsmcrt.c: Ditto.
+	* src/libcrt/crt/tlsmthread.c: Ditto.
+	* src/libcrt/crt/tlssup.c: Ditto.
+	* src/libcrt/crt/tlsthrd.c: Ditto.
+	* src/libcrt/crt/toascii.c: Ditto.
+	* src/libcrt/crt/wcscmpi.c: Ditto.
+	* src/libcrt/inttypes/imaxabs.c: Ditto.
+	* src/libcrt/inttypes/imaxdiv.c: Ditto.
+	* src/libcrt/inttypes/strtoimax.c: Ditto.
+	* src/libcrt/inttypes/strtoumax.c: Ditto.
+	* src/libcrt/inttypes/wcstoimax.c: Ditto.
+	* src/libcrt/inttypes/wcstoumax.c: Ditto.
+	* src/libcrt/math/acosf.c: Ditto.
+	* src/libcrt/math/acosl.c: Ditto.
+	* src/libcrt/math/asinl.c: Ditto.
+	* src/libcrt/math/atan2f.c: Ditto.
+	* src/libcrt/math/atan2l.c: Ditto.
+	* src/libcrt/math/atanf.c: Ditto.
+	* src/libcrt/math/atanl.c: Ditto.
+	* src/libcrt/math/ceilf.S: Ditto.
+	* src/libcrt/math/ceill.S: Ditto.
+	* src/libcrt/math/copysign.S: Ditto.
+	* src/libcrt/math/copysignf.S: Ditto.
+	* src/libcrt/math/copysignl.S: Ditto.
+	* src/libcrt/math/cosf.S: Ditto.
+	* src/libcrt/math/cosl.S: Ditto.
+	* src/libcrt/math/exp2.S: Ditto.
+	* src/libcrt/math/exp2f.S: Ditto.
+	* src/libcrt/math/exp2l.S: Ditto.
+	* src/libcrt/math/expl.c: Ditto.
+	* src/libcrt/math/expm1.c: Ditto.
+	* src/libcrt/math/expm1f.c: Ditto.
+	* src/libcrt/math/expm1l.c: Ditto.
+	* src/libcrt/math/floorf.S: Ditto.
+	* src/libcrt/math/floorl.S: Ditto.
+	* src/libcrt/math/fmodf.c: Ditto.
+	* src/libcrt/math/fmodl.c: Ditto.
+	* src/libcrt/math/ilogb.S: Ditto.
+	* src/libcrt/math/ilogbf.S: Ditto.
+	* src/libcrt/math/ilogbl.S: Ditto.
+	* src/libcrt/math/log10f.S: Ditto.
+	* src/libcrt/math/log10l.S: Ditto.
+	* src/libcrt/math/log1p.S: Ditto.
+	* src/libcrt/math/log1pf.S: Ditto.
+	* src/libcrt/math/log1pl.S: Ditto.
+	* src/libcrt/math/log2.S: Ditto.
+	* src/libcrt/math/log2f.S: Ditto.
+	* src/libcrt/math/log2l.S: Ditto.
+	* src/libcrt/math/logb.c: Ditto.
+	* src/libcrt/math/logbf.c: Ditto.
+	* src/libcrt/math/logbl.c: Ditto.
+	* src/libcrt/math/logf.S: Ditto.
+	* src/libcrt/math/logl.S: Ditto.
+	* src/libcrt/math/lround_generic.c: Ditto.
+	* src/libcrt/math/nearbyint.S: Ditto.
+	* src/libcrt/math/nearbyintf.S: Ditto.
+	* src/libcrt/math/nearbyintl.S: Ditto.
+	* src/libcrt/math/nextafterl.c: Ditto.
+	* src/libcrt/math/nexttoward.c: Ditto.
+	* src/libcrt/math/nexttowardf.c: Ditto.
+	* src/libcrt/math/remainder.S: Ditto.
+	* src/libcrt/math/remainderf.S: Ditto.
+	* src/libcrt/math/remainderl.S: Ditto.
+	* src/libcrt/math/remquo.S: Ditto.
+	* src/libcrt/math/remquof.S: Ditto.
+	* src/libcrt/math/remquol.S: Ditto.
+	* src/libcrt/math/round_generic.c: Ditto.
+	* src/libcrt/math/scalbn.S: Ditto.
+	* src/libcrt/math/scalbnf.S: Ditto.
+	* src/libcrt/math/scalbnl.S: Ditto.
+	* src/libcrt/math/sinf.S: Ditto.
+	* src/libcrt/math/sinl.S: Ditto.
+	* src/libcrt/math/tanf.S: Ditto.
+	* src/libcrt/math/tanl.S: Ditto.
+	* src/libcrt/misc/getopt.c: Ditto.
+	* src/libcrt/misc/membarrier.c: Ditto.
+	* src/libcrt/misc/mingw-aligned-malloc.c: Ditto.
+	* src/libcrt/misc/mingw-fseek.c: Ditto.
+	* src/libcrt/posix/libgen/basename.c: Ditto.
+	* src/libcrt/posix/libgen/dirname.c: Ditto.
+	* src/libcrt/posix/unistd/usleep.c: Ditto.
+	* src/libcrt/search/tdelete.c: Ditto.
+	* src/libcrt/search/tfind.c: Ditto.
+	* src/libcrt/search/tsearch.c: Ditto.
+	* src/libcrt/search/twalk.c: Ditto.
+	* src/libcrt/stdio/fprintf.c: Ditto.
+	* src/libcrt/stdio/printf.c: Ditto.
+	* src/libcrt/stdio/snprintf.c: Ditto.
+	* src/libcrt/stdio/sprintf.c: Ditto.
+	* src/libcrt/stdio/vfprintf.c: Ditto.
+	* src/libcrt/stdio/vfscanf.c: Ditto.
+	* src/libcrt/stdio/vfwscanf.c: Ditto.
+	* src/libcrt/stdio/vprintf.c: Ditto.
+	* src/libcrt/stdio/vscanf.c: Ditto.
+	* src/libcrt/stdio/vsnprintf.c: Ditto.
+	* src/libcrt/stdio/vsprintf.c: Ditto.
+	* src/libcrt/stdio/vsscanf.c: Ditto.
+	* src/libcrt/stdio/vswscanf.c: Ditto.
+	* src/libcrt/stdio/vwscanf.c: Ditto.
+	* src/libcrt/sys/time/gettimeofday.c: Ditto.
+	* src/libcrt/tchar/dirent.c: Ditto.
+	* src/libcrt/wchar/mbsinit.c: Ditto.
+	* src/libcrt/wchar/wcstof.c: Ditto.
+	* src/libcrt/wchar/wcstold.c: Ditto.
+	* src/libcrt/wchar/wmemchr.c: Ditto.
+	* src/libcrt/wchar/wmemcmp.c: Ditto.
+	* src/libcrt/wchar/wmemcpy.c: Ditto.
+	* src/libcrt/wchar/wmemmove.c: Ditto.
+	* src/libcrt/wchar/wmemset.c: Ditto.
+	* src/libcrt/wctype/wctrans.c: Ditto.
+	* src/libcrt/wctype/wctype.c: Ditto.
+	* src/libgdiplus/gdiplus.c: Ditto.
+	* src/liblargeint/largeint.c: Ditto.
+	* src/libscrnsave/scrnsave.c: Ditto.
+	* src/libuuid/ativscp-uuid.c: Ditto.
+	* src/libuuid/cguid-uuid.c: Ditto.
+	* src/libuuid/comcat-uuid.c: Ditto.
+	* src/libuuid/devguid.c: Ditto.
+	* src/libuuid/docobj-uuid.c: Ditto.
+	* src/libuuid/exdisp-uuid.c: Ditto.
+	* src/libuuid/extras-uuid.c: Ditto.
+	* src/libuuid/hlguids-uuid.c: Ditto.
+	* src/libuuid/hlink-uuid.c: Ditto.
+	* src/libuuid/mlang-uuid.c: Ditto.
+	* src/libuuid/mshtml-uuid.c: Ditto.
+	* src/libuuid/msxml-uuid.c: Ditto.
+	* src/libuuid/oaidl-uuid.c: Ditto.
+	* src/libuuid/objidl-uuid.c: Ditto.
+	* src/libuuid/objsafe-uuid.c: Ditto.
+	* src/libuuid/ocidl-uuid.c: Ditto.
+	* src/libuuid/oleacc-uuid.c: Ditto.
+	* src/libuuid/olectlid-uuid.c: Ditto.
+	* src/libuuid/oleidl-uuid.c: Ditto.
+	* src/libuuid/power-uuid.c: Ditto.
+	* src/libuuid/servprov-uuid.c: Ditto.
+	* src/libuuid/shobjidl-uuid.c: Ditto.
+	* src/libuuid/unknwn-uuid.c: Ditto.
+	* src/libuuid/urlmon-uuid.c: Ditto.
+
+2012-09-06  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	Miscellaneous changes discovered during manual audit.
+
+	* src/libcrt/math/lgammal.c: Remove generated file preamble and move to
+	misc/src/libcrt/math/.
+	* src/libcrt/math/s_erf.c: Ditto.
+	* src/libcrt/math/sf_erf.c: Ditto.
+	* src/libcrt/math/tgammal.c: Ditto.
+	* src/libcrt/stdio/pformat.c: Ditto.
+	Define __MSVCRT_VERSION__ as 0x0800 before including headers.
+	* src/libcrt/stdio/pformat.h: Move to src/libcrt/include.
+	* src/libcrt/crt/test_headers.c: Move to tests/libcrt/.
+	* src/libcrt/math/lround.c: New file.
+	* src/libcrt/math/lroundf.c: Ditto.
+	* src/libcrt/math/lroundl.c: Ditto.
+	* src/libcrt/math/round.c: Ditto.
+	* src/libcrt/math/roundf.c: Ditto.
+	* src/libcrt/math/roundl.c: Ditto.
+	* Makefile.in: Modify source directory for lgammal.c, s_erf.c, sf_erf.c
+	and tgammal.c.
+	Add lround.c, lroundf.c, lroundl.c, round.c, roundf.c and roundl.c.
+	Remove lround_generic.c and round_generic.c.
+
+2012-09-06  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	Manual resolution for LICENSE for files already containing a file
+	preamble as appropriate.
+
+	* include/adsprop.h: Remove the existing file preamble.
+	* include/assert.h: Ditto.
+	* include/cmnquery.h: Ditto.
+	* include/complex.h: Ditto.
+	* include/ddk/atm.h: Ditto.
+	* include/ddk/batclass.h: Ditto.
+	* include/ddk/d4iface.h: Ditto.
+	* include/ddk/hidclass.h: Ditto.
+	* include/ddk/hidsdi.h: Ditto.
+	* include/ddk/hidusage.h: Ditto.
+	* include/ddk/minitape.h: Ditto.
+	* include/ddk/mountmgr.h: Ditto.
+	* include/ddk/netevent.h: Ditto.
+	* include/ddk/storport.h: Ditto.
+	* include/ddk/usb.h: Ditto.
+	* include/direct.h: Ditto.
+	* include/directx/d3d9.h: Ditto.
+	* include/directx/d3d9caps.h: Ditto.
+	* include/directx/d3d9types.h: Ditto.
+	* include/directx/dxerr8.h: Ditto.
+	* include/directx/dxerr9.h: Ditto.
+	* include/dirent.h: Ditto.
+	* include/dsadmin.h: Ditto.
+	* include/dsclient.h: Ditto.
+	* include/dsgetdc.h: Ditto.
+	* include/dsquery.h: Ditto.
+	* include/dsrole.h: Ditto.
+	* include/gdiplus.h: Ditto.
+	* include/imagehlp.h: Ditto.
+	* include/io.h: Ditto.
+	* include/math.h: Ditto.
+	* include/ntdsapi.h: Ditto.
+	* include/ntdsbcli.h: Ditto.
+	* include/objsel.h: Ditto.
+	* include/psapi.h: Ditto.
+	* include/rapi.h: Ditto.
+	* include/routprot.h: Ditto.
+	* include/rtutils.h: Ditto.
+	* include/scrnsave.h: Ditto.
+	* include/sdkddkver.h: Ditto.
+	* include/setjmp.h: Ditto.
+	* include/share.h: Ditto.
+	* include/signal.h: Ditto.
+	* include/snmp.h: Ditto.
+	* include/stdio.h: Ditto.
+	* include/stdlib.h: Ditto.
+	* include/string.h: Ditto.
+	* include/strings.h: Ditto.
+	* include/sys/fcntl.h: Ditto.
+	* include/sys/file.h: Ditto.
+	* include/sys/locking.h: Ditto.
+	* include/sys/param.h: Ditto.
+	* include/sys/stat.h: Ditto.
+	* include/sys/types.h: Ditto.
+	* include/sys/utime.h: Ditto.
+	* include/time.h: Ditto.
+	* include/tlhelp32h: Ditto.
+	* include/wchar.h: Ditto.
+	* include/wctype.h: Ditto.
+	* include/windows.h: Ditto.
+	* include/ws2spi.h: Ditto.
+	* include/wsipx.h: Ditto.
+	* include/_mingw.h: Modify the existing file preamble for documentation.
+	* include/conio.h: Ditto.
+	* include/ctype.h: Ditto.
+	* include/ddk/cfg.h: Ditto.
+	* include/ddk/cfgmgr32.h: Ditto.
+	* include/ddk/d4drvif.h: Ditto.
+	* include/ddk/ddkmapi.h: Ditto.
+	* include/ddk/hidpi.h: Ditto.
+	* include/ddk/kbdmou.h: Ditto.
+	* include/ddk/mcd.h: Ditto.
+	* include/ddk/miniport.h: Ditto.
+	* include/ddk/mountdev.h: Ditto.
+	* include/ddk/ndis.h: Ditto.
+	* include/ddk/ndisguid.h: Ditto.
+	* include/ddk/ndistapi.h: Ditto.
+	* include/ddk/ndiswan.h: Ditto.
+	* include/ddk/netpnp.h: Ditto.
+	* include/ddk/newdev.h: Ditto.
+	* include/ddk/ntapi.h: Ditto.
+	* include/ddk/ntdd8042.h: Ditto.
+	* include/ddk/ntddbeep.h: Ditto.
+	* include/ddk/ntddcdrm.h: Ditto.
+	* include/ddk/ntddcdvd.h: Ditto.
+	* include/ddk/ntddchgr.h: Ditto.
+	* include/ddk/ntdddisk.h: Ditto.
+	* include/ddk/ntddk.h: Ditto.
+	* include/ddk/ntddkbd.h: Ditto.
+	* include/ddk/ntddmou.h: Ditto.
+	* include/ddk/ntddndis.h: Ditto.
+	* include/ddk/ntddpar.h: Ditto.
+	* include/ddk/ntddpcm.h: Ditto.
+	* include/ddk/ntddscsi.h: Ditto.
+	* include/ddk/ntddser.h: Ditto.
+	* include/ddk/ntddstor.h: Ditto.
+	* include/ddk/ntddtape.h: Ditto.
+	* include/ddk/ntddtdi.h: Ditto.
+	* include/ddk/ntddvdeo.h: Ditto.
+	* include/ddk/ntddvol.h: Ditto.
+	* include/ddk/ntifs.h: Ditto.
+	* include/ddk/ntpoapi.h: Ditto.
+	* include/ddk/ntstatus.h: Ditto.
+	* include/ddk/parallel.h: Ditto.
+	* include/ddk/pfhook.h: Ditto.
+	* include/ddk/poclass.h: Ditto.
+	* include/ddk/scsi.h: Ditto.
+	* include/ddk/scsiscan.h: Ditto.
+	* include/ddk/scsiwmi.h: Ditto.
+	* include/ddk/smbus.h: Ditto.
+	* include/ddk/srb.h: Ditto.
+	* include/ddk/tdi.h: Ditto.
+	* include/ddk/tdiinfo.h: Ditto.
+	* include/ddk/tdikrnl.h: Ditto.
+	* include/ddk/tdistat.h: Ditto.
+	* include/ddk/tvout.h: Ditto.
+	* include/ddk/upssvc.h: Ditto.
+	* include/ddk/usb100.h: Ditto.
+	* include/ddk/usbcamdi.h: Ditto.
+	* include/ddk/usbdi.h: Ditto.
+	* include/ddk/usbioctl.h: Ditto.
+	* include/ddk/usbiodef.h: Ditto.
+	* include/ddk/usbscan.h: Ditto.
+	* include/ddk/usbuser.h: Ditto.
+	* include/ddk/video.h: Ditto.
+	* include/ddk/videoagp.h: Ditto.
+	* include/ddk/win2k.h: Ditto.
+	* include/ddk/winddi.h: Ditto.
+	* include/ddk/winddk.h: Ditto.
+	* include/ddk/winnt4.h: Ditto.
+	* include/ddk/winxp.h: Ditto.
+	* include/ddk/ws2san.h: Ditto.
+	* include/ddk/xfilter.h: Ditto.
+	* include/dir.h: Ditto.
+	* include/dos.h: Ditto.
+	* include/errno.h: Ditto.
+	* include/excpt.h: Ditto.
+	* include/fcntl.h: Ditto.
+	* include/float.h: Ditto.
+	* include/fltdefs.h: Ditto.
+	* include/gdiplus/gdiplusbase.h: Ditto.
+	* include/gdiplus/gdiplusbrush.h: Ditto.
+	* include/gdiplus/gdipluscolor.h: Ditto.
+	* include/gdiplus/gdipluscolormatrix.h: Ditto.
+	* include/gdiplus/gdiplusenums.h: Ditto.
+	* include/gdiplus/gdiplusflat.h: Ditto.
+	* include/gdiplus/gdiplusgpstubs.h: Ditto.
+	* include/gdiplus/gdiplusgraphics.h: Ditto.
+	* include/gdiplus/gdiplusheaders.h: Ditto.
+	* include/gdiplus/gdiplusimageattributes.h: Ditto.
+	* include/gdiplus/gdiplusimagecodec.h: Ditto.
+	* include/gdiplus/gdiplusimaging.h: Ditto.
+	* include/gdiplus/gdiplusimpl.h: Ditto.
+	* include/gdiplus/gdiplusinit.h: Ditto.
+	* include/gdiplus/gdipluslinecaps.h: Ditto.
+	* include/gdiplus/gdiplusmatrix.h: Ditto.
+	* include/gdiplus/gdiplusmem.h: Ditto.
+	* include/gdiplus/gdiplusmetafile.h: Ditto.
+	* include/gdiplus/gdiplusmetaheader.h: Ditto.
+	* include/gdiplus/gdipluspath.h: Ditto.
+	* include/gdiplus/gdipluspen.h: Ditto.
+	* include/gdiplus/gdipluspixelformats.h: Ditto.
+	* include/gdiplus/gdiplusstringformat.h: Ditto.
+	* include/gdiplus/gdiplustypes.h: Ditto.
+	* include/getopt.h: Ditto.
+	* include/httpext.h: Ditto.
+	* include/ipifcons.h: Ditto.
+	* include/ipinfoid.h: Ditto.
+	* include/ipxconst.h: Ditto.
+	* include/ipxrtdef.h: Ditto.
+	* include/ipxtfflt.h: Ditto.
+	* include/largeint.h: Ditto.
+	* include/libgen.h: Ditto.
+	* include/limits.h: Ditto.
+	* include/locale.h: Ditto.
+	* include/malloc.h: Ditto.
+	* include/mbctype.h: Ditto.
+	* include/mbstring.h: Ditto.
+	* include/mem.h: Ditto.
+	* include/memory.h: Ditto.
+	* include/mgmtapi.h: Ditto.
+	* include/mprapi.h: Ditto.
+	* include/msacm.h: Ditto.
+	* include/mswsock.h: Ditto.
+	* include/ntldap.h: Ditto.
+	* include/objbase.h: Ditto.
+	* include/process.h: Ditto.
+	* include/rpcproxy.h: Ditto.
+	* include/stdint.h: Ditto.
+	* include/sys/timeb.h: Ditto.
+	* include/sys/unistd.h: Ditto.
+	* include/tchar.h: Ditto.
+	* include/unistd.h: Ditto.
+	* include/winber.h: Ditto.
+	* include/winldap.h: Ditto.
+	* include/winsnmp.h: Ditto.
+	* include/winsock.h: Ditto.
+	* include/winsock2.h: Ditto.
+	* include/ws2tcpip.h: Ditto.
+	* include/zmouse.h: Ditto.
+	* include/dir.h: Add warning for using an obsolete file.
+	* include/inttypes.h: Modify white space.
+	* include/richole.h: Ditto.
+	* include/*: Reorder lines for common look and feel with regard to the
+	file included guards.
+
+2012-09-05  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	Apply LICENSE to all files as appropriate.
+
+	* Makefile.in: Add file preamble.
+	* README: Ditto.
+	* config.h.in: Ditto.
+	* configure.ac: Ditto.
+	* include/*.h: Ditto.
+	* include/ddk/*: Ditto.
+	* include/directx/*: Ditto.
+	* include/gdiplus/*: Ditto
+	* src/libcrt/complex/*: Ditto.
+	* src/libcrt/crt/*: Ditto.
+	* src/libcrt/ctype/*: Ditto.
+	* src/libcrt/fenv/*: Ditto.
+	* src/libcrt/include/*: Ditto.
+	* src/libcrt/inttypes/*: Ditto.
+	* src/libcrt/math/*: Ditto.
+	* src/libcrt/misc/*: Ditto.
+	* src/libcrt/posix/*: Ditto.
+	* src/libcrt/search/*: Ditto.
+	* src/libcrt/stdio/*: Ditto.
+	* src/libcrt/sys/time/*: Ditto.
+	* src/libcrt/tchar/*: Ditto.
+	* src/libcrt/wchar/*: Ditto.
+	* src/libgdiplus/*: Ditto.
+	* src/liblargeint/*: Ditto.
+	* src/libscrnsave/*: Ditto.
+	* src/libshell32/*: Ditto.
+	* src/libuuid/*: Ditto.
+	* src/libws2_32/*: Ditto.
+	* tests/TODO: Add an item to review the tests files for LICENSE
+	application.
+
+2012-09-05  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	Segregate source that cannot take on the MinGW.org LICENSE.
+
+	* Makefile.in: Make changes based on moved files.
+	* gpl/*: Move to misc/gpl/*.
+	* include/GL/*: Move to misc/include/GL/*.
+	* include/profile.h: Move to misc/include/profile.h.
+	* src/libcrt/math/cephes_mconf.h: Move to
+	misc/src/include/cephes_mconf.h.
+	* src/libcrt/include/gdtoa.h: Move to misc/src/include/gdtoa.h.
+	* src/libcrt/gdtoa/*: Move to misc/src/libcrt/gdtoa/*.
+	* src/libcrt/math/cbrt.c: Move to misc/src/libcrt/math/cbrt.c.
+	* src/libcrt/math/cbrtf.c: Move to misc/src/libcrt/math/cbrtf.c.
+	* src/libcrt/math/cbrtl.c: Move to misc/src/libcrt/math/cbrtl.c.
+	* src/libcrt/math/coshl.c: Move to misc/src/libcrt/math/coshl.c.
+	* src/libcrt/math/erfl.c: Move to misc/src/libcrt/math/erfl.c.
+	* src/libcrt/math/frexpl.S: Move to misc/src/libcrt/math/frexpl.S.
+	* src/libcrt/math/hypotl.c: Move to misc/src/libcrt/math/hypotl.c.
+	* src/libcrt/math/lgamma.c: Move to misc/src/libcrt/math/lgamma.c.
+	* src/libcrt/math/lgammaf.c: Move to misc/src/libcrt/math/lgammaf.c.
+	* src/libcrt/math/pow.c: Move to misc/src/libcrt/math/pow.c.
+	* src/libcrt/math/powi.c: Move to misc/src/libcrt/math/powi.c.
+	* src/libcrt/math/powif.c: Move to misc/src/libcrt/math/powif.c.
+	* src/libcrt/math/powil.c: Move to misc/src/libcrt/math/powil.c.
+	* src/libcrt/math/powl.c: Move to misc/src/libcrt/math/powl.c.
+	* src/libcrt/math/sinhl.c: Move to misc/src/libcrt/math/sinhl.c.
+	* src/libcrt/math/tanhl.c: Move to misc/src/libcrt/math/tanhl.c.
+	* src/libcrt/math/tgamma.c: Move to misc/src/libcrt/math/tgamma.c.
+	* src/libcrt/math/tgammaf.c: Move to misc/src/libcrt/math/tgammaf.c.
+	* src/libcrt/profile/*: Move to misc/src/libcrt/profile/*.
+	* src/libcrt/libdinput/*: Move to misc/src/libcrt/libdinput/*.
+	* src/libcrt/libdmoguids/*: Move to misc/src/libcrt/libdmoguids/*.
+	* src/libcrt/libdxerr8/*: Move to misc/src/libcrt/libdxerr8/*.
+	* src/libcrt/libdxerr9/*: Move to misc/src/libcrt/libdxerr9/*.
+	* src/libcrt/libdxguid/*: Move to misc/src/libcrt/libdxguid/*.
+	* src/libcrt/libksuser/*: Move to misc/src/libcrt/libksuser/*.
+	* src/libcrt/libstrmiids/*: Move to misc/src/libcrt/libstrmiids/*.
+
+2012-09-04  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	More on assuming GCC is greater than or equal to version 3.5.4 and that
+	GCC is the only compiler to be used for MinGW.org.
+
+	* src/libcrt/math/cephes_mconf.h: Remove unneeded filters based on the
+	assumptions.
+	* include/_mingw.h: Fix typo.
+
+2012-09-04  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	More on assuming GCC is greater than or equal to version 3.5.4 and that
+	GCC is the only compiler to be used for MinGW.org.
+
+	* include/pbt.h: Remove unneeded filters based on the assumptions.
+	* include/powrprof.h: Ditto.
+	* include/prsht.h: Ditto.
+	* include/psapi.h: Ditto.
+	* include/qedit.h: Ditto.
+	* include/rapi.h: Ditto.
+	* include/ras.h: Ditto.
+	* include/rasdlg.h: Ditto.
+	* include/raserror.h: Ditto.
+	* include/rassapi.h: Ditto.
+	* include/reason.h: Ditto.
+	* include/regstr.h: Ditto.
+	* include/richedit.h: Ditto.
+	* include/richole.h: Ditto.
+	* include/oleidl.h: Ditto.
+	* include/oledlg.h: Ditto.
+	* include/olectlid.h: Ditto.
+	* include/olectl.h: Ditto.
+	* include/oleauto.h: Ditto.
+	* include/oleacc.h: Ditto.
+	* include/ole2ver.h: Ditto.
+	* include/ole2.h: Ditto.
+	* include/ole.h: Ditto.
+	* include/odbcinst.h: Ditto.
+	* include/ocidl.h: Ditto.
+	* include/objsel.h: Ditto.
+	* include/objsafe.h: Ditto.
+	* include/objidl.h: Ditto.
+	* include/objfwd.h: Ditto.
+	* include/objbase.h: Ditto.
+	* include/oaidl.h: Ditto.
+	* include/ntsecpkg.h: Ditto.
+	* include/ntsecapi.h: Ditto.
+	* include/ntldap.h: Ditto.
+	* include/ntdsbcli.h: Ditto.
+	* include/ntdll.h: Ditto.
+	* include/ntdef.h: Ditto.
+	* include/nspapi.h: Ditto.
+	* include/nddeapi.h: Ditto.
+	* include/nb30.h: Ditto.
+	* include/mswsock.h: Ditto.
+	* include/mshtml.h: Ditto.
+	* include/msacm.h: Ditto.
+	* include/mq.h: Ditto.
+	* include/mprapi.h: Ditto.
+	* include/mpegtype.h: Ditto.
+	* include/mmsystem.h: Ditto.
+	* include/mmreg.h: Ditto.
+	* include/mlang.h: Ditto.
+	* include/mgmtapi.h: Ditto.
+	* include/mgm.h: Ditto.
+	* include/mcx.h: Ditto.
+	* include/mciavi.h: Ditto.
+	* include/math.h: Ditto.
+	* include/mapi.h: Ditto.
+	* include/lzexpand.h: Ditto.
+	* include/lmwksta.h: Ditto.
+	* include/lmuseflg.h: Ditto.
+	* include/lmuse.h: Ditto.
+	* include/lmsvc.h: Ditto.
+	* include/lmstats.h: Ditto.
+	* include/lmsname.h: Ditto.
+	* include/lmshare.h: Ditto.
+	* include/lmserver.h: Ditto.
+	* include/lmrepl.h: Ditto.
+	* include/lmremutl.h: Ditto.
+	* include/lmmsg.h: Ditto.
+	* include/lmerrlog.h: Ditto.
+	* include/lmerr.h: Ditto.
+	* include/lmcons.h: Ditto.
+	* include/lmconfig.h: Ditto.
+	* include/lmchdev.h: Ditto.
+	* include/lmbrowsr.h: Ditto.
+	* include/lmaudit.h: Ditto.
+	* include/lmat.h: Ditto.
+	* include/lmapibug.h: Ditto.
+	* include/lmalert.h: Ditto.
+	* include/lmaccess.h: Ditto.
+	* include/lm.h: Ditto.
+	* include/largeint.h: Ditto.
+	* include/ksmedia.h: Ditto.
+	* include/ks.h: Ditto.
+	* include/isguids.h: Ditto.
+	* include/ipxtfflt.h: Ditto.
+	* include/ipxrtdef.h: Ditto.
+	* include/ipxconst.h: Ditto.
+	* include/iptypes.h: Ditto.
+	* include/iprtrmib.h: Ditto.
+	* include/ipinfoid.h: Ditto.
+	* include/ipifcons.h: Ditto.
+	* include/iphlpapi.h: Ditto.
+	* include/ipexport.h: Ditto.
+	* include/intshcut.h: Ditto.
+	* include/initguid.h: Ditto.
+	* include/imm.h: Ditto.
+	* include/imagehlp.h: Ditto.
+	* include/il21dec.h: Ditto.
+	* include/idispids.h: Ditto.
+	* include/icm.h: Ditto.
+	* include/httpext.h: Ditto.
+	* include/GL/glu.h: Ditto.
+	* include/gdiplus/gdiplustypes.h: Ditto.
+	* include/gdiplus/gdiplusstringformat.h: Ditto.
+	* include/gdiplus/gdipluspixelformats.h: Ditto.
+	* include/gdiplus/gdipluspen.h: Ditto.
+	* include/gdiplus/gdipluspath.h: Ditto.
+	* include/gdiplus/gdiplusmetaheader.h: Ditto.
+	* include/gdiplus/gdiplusmetafile.h: Ditto.
+	* include/gdiplus/gdiplusmem.h: Ditto.
+	* include/gdiplus/gdiplusmatrix.h: Ditto.
+	* include/gdiplus/gdipluslinecaps.h: Ditto.
+	* include/gdiplus/gdiplusinit.h: Ditto.
+	* include/gdiplus/gdiplusimpl.h: Ditto.
+	* include/gdiplus/gdiplusimaging.h: Ditto.
+	* include/gdiplus/gdiplusimagecodec.h: Ditto.
+	* include/gdiplus/gdiplusimageattributes.h: Ditto.
+	* include/gdiplus/gdiplusheaders.h: Ditto.
+	* include/gdiplus/gdiplusgraphics.h: Ditto.
+	* include/gdiplus/gdiplusgpstubs.h: Ditto.
+	* include/gdiplus/gdiplusflat.h: Ditto.
+	* include/gdiplus/gdiplusenums.h: Ditto.
+	* include/gdiplus/gdipluseffects.h: Ditto.
+	* include/gdiplus/gdipluscolormatrix.h: Ditto.
+	* include/gdiplus/gdipluscolor.h: Ditto.
+	* include/gdiplus/gdiplusbrush.h: Ditto.
+	* include/gdiplus/gdiplusbase.h: Ditto.
+	* include/gdiplus/gdiplus.h: Ditto.
+	* include/fltdefs.h: Ditto.
+	* include/exdispid.h: Ditto.
+	* include/exdisp.h: Ditto.
+	* include/evcode.h: Ditto.
+	* include/errors.h: Ditto.
+	* include/errorrep.h: Ditto.
+	* include/edevdefs.h: Ditto.
+	* include/dvdmedia.h: Ditto.
+	* include/dvdevcod.h: Ditto.
+	* include/dsrole.h: Ditto.
+	* include/dsquery.h: Ditto.
+	* include/dshow.h: Ditto.
+	* include/dsgetdc.h: Ditto.
+	* include/dsclient.h: Ditto.
+	* include/dsadmin.h: Ditto.
+	* include/docobj.h: Ditto.
+	* include/dlgs.h: Ditto.
+	* include/directx/dxerr9.h: Ditto.
+	* include/directx/dxerr8.h: Ditto.
+	* include/directx/d3d9types.h: Ditto.
+	* include/directx/d3d9caps.h: Ditto.
+	* include/directx/d3d9.h: Ditto.
+	* include/dhcpcsdk.h: Ditto.
+	* include/devguid.h: Ditto.
+	* include/ddk/xfilter.h: Ditto.
+	* include/ddk/ws2san.h: Ditto.
+	* include/ddk/winnt4.h: Ditto.
+	* include/ddk/winddk.h: Ditto.
+	* include/ddk/winddi.h: Ditto.
+	* include/ddk/win2k.h: Ditto.
+	* include/ddk/videoagp.h: Ditto.
+	* include/ddk/video.h: Ditto.
+	* include/ddk/usbuser.h: Ditto.
+	* include/ddk/usbscan.h: Ditto.
+	* include/ddk/usbiodef.h: Ditto.
+	* include/ddk/usbioctl.h: Ditto.
+	* include/ddk/usbdi.h: Ditto.
+	* include/ddk/usbcamdi.h: Ditto.
+	* include/ddk/usb100.h: Ditto.
+	* include/ddk/usb.h: Ditto.
+	* include/ddk/upssvc.h: Ditto.
+	* include/ddk/tvout.h: Ditto.
+	* include/ddk/tdistat.h: Ditto.
+	* include/ddk/tdikrnl.h: Ditto.
+	* include/ddk/tdiinfo.h: Ditto.
+	* include/ddk/tdi.h: Ditto.
+	* include/ddk/storport.h: Ditto.
+	* include/ddk/srb.h: Ditto.
+	* include/ddk/smbus.h: Ditto.
+	* include/ddk/scsiwmi.h: Ditto.
+	* include/ddk/scsiscan.h: Ditto.
+	* include/ddk/scsi.h: Ditto.
+	* include/ddk/poclass.h: Ditto.
+	* include/ddk/pfhook.h: Ditto.
+	* include/ddk/parallel.h: Ditto.
+	* include/ddk/ntstatus.h: Ditto.
+	* include/ddk/ntpoapi.h: Ditto.
+	* include/ddk/ntifs.h: Ditto.
+	* include/ddk/ntddvol.h: Ditto.
+	* include/ddk/ntddvideo.h: Ditto.
+	* include/ddk/ntddtdi.h: Ditto.
+	* include/ddk/ntddtape.h: Ditto.
+	* include/ddk/ntddstor.h: Ditto.
+	* include/ddk/ntddser.h: Ditto.
+	* include/ddk/ntddscsi.h: Ditto.
+	* include/ddk/ntddpcm.h: Ditto.
+	* include/ddk/ntddpar.h: Ditto.
+	* include/ddk/ntddndis.h: Ditto.
+	* include/ddk/ntddmou.h: Ditto.
+	* include/ddk/ntddkbd.h: Ditto.
+	* include/ddk/ntdddk.h: Ditto.
+	* include/ddk/ntdddisk.h: Ditto.
+	* include/ddk/ntddchgr.h: Ditto.
+	* include/ddk/ntddcdvd.h: Ditto.
+	* include/ddk/ntddcdrm.h: Ditto.
+	* include/ddk/ntddbeep.h: Ditto.
+	* include/ddk/ntdd8042.h: Ditto.
+	* include/ddk/ntapi.h: Ditto.
+	* include/ddk/atm.h: Ditto.
+	* include/ddk/batclass.h: Ditto.
+	* include/ddk/cfg.h: Ditto.
+	* include/ddk/cfgmgr32.h: Ditto.
+	* include/ddk/d4drvif.h: Ditto.
+	* include/ddk/d4iface.h: Ditto.
+	* include/ddk/ddkmapi.h: Ditto.
+	* include/ddk/hidclass.h: Ditto.
+	* include/ddk/hidpi.h: Ditto.
+	* include/ddk/hidsdi.h: Ditto.
+	* include/ddk/hidusage.h: Ditto.
+	* include/ddk/mcd.h: Ditto.
+	* include/ddk/miniport.h: Ditto.
+	* include/ddk/minitape.h: Ditto.
+	* include/ddk/mountdev.h: Ditto.
+	* include/ddk/mountmgr.h: Ditto.
+	* include/ddk/ndis.h: Ditto.
+	* include/ddk/ndisguid.h: Ditto.
+	* include/ddk/ndistapi.h: Ditto.
+	* include/ddk/ndiswan.h: Ditto.
+	* include/ddk/netevent.h: Ditto.
+	* include/ddk/netpnp.h: Ditto.
+	* include/ddk/newdev.h: Ditto.
+	* include/basetyps.h: Ditto.
+	* include/bdatypes.h: Ditto.
+	* include/cderr.h: Ditto.
+	* include/cguid.h: Ditto.
+	* include/cmnquery.h: Ditto.
+	* include/comcat.h: Ditto.
+	* include/commctrl.h: Ditto.
+	* include/commdlg.h: Ditto.
+	* include/control.h: Ditto.
+	* include/cpl.h: Ditto.
+	* include/cplext.h: Ditto.
+	* include/custcntl.h: Ditto.
+	* include/dbt.h: Ditto.
+	* include/dde.h: Ditto.
+	* include/ddeml.h: Ditto.
+	* include/mq.h: Remove CTRL-M from line endings.
+	* include/gdiplus/gdiplustypes.h: Ditto.
+	* include/gdiplus/gdiplusstringformat.h: Ditto.
+	* include/gdiplus/gdipluspen.h: Ditto.
+	* include/gdiplus/gdipluspath.h: Ditto.
+	* include/gdiplus/gdiplusmetaheader.h: Ditto.
+	* include/gdiplus/gdiplusmetafile.h: Ditto.
+	* include/gdiplus/gdiplusmem.h: Ditto.
+	* include/gdiplus/gdiplusmatrix.h: Ditto.
+	* include/gdiplus/gdipluslinecaps.h: Ditto.
+	* include/gdiplus/gdiplusinit.h: Ditto.
+	* include/gdiplus/gdiplusimpl.h: Ditto.
+	* include/gdiplus/gdiplusimaging.h: Ditto.
+	* include/gdiplus/gdiplusimagecodec.h: Ditto.
+	* include/gdiplus/gdiplusimageattributes.h: Ditto.
+	* include/gdiplus/gdiplusheaders.h: Ditto.
+	* include/gdiplus/gdiplusgraphics.h: Ditto.
+	* include/gdiplus/gdiplusgpstubs.h: Ditto.
+	* include/gdiplus/gdiplusflat.h: Ditto.
+	* include/gdiplus/gdiplusenums.h: Ditto.
+	* include/gdiplus/gdipluseffects.h: Ditto.
+	* include/gdiplus/gdipluscolormatrix.h: Ditto.
+	* include/gdiplus/gdipluscolor.h: Ditto.
+	* include/gdiplus/gdiplusbrush.h: Ditto.
+	* include/gdiplus/gdiplusbase.h: Ditto.
+	* include/gdiplus/gdiplus.h: Ditto.
+
+2012-09-01  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	More on assuming GCC is greater than or equal to version 3.5.4 and that
+	GCC is the only compiler to be used for MinGW.org.
+
+	* include/routprot.h: Remove unneeded filters based on the assumptions.
+	* include/rpc.h: Ditto.
+	* include/rpcdce.h: Ditto.
+	* include/rpcdce2.h: Ditto.
+	* include/rpcdcep.h: Ditto.
+	* include/rpcndr.h: Ditto.
+	* include/rpcnsi.h: Ditto.
+	* include/rpcnsip.h: Ditto.
+	* include/rpcnterr.h: Ditto.
+	* include/rpcproxy.h: Ditto.
+	* include/rpcutils.h: Ditto.
+	* include/schannel.h: Ditto.
+	* include/schnlsp.h: Ditto.
+	* include/scrnsave.h: Ditto.
+	* include/sddl.h: Ditto.
+	* include/secext.h: Ditto.
+	* include/security.h: Ditto.
+	* include/servprov.h: Ditto.
+	* include/setupapi.h: Ditto.
+	* include/shell.api.h: Ditto.
+	* include/shldisp.h: Ditto.
+	* include/shlguid.h: Ditto.
+	* include/shlobj.h: Ditto.
+	* include/shlwapi.h: Ditto.
+	* include/shobjidl.h: Ditto.
+	* include/snmp.h: Ditto.
+	* include/specstrings.h: Ditto.
+	* include/sql.h: Ditto.
+	* include/sqlext.h: Ditto.
+	* include/sqltypes.h: Ditto.
+	* include/sqlucode.h: Ditto.
+	* include/sspi.h: Ditto.
+	* include/stm.h: Ditto.
+	* include/strmif.h: Ditto.
+	* include/subauth.h: Ditto.
+	* include/svcguid.h: Ditto.
+	* include/tlhelp32.h: Ditto.
+	* include/tmschema.h: Ditto.
+	* include/unknwn.h: Ditto.
+
+2012-08-31  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	More on assuming GCC is greater than or equal to version 3.5.4 and that
+	GCC is the only compiler to be used for MinGW.org.
+
+	* include/winnt.h: Remove unneeded filters based on the assumptions.
+	(_SYSTEM_POWER_INFORMATION): Introduce filter for _WIN32_WINNT >=
+	Windows XP.
+	* include/winperf.h: Remove unneeded filters based on the assumptions.
+	* include/winreg.h: Ditto.
+	* include/winresrc.h: Ditto.
+	* include/winsnmp.h: Ditto.
+	* include/winsock.h: Ditto.
+	* include/winsock2.h: Ditto.
+	* include/winspool.h: Ditto.
+	* include/winsvc.h: Ditto.
+	* include/winuser.h: Ditto.
+	* include/winver.h: Ditto.
+	* include/ws2spi.h: Ditto.
+	* include/ws2tcpip.h: Ditto.
+	* include/wsahelp.h: Ditto.
+	* include/wsipx.h: Ditto.
+	* include/wsnetbs.h: Ditto.
+	* include/wingdi.h: Ditto.
+	* include/wininet.h: Ditto.
+	* include/winocotl.h: Ditto.
+	* include/winldap.h:Ditto.
+	* include/winnls.h: Ditto.
+	* include/userenv.h: Ditto.
+	* include/usp10.h: Ditto.
+	* include/uxtheme.h: Ditto.
+	* include/vidcap.h: Ditto.
+	* include/vmr9.h: Ditto.
+	* include/vptype.h: Ditto.
+	* include/w32api.h: Ditto.
+	* include/winable.h: Ditto.
+	* include/winbase.h: Ditto.
+	* include/winber.h: Ditto.
+	* include/wincon.h: Ditto.
+	* include/wincrypt.h: Ditto.
+	* include/windef.h: Ditto.
+	* include/windns.h: Ditto.
+	* include/windows.h: Ditto.
+	* include/windowsx.h: Ditto.
+	* include/winerror.h: Ditto.
+	* include/wchar.h: Ditto.  Add GCC system_header pragma.
+	* include/_mingw.h: Give an error if __GNUC__ isn't defined or isn't >=
+	version 3.4.5.
+
+2012-08-28  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	We are going to assume that MinGW is using GCC version greater than or
+	equal to 3.5.4 and remove any filters related to earlier versions. We
+	are also going to remove any possibility of using a compiler other than
+	GCC.
+
+	* include/_mingw.h: Remove filters for __GNUC__ >=3, remove the
+	possibility of using a compiler other than GCC and remove any other
+	needless filters.
+	* include/acccrtl.h: Ditto.
+	* include/aclapi.h: Ditto.
+	* include/aclui.h: Ditto.
+	* include/adsprop.h: Ditto.
+	* include/afxres.h: Ditto.
+	* include/amaudio.h: Ditto.
+	* include/amvideo.h: Ditto.
+	* include/audevcod.h: Ditto.
+	* include/aygshell.h: Ditto.
+	* include/basetsd.h: Ditto.
+	* include/wtsapi32.h: Ditto.
+	* include/wtypes.h: Ditto.
+	* include/xprtdefs.h: Ditto.
+	* include/zmouse.h: Ditto.
+	* include/aviriff.h: Ditto.
+	* src/libcrt/crt/CRT_fp10.c: Ditto.
+	* src/libcrt/crt/CRT_fp8.c: Ditto.
+	* src/libcrt/crt/dllcrt1.c: Ditto.
+	* src/libcrt/crt/pseudo-reloc.c: Ditto.
+
+2012-08-23  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* configure.ac: Set AC_CONFIG_AUX_DIR, AC_PREFIX_DEFAULT and call
+	AC_CANONICAL_SYSTEM.
+	* .gitmodules: New file.
+	* build-aux: New submodule.
+
+2012-08-20  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* Makefile.in (check): Add target.
+	(install-wsl-dirs): Ditto.
+	(install-wsl): Ditto.
+	(dist-wsl): Ditto.
+	(_dist-wsl-all_): Ditto.
+	(dist-wsl-mkdir): Ditto.
+	(dist-wsl-install): Ditto.
+	(dist-wsl-dll): Ditto.
+	(dist-wsl-dev): Ditto.
+	(dist-wsl-lic): Ditto.
+	(dist-wsl-doc): Ditto.
+	(dist-wsl-src): Ditto.
+	(dist-mingwrt-dll): Correct typo.
+	(libmingwex_a_SOURCES): Ditto.
+	(DLLTOOL_FLAGS): Remove -U.
+	(libmoldname%.a): New target.
+	(clean): Using find was not a good idea.
+	Step into tests subdirectory and execute the same target.
+	(distclean): Add removal of dist/ directory.
+	Step into tests subdirectory and execute the same target.
+	* configure.ac (tests/Makefile): Add to AC_CONFIG_FILES.
+	* doc/: New files.
+	* gpl/: Ditto.
+	* include/profile.h: Ditto.
+	* lib/: Ditto.
+	* src/: Ditto.
+	* tests/: Ditto.
+
+2012-08-19  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	Needed to be able to make dist-mingwrt and dist-w32api to create these
+	packages individually.  Eventually we also need dist-wsl target to
+	create a package named mingw.org-wsl.
+
+	* include/_mingw.h (__MINGW_VERSION): Correct typo.
+	(__MINGW_MAJOR_VERSION): Ditto.
+	* include/w32api.h: Add deprecated file warning.
+	* Makefile.in: Throughout, add and correct targets for building
+	distributed mingwrt and w32api packages.
+	(PACKAGE_VERSION): Add configured variable.
+	(PACKAGE_RELEASE): Ditto.
+	(winapi_DDK_DEF): New variable.
+	(winapi_DIRECTX_DEF): Ditto.
+	(winapi_DIRECTX_DINPUT_DEF): Ditto.
+	(winapi_lib_DDK_LIBRARIES): Ditto.
+	(winapi_lib_DIRECTX_LIBRARIES): Ditto.
+	(winapi_lib_DIRECTX_INPUT_LIBRARIES): Ditto.
+	(libdmoguids_a_SOURCES): Ditto.
+	(libdmoguids_a_OBJECTS): Ditto.
+	(libdxguid_a_SOURCES): Ditto.
+	(libdxguid_a_OBJECTS): Ditto.
+	(libstrmiids_a_SOURCES): Ditto.
+	(libstrmiids_a_OBJECTS): Ditto.
+	(complex_SOURCES): Ditto.
+	(libdinput_a_SOURCES): Ditto.
+	(libdinput_a_OBJECTS): Ditto.
+	(libdxerr8_a_SOURCES): Ditto.
+	(libdxerr8_a_OBJECTS): Ditto.
+	(libdxerr9_a_SOURCES): Ditto.
+	(libdxerr9_a_OBJECTS): Ditto.
+	(mingwrt_bin_LIBRARIES): Ditto.
+	(mingwrt_lib_LIBRARIES): Ditto.
+	(mingwrt_lib_INCLUDES): Ditto.
+	(mingwrt_lib_SYS_INCLUDES): Ditto.
+	(w32api_lib_INCLUDES): Ditto.
+	(w32api_lib_DDK_INCLUDES): Ditto.
+	(w32api_lib_GDIPLUS_INCLUDES): Ditto.
+	(w32api_lib_GL_INCLUDES): Ditto
+	(w32api_lib_DIRECTX_INCLUDES): Ditto.
+	(w32api_lib_LIBRARIES): Ditto.
+	(winapi_lib_EXTRA_LIBRARIES): Add libdmoguids.a, libdxguid.a and
+	libstrmiids.a
+	(lib_LIBRARIES): Add winapi_lib_DDK_LIBRARIES,
+	winapi_lib_DIRECTX_LIBRARIES and winapi_lib_DIRECTX_DINPUT_LIBRARIES.
+	(ALL_SOURCES): Add libdinput_a_SOURCES, libdxerr8_a_SOURCES and
+	libdxerr9_a_SOURCES.
+	(winapi_lib_DDK_LIBRARIES): New target.
+	(winapi_lib_DIRECTX_LIBRARIES): Ditto.
+	(lib%.a): Ditto.
+	(crt1.o): Ditto.
+	(crt2.o): Ditto.
+	(dllcrt1.o): Ditto.
+	(dllcrt2.o): Ditto.
+	(libdinput.a): Ditto.
+	(libdinput8.a): Ditto.
+	(libdinput_a_OBJECTS): Ditto.
+	(libdmoguids_a_OBJECTS): Ditto.
+	(libdxguid_a_OBJECTS): Ditto.
+	(libstrmiids_a_OBJECTS): Ditto.
+	(libdxerr8.a): Ditto.
+	(libdxerr9.a): Ditto.
+	(libmoguids.a): Ditto.
+	(libdxguid.a): Ditto.
+	(libstrmiids.a): Ditto.
+	(install-mingwrt-dirs): Ditto.
+	(install-mingwrt): Ditto.
+	(dist): Ditto.
+	(dist-mingwrt): Ditto.
+	(_dist-mingwrt-all_): Ditto.
+	(dist-mingwrt-mkdir): Ditto.
+	(dist-mingwrt-install): Ditto.
+	(dist-mingwrt-dll): Ditto.
+	(dist-mingwrt-dev): Ditto.
+	($(DESTDIR)$(prefix)/share/doc/mingwrt/DISCLAIMER): Ditto
+	(dist-mingwrt-lic): Ditto.
+	(dist-mingwrt-doc): Ditto.
+	(dist-mingwrt-src): Ditto.
+	(install-w32api-dirs): Ditto.
+	(install-w32api): Ditto.
+	(dist-w32api): Ditto.
+	(_dist-w32api-all_): Ditto.
+	(dist-w32api-mkdir): Ditto.
+	(dist-w32api-install): Ditto.
+	(dist-w32api-dev): Ditto.
+	(dist-w32api-lic): Ditto.
+	(dist-w32api-doc): Ditto.
+	(dist-w32api-src): Ditto.
+	(install-docs): Correct cp action.
+	(libmingex.a): Correct dependencies.
+	* configure.ac (AC_INIT): Correct the version.
+
+2012-08-14  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* Makefile.in: New file.
+	* configure.ac: Ditto.
+	* config.h.in: Ditto.
+	* .gitignore: Add install-sh.
+
+2012-08-13  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* .gitignore (Makefile.in): Remove entry.
+	(*.bak): Add entry.
+
+2012-08-12  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* include/CVS/*: Remove accidentally added CVS directories.
+	* .gitignore (*.log): Ignore all .log file types.
+
+2012-08-11  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* include/*: Add combined winsup/mingw and winsup/w32api include files.
+
+2012-08-08  Earnie Boyd  <earnie@users.sourceforge.net>
+
+	* ChangeLog: New file.
+	* LICENSE: Ditto.
+	* README: Ditto.
+	* .gitignore: Ditto.

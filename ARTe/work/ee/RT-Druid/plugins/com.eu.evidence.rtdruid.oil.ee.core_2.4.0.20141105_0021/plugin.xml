@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension-point id="eeSectionWriter" name="RT-Druid oil writer extention for Erika Enterprise" schema="schema/eeSectionWriter.exsd"/>
+   <extension-point id="eeCpuDescription" name="Description of a CPU" schema="schema/eeCpuDescription.exsd"/>
+   <extension-point id="eeSrc" name="Erika Enterprise source code" schema="schema/eeSrc.exsd"/>
+   <extension-point id="eeXsltSectionWriter" name="RT-Druid oil writer extention for Erika Enterprise based on xslt transformations" schema="schema/eeXsltSectionWriter.exsd"/>
+   <extension
+         point="com.eu.evidence.rtdruid.oil.core.RtosWriter">
+      <writer
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.ErikaEnterpriseWriter"
+            rtos_id="EE">
+      </writer>
+   </extension>
+   <extension
+         point="com.eu.evidence.rtdruid.oil.core.oilTransform">
+      <transformer
+            class="com.eu.evidence.rtdruid.internal.modules.oil.ee_transformer.ErikaEnterpriseTransform"
+            name="ee"
+            rtos="EE">
+      </transformer>
+   </extension>
+   <extension
+         point="com.eu.evidence.rtdruid.oil.core.oil_implementation">
+      <implementation_file
+            path="oil_files/ee_Implementation.oil">
+      </implementation_file>
+      <implementation_file
+            path="oil_files/com.oil">
+      </implementation_file>
+      <implementation_file
+            path="oil_files/memory_protection.oil">
+      </implementation_file>
+   </extension>
+<!--   <extension
+         point="com.eu.evidence.rtdruid.oil.ee.core.eeSectionWriter">
+      <writer
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.ErikaEnterpriseXsltWriter"
+            id="EE_xslt">
+      </writer>
+   </extension>-->
+   <extension
+         point="com.eu.evidence.rtdruid.oil.core.xsltWriterStep">
+      <Step
+            stepId="com.eu.evidence.rtdruid.oil.ee.xslt_steps.pre_parsing"
+            xsltFile="xsltTransformations/pre_parsing_rules.xsl">
+      </Step>
+      <Step
+            stepId="com.eu.evidence.rtdruid.oil.ee.xslt_steps.parsing"
+            xsltFile="xsltTransformations/parsing_rules.xsl">
+      </Step>
+      <ParameterProvider
+            provider="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.EEParameterProvider">
+      </ParameterProvider>
+   </extension>
+   <extension
+         point="com.eu.evidence.rtdruid.oil.ee.core.eeXsltSectionWriter">
+      <xsltWriter
+            enabled="false"
+            id="test_ee_xslt_writer"
+            type="CPU">
+         <xsltStep
+               xsltWriterStepId="com.eu.evidence.rtdruid.oil.ee.xslt_steps.pre_parsing">
+            <xsltStep
+                  xsltWriterStepId="com.eu.evidence.rtdruid.oil.ee.xslt_steps.parsing">
+            </xsltStep>
+         </xsltStep>
+      </xsltWriter>
+   </extension>
+
+   <extension
+         point="com.eu.evidence.rtdruid.oil.ee.core.eeXsltSectionWriter">
+      <xsltWriter
+            id="test_ee_xslt_writer___2" type="OTHERS">
+        <xsltStep
+              xsltWriterStepId="com.eu.evidence.rtdruid.oil.ee.xslt_steps.parsing">
+        </xsltStep>
+         <xsltStep
+               xsltWriterStepId="com.eu.evidence.rtdruid.oil.ee.xslt_steps.pre_parsing">
+            <xsltStep
+                  xsltWriterStepId="com.eu.evidence.rtdruid.oil.ee.xslt_steps.parsing">
+            </xsltStep>
+            <xsltStep
+                  xsltWriterStepId="com.eu.evidence.rtdruid.oil.ee.xslt_steps.parsing">
+	            <xsltStep
+	                  xsltWriterStepId="com.eu.evidence.rtdruid.oil.ee.xslt_steps.parsing">
+	            </xsltStep>
+            </xsltStep>
+         </xsltStep>
+      </xsltWriter>
+   </extension>
+   <extension
+         point="com.eu.evidence.rtdruid.oil.ee.core.eeSectionWriter">
+      <writer
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.sectionwriter.SectionWriterMemoryProtection">
+      </writer>
+      <writer
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.sectionwriter.SectionWriterOsApplication">
+      </writer>
+      <writer
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.sectionwriter.SectionWriterCom">
+      </writer>
+      <writer
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.sectionwriter.SectionWriterCommonKernelVectorSizeDefs">
+      </writer>
+      <writer
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.sectionwriter.SectionWriterQueuedSpinlock">
+      </writer>
+      <writer
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.sectionwriter.SectionWriterSimpleSpinlock">
+      </writer>
+      <writer
+            class="com.eu.evidence.rtdruid.internal.modules.oil.codewriter.erikaenterprise.sectionwriter.SectionWriterCommonKernelVectorSizeDefs">
+      </writer>
+   </extension>
+
+
+
+
+</plugin>

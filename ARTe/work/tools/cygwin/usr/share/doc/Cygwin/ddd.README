@@ -1,0 +1,101 @@
+ddd
+------------------------------------------
+GNU DDD is a graphical front-end for command-line debuggers such as
+GDB, DBX, WDB, Ladebug, JDB, XDB, the Perl debugger, the bash debugger
+bashdb, the GNU Make debugger remake, or the Python debugger pydb.
+Besides ``usual'' front-end features such as viewing source texts,
+DDD has become famous through its interactive graphical data display,
+where data structures are displayed as graphs. 
+
+Runtime requirements (these or newer):
+  cygwin
+  libstdc++
+  libncurses
+  libX11
+  libXaw
+  libXm
+
+Build requirements (these or newer):
+  (All of the above, plus their devel packages, and the following)
+  gcc
+
+Canonical homepage:
+  http://www.gnu.org/software/ddd/
+
+------------------------------------
+
+Build instructions:
+  unpack ddd-3.3.12-X-src.tar.bz2
+    if you use setup to install this src package, it will be
+	 unpacked under /usr/src automatically
+  cd /usr/src
+  cygport ddd-3.3.12-X.cygport all
+
+This will create:
+  /usr/src/ddd-3.3.12-X.tar.bz2
+  /usr/src/ddd-3.3.12-X-src.tar.bz2
+
+-------------------------------------------
+
+Files included in the binary distro:
+
+usr/bin/ddd.exe
+usr/share/applications/ddd.desktop
+usr/share/ddd-3.3.12/COPYING
+usr/share/ddd-3.3.12/ddd/Ddd
+usr/share/ddd-3.3.12/NEWS
+usr/share/ddd-3.3.12/themes/green.vsl
+usr/share/ddd-3.3.12/themes/red.vsl
+usr/share/ddd-3.3.12/themes/rednil.vsl
+usr/share/ddd-3.3.12/themes/smalltitles.vsl
+usr/share/ddd-3.3.12/themes/smallvalues.vsl
+usr/share/ddd-3.3.12/themes/suppress.vsl
+usr/share/ddd-3.3.12/themes/tinyvalues.vsl
+usr/share/ddd-3.3.12/themes/x86.vsl
+usr/share/ddd-3.3.12/vsllib/arcs.vsl
+usr/share/ddd-3.3.12/vsllib/builtin.vsl
+usr/share/ddd-3.3.12/vsllib/colors.vsl
+usr/share/ddd-3.3.12/vsllib/ctree.vsl
+usr/share/ddd-3.3.12/vsllib/ddd.vsl
+usr/share/ddd-3.3.12/vsllib/flow.vsl
+usr/share/ddd-3.3.12/vsllib/flowplus.vsl
+usr/share/ddd-3.3.12/vsllib/fonts.vsl
+usr/share/ddd-3.3.12/vsllib/linebreak.vsl
+usr/share/ddd-3.3.12/vsllib/list.vsl
+usr/share/ddd-3.3.12/vsllib/slopes.vsl
+usr/share/ddd-3.3.12/vsllib/std.vsl
+usr/share/ddd-3.3.12/vsllib/struct.vsl
+usr/share/ddd-3.3.12/vsllib/symbols.vsl
+usr/share/ddd-3.3.12/vsllib/tab.vsl
+usr/share/ddd-3.3.12/vsllib/tree.vsl
+usr/share/ddd-3.3.12/vsllib/verbose.vsl
+usr/share/ddd-3.3.12/vsllib/vsl.vsl
+usr/share/ddd-3.3.12/vsllib/vsldef.vsl
+usr/share/ddd-3.3.12/vsllib/vsllib.vsl
+usr/share/doc/ddd/AUTHORS
+usr/share/doc/ddd/COPYING
+usr/share/doc/ddd/CREDITS
+usr/share/doc/ddd/NEWS
+usr/share/doc/ddd/README
+usr/share/doc/ddd/TODO
+usr/share/info/ddd-themes.info.gz
+usr/share/info/ddd.info-1.gz
+usr/share/info/ddd.info-2.gz
+usr/share/info/ddd.info.gz
+usr/share/man/man1/ddd.1.gz
+
+------------------
+
+Port Notes:
+
+----- version 3.3.12-1 -----
+* Sync with upstream release.
+
+----- version 3.3.9-1 -----
+* Sync with upstream release.
+
+----- version 3.3.8-1 -----
+* Initial Cygwin release.
+
+
+Cygwin port maintained by: Jon TURNEY <jon.turney@dronecode.org.uk>

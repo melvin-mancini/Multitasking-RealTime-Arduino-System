@@ -1,0 +1,91 @@
+xf86-video-nested: driver to run Xorg on top of Xorg or something else
+
+= Usage =
+
+This is how I test it:
+    X -config my.conf -noreset -retro :1
+    (if your Xorg server is old you might need "-sharevts vt7", in case your
+    bottom-layer X runs on vt7)
+
+My xorg.conf:
+
+-- begin xorg.conf --
+Section "ServerFlags"
+    Option "AutoEnableDevices" "false"
+    Option "AutoAddDevices" "false"
+    Option "AllowEmptyInput" "true"
+EndSection
+
+Section "Device"
+    Identifier "device1"
+    Driver "nested"
+    Option "Display" ":0"     # you can omit this
+EndSection
+
+Section "Screen"
+    Identifier "screen1"
+    Device "device1"
+    DefaultDepth 24
+    Option "Origin" "100 100" # you can omit this
+    SubSection "Display"
+        Depth 24
+        Modes "640x480"
+    EndSubSection
+EndSection
+
+Section "ServerLayout"
+    Identifier "layout1"
+    Screen "screen1"
+EndSection
+-- end xorg.conf --
+
+Mouse and keyboard input events from the client window are forwarded to the nested 
+xserver, so no mouse/keyboard drivers are needed.
+
+You can also have more than one screen with this driver. Here's an example of a
+xorg.conf with 2 screens and a mouse:
+
+-- begin xorg.conf --
+Section "ServerFlags"
+    Option "AutoEnableDevices" "false"
+    Option "AutoAddDevices" "false"
+    Option "AllowEmptyInput" "true"
+EndSection
+
+Section "Device"
+    Identifier "device1"
+    Driver "nested"
+EndSection
+
+Section "Device"
+    Identifier "device2"
+    Driver "nested"
+EndSection
+
+Section "Screen"
+    Identifier "screen1"
+    Device "device1"
+    DefaultDepth 24
+    SubSection "Display"
+        Depth 24
+        Modes "640x480"
+    EndSubSection
+EndSection
+
+Section "Screen"
+    Identifier "screen2"
+    Device "device1"
+    DefaultDepth 24
+    SubSection "Display"
+        Depth 24
+        Modes "640x480"
+    EndSubSection
+EndSection
+
+Section "ServerLayout"
+    Identifier "layout1"
+    Screen "screen1"
+    Screen "screen2" RightOf "screen1"
+    InputDevice "mouse1"
+EndSection
+-- end xorg.conf --

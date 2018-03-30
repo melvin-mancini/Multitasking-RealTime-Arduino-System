@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="ASCII"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="rtdruid" nsURI="http://www.evidence.eu.com/rtdruid/data" nsPrefix="com.eu.evidence.rtdruid.data">
+  <eClassifiers xsi:type="ecore:EClass" name="System" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Annotation" eType="#//Annotation"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Architectural" eType="#//Architectural"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Functional" eType="#//Functional"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Mapping" eType="#//Mapping"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Modes" eType="#//Modes"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" lowerBound="1" eType="#//StringVar"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Schedulability" eType="#//Schedulability"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="XTC_Cookie" upperBound="-1"
+        eType="#//StringVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ObjectWithID" abstract="true">
+    <eOperations name="checkNewID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="newID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="getObjectID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eOperations name="setObjectID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="newID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="properties" eType="#//PropertyVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Modes" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ModeList" upperBound="-1"
+        eType="#//Mode" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Mode" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" lowerBound="1" eType="#//StringVar"
+        iD="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Functional" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="EventList" upperBound="-1"
+        eType="#//Event" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="PartialOrderList" upperBound="-1"
+        eType="#//PartialOrder" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Implementation" upperBound="-1"
+        eType="#//SystemImplementation" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="TimeConstList" upperBound="-1"
+        eType="#//TimeConst" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="TypeList" upperBound="-1"
+        eType="#//Type" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Implementation" abstract="true" eSuperTypes="#//SystemImplementation"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Proc" eSuperTypes="#//Implementation">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="MethodRefList" upperBound="-1"
+        eType="#//MethodRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Methods" upperBound="-1"
+        eType="#//StringVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Architectural" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="BusList" upperBound="-1"
+        eType="#//Bus" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="EcuList" lowerBound="1"
+        upperBound="-1" eType="#//Ecu" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="FrameList" upperBound="-1"
+        eType="#//Frame" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="MutexList" upperBound="-1"
+        eType="#//Mutex" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ResourceList" upperBound="-1"
+        eType="#//Resource" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="SignalList" upperBound="-1"
+        eType="#//Signal" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="TaskList" lowerBound="1"
+        upperBound="-1" eType="#//Task" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ComList" upperBound="-1"
+        eType="#//Com" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="SpinLockList" upperBound="-1"
+        eType="#//SpinLock" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ScheduleTableList" upperBound="-1"
+        eType="#//ScheduleTable" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Mapping" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ProcMapList" upperBound="-1"
+        eType="#//ProcMap" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="TaskMapList" upperBound="-1"
+        eType="#//TaskMap" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="VarMapList" upperBound="-1"
+        eType="#//VarMap" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Annotation" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ExecTimeLists" upperBound="-1"
+        eType="#//ExecTimeList" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="CacheMissCostLists" upperBound="-1"
+        eType="#//CacheMissCostList" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Schedulability" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="SchedulingScenarioList"
+        upperBound="-1" eType="#//SchedulingScenario" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Var" eSuperTypes="#//Implementation">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Methods" upperBound="-1"
+        eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" eType="#//StringVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Trigger" eSuperTypes="#//SystemImplementation">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="MethodRefList" upperBound="-1"
+        eType="#//MethodRef" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Event" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" lowerBound="1" eType="#//StringVar"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="MethodRefName" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" eType="#//StringVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PartialOrder" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ModeRef" lowerBound="1"
+        eType="#//StringVar" iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="OrderList" upperBound="-1"
+        eType="#//Order" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SystemImplementation" abstract="true"
+      eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" lowerBound="1" eType="#//StringVar"
+        iD="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SubSystem" eSuperTypes="#//Implementation">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Implementation" upperBound="-1"
+        eType="#//Implementation" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ProvidedInterfaceList"
+        upperBound="-1" eType="#//ProvidedInterface" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="RequiredInterfaceList"
+        upperBound="-1" eType="#//RequiredInterface" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TimeConst" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ModeRef" lowerBound="1"
+        eType="#//StringVar" iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="TimeConstElementList" upperBound="-1"
+        eType="#//TimeConstElement" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MethodRef" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" lowerBound="1" eType="#//StringVar"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="MethodName" eType="#//StringVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ProvidedInterface" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="LocalMethodRef" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="LocalObjectRef" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" lowerBound="1" eType="#//StringVar"
+        iD="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RequiredInterface" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ExternalMethodRef" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" lowerBound="1" eType="#//StringVar"
+        iD="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Order" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="FirstEvent" lowerBound="1"
+        eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="SecondEvent" lowerBound="1"
+        eType="#//StringVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TimeConstElement" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="BoundType" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="BoundValue" eType="#//TimeVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="FirstEvent" lowerBound="1"
+        eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="SecondEvent" eType="#//StringVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Ecu" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="CpuList" upperBound="-1"
+        eType="#//Cpu" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" lowerBound="1" eType="#//StringVar"
+        iD="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Task" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ActivationList" upperBound="-1"
+        eType="#//Activation" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" lowerBound="1" eType="#//StringVar"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="OilVar" eType="#//OilVar"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ResourceRefList" upperBound="-1"
+        eType="#//ResourceRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="SchedulingList" upperBound="-1"
+        eType="#//Scheduling" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" eType="#//StringVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Resource" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Methods" upperBound="-1"
+        eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="MutexRefList" upperBound="-1"
+        eType="#//MutexRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" lowerBound="1" eType="#//StringVar"
+        iD="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Bus" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" lowerBound="1" eType="#//StringVar"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Speed" eType="#//LongVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" eType="#//StringVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Frame" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ActivationClass" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ActivationRate" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ActivationType" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Id" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Length" eType="#//LongVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" lowerBound="1" eType="#//StringVar"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="MessageType" eType="#//StringVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Signal" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" lowerBound="1" eType="#//StringVar"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="OilVar" eType="#//OilVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" eType="#//StringVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Mutex" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" lowerBound="1" eType="#//StringVar"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="OilVar" eType="#//OilVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Policy" eType="#//StringVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Cpu" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" lowerBound="1" eType="#//StringVar"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Model" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Rtos" eType="#//Rtos" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="OsApplication" upperBound="-1"
+        eType="#//OsApplication" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Speed" eType="#//DoubleVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Speed_Unit" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="BinaryImage" eType="#//StringVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Rtos" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" lowerBound="1" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="OilVar" eType="#//OilVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Methods" upperBound="-1"
+        eType="#//StringVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Scheduling" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ModeRef" lowerBound="1"
+        eType="#//StringVar" iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="PreemptionGroupName" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Priority" eType="#//IntegerVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Threshold" eType="#//IntegerVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Stack" eType="#//IntegerVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Activation" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ActNumber" eType="#//IntegerVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ActivationClass" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Deadline" eType="#//TimeVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ModeRef" lowerBound="1"
+        eType="#//StringVar" iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Offset" eType="#//TimeVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Period" eType="#//TimeVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" eType="#//StringVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ResourceRef" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ModeRef" lowerBound="1"
+        eType="#//StringVar" iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ResourceMethodRef" upperBound="-1"
+        eType="#//StringVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MutexRef" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ModeRef" lowerBound="1"
+        eType="#//StringVar" iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="MutexName" eType="#//StringVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExecTime" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Best" eType="#//TimeVar"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Distribution" eType="#//Distribution"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Ref" lowerBound="1" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" lowerBound="1" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Worst" eType="#//TimeVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExecTimeList" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ExecTimeItemsList" upperBound="-1"
+        eType="#//ExecTime" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ModeRef" lowerBound="1"
+        eType="#//StringVar" iD="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Distribution" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Avg" eType="#//TimeVar"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="SampleList" upperBound="-1"
+        eType="#//Sample" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Variance" eType="#//DoubleVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Sample" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Probability" eType="#//DoubleVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Value" lowerBound="1" eType="#//TimeVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ProcMap" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ModeRef" lowerBound="1"
+        eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Order" eType="#//IntegerVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ProcRef" lowerBound="1"
+        eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="TaskRef" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="OnceEveryK" eType="#//IntegerVar"
+        defaultValueLiteral="1"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="MethodRefName" eType="#//StringVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TaskMap" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ModeRef" lowerBound="1"
+        eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="RtosRef" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="TaskRef" lowerBound="1"
+        eType="#//StringVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VarMap" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="BusRef" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="FrameRef" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ModeRef" lowerBound="1"
+        eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="MutexRef" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="VarRef" lowerBound="1"
+        eType="#//StringVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SchedulingScenario" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="CpuSchedList" upperBound="-1"
+        eType="#//CpuSched" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ModeRef" lowerBound="1"
+        eType="#//StringVar" iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Reports" upperBound="-1"
+        eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="TaskSchedList" upperBound="-1"
+        eType="#//TaskSched" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CpuSched" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Boundary" eType="#//DoubleVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="CpuRef" lowerBound="1"
+        eType="#//StringVar" iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Schedulable" eType="#//BooleanVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="SpeedFactor" eType="#//DoubleVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Utilization" eType="#//DoubleVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="MaxStackSize" eType="#//IntegerVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TaskSched" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="CDelta" eType="#//DoubleVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ResponseTime" eType="#//TimeVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Schedulable" eType="#//BooleanVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="TaskRef" lowerBound="1"
+        eType="#//StringVar" iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="TDelta" eType="#//DoubleVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Utilization" eType="#//DoubleVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="BooleanVar" instanceClassName="com.eu.evidence.rtdruid.vartree.variables.BooleanVar"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="DoubleVar" instanceClassName="com.eu.evidence.rtdruid.vartree.variables.DoubleVar"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="FloatVar" instanceClassName="com.eu.evidence.rtdruid.vartree.variables.FloatVar"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="IntegerVar" instanceClassName="com.eu.evidence.rtdruid.vartree.variables.IntegerVar"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="LongVar" instanceClassName="com.eu.evidence.rtdruid.vartree.variables.LongVar"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="OilVar" instanceClassName="com.eu.evidence.rtdruid.vartree.variables.OilVar"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="StringVar" instanceClassName="com.eu.evidence.rtdruid.vartree.variables.StringVar"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="TimeVar" instanceClassName="com.eu.evidence.rtdruid.vartree.variables.TimeVar"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="PropertyVar" instanceClassName="com.eu.evidence.rtdruid.vartree.variables.PropertyVar"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CacheMissCostList" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="CacheMissCostItemsList"
+        upperBound="-1" eType="#//CacheMissCost" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ModeRef" lowerBound="1"
+        eType="#//StringVar" iD="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CacheMissCost" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Best" eType="#//TimeVar"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Distribution" eType="#//Distribution"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Ref" lowerBound="1" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" lowerBound="1" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Worst" eType="#//TimeVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Field" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" eType="#//StringVar"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Size" eType="#//IntegerVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Type" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" eType="#//StringVar"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Field" upperBound="-1"
+        eType="#//Field" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Dim" eType="#//IntegerVar"
+        defaultValueLiteral="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OsApplication" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" eType="#//StringVar"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="OilVar" eType="#//OilVar"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Com" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" eType="#//StringVar"
+        iD="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SpinLock" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" eType="#//StringVar"
+        iD="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleTable" eSuperTypes="#//ObjectWithID">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" eType="#//StringVar"
+        iD="true"/>
+  </eClassifiers>
+</ecore:EPackage>

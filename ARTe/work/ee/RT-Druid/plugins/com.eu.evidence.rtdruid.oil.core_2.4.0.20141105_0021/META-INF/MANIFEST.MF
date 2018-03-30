@@ -1,0 +1,37 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.8.3
+Created-By: 1.6.0_18-b07 (Sun Microsystems Inc.)
+Export-Package: com.eu.evidence.rtdruid.internal.modules.oil.exception
+ s,com.eu.evidence.rtdruid.internal.modules.oil.keywords,com.eu.eviden
+ ce.rtdruid.modules.oil.abstractions,com.eu.evidence.rtdruid.modules.o
+ il.codewriter.common,com.eu.evidence.rtdruid.modules.oil.codewriter.c
+ ommon.comments,com.eu.evidence.rtdruid.modules.oil.codewriter.common.
+ xsltcodegeneration,com.eu.evidence.rtdruid.modules.oil.codewriter.opt
+ ions,com.eu.evidence.rtdruid.modules.oil.implementation,com.eu.eviden
+ ce.rtdruid.modules.oil.interfaces,com.eu.evidence.rtdruid.modules.oil
+ .keywords,com.eu.evidence.rtdruid.modules.oil.transform,com.eu.eviden
+ ce.rtdruid.oil.xtext,com.eu.evidence.rtdruid.oil.xtext.formatting,com
+ .eu.evidence.rtdruid.oil.xtext.model,com.eu.evidence.rtdruid.oil.xtex
+ t.parseTreeConstruction,com.eu.evidence.rtdruid.oil.xtext.parser,com.
+ eu.evidence.rtdruid.oil.xtext.parser.antlr,com.eu.evidence.rtdruid.oi
+ l.xtext.parser.antlr.internal,com.eu.evidence.rtdruid.oil.xtext.servi
+ ces,com.eu.evidence.rtdruid.oil.xtext.validation
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: rtdruid_oil_core.jar
+Bundle-Name: RT-Druid Oil Plug-in (core)
+Bundle-Localization: plugin
+Require-Bundle: com.eu.evidence.rtdruid.core,org.eclipse.core.runtime,
+ org.eclipse.core.resources,com.eu.evidence.templates.core,org.eclipse
+ .xtext.generator;resolution:=optional,org.eclipse.emf.mwe2.launch;res
+ olution:=optional,org.apache.commons.logging;resolution:=optional,org
+ .eclipse.xtext,org.eclipse.xtext.util,org.antlr.runtime,org.eclipse.x
+ text.xbase.lib
+Bundle-Vendor: Evidence S.r.l.
+Bundle-Version: 2.4.0.20141105_0021
+Bundle-ManifestVersion: 2
+Bundle-Activator: com.eu.evidence.rtdruid.modules.oil.Rtd_oil_corePlug
+ in
+Bundle-SymbolicName: com.eu.evidence.rtdruid.oil.core;singleton:=true
+Import-Package: org.apache.log4j
+Eclipse-RegisterBuddy: org.apache.log4j
+

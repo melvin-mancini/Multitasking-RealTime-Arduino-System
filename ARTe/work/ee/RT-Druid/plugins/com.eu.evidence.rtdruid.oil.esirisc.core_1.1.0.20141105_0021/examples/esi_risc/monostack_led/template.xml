@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<evidence_example version="1" ID="esi_risc_monostack_led">
+
+ <category>esi_risc/monostack_led</category>
+ <title>Monostack LED demo</title>
+   
+ <small_descr>
+ A monostack demo project to display a running LED pattern.
+ </small_descr>
+
+ <long_descr>
+ This demo shows the basic structure of a monostack project.
+ The application displays a running LED pattern. 
+ </long_descr>
+
+ <file_section>
+  <file     name="main.c"/> 
+  <file     name="conf.oil"/>
+ </file_section>
+
+</evidence_example>

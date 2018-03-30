@@ -1,0 +1,23 @@
+root:S-1-5-32-544:0:
+SYSTEM:S-1-5-18:18:
+Access Control Assistance Operators:S-1-5-32-579:579:
+Administrators:S-1-5-32-544:544:
+Backup Operators:S-1-5-32-551:551:
+Cryptographic Operators:S-1-5-32-569:569:
+Distributed COM Users:S-1-5-32-562:562:
+Event Log Readers:S-1-5-32-573:573:
+Guests:S-1-5-32-546:546:
+Hyper-V Administrators:S-1-5-32-578:578:
+IIS_IUSRS:S-1-5-32-568:568:
+Network Configuration Operators:S-1-5-32-556:556:
+Performance Log Users:S-1-5-32-559:559:
+Performance Monitor Users:S-1-5-32-558:558:
+Power Users:S-1-5-32-547:547:
+Remote Desktop Users:S-1-5-32-555:555:
+Remote Management Users:S-1-5-32-580:580:
+Replicator:S-1-5-32-552:552:
+Users:S-1-5-32-545:545:
+HomeUsers:S-1-5-21-1666654624-981478368-3294669062-1002:1002:
+WinRMRemoteWMIUsers__:S-1-5-21-1666654624-981478368-3294669062-1000:1000:
+None:S-1-5-21-1666654624-981478368-3294669062-513:513:
+Pietro:S-1-5-21-1666654624-981478368-3294669062-1001:11001:

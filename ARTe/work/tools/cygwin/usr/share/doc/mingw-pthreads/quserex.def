@@ -1,0 +1,5 @@
+; i686-pc-mingw32-dlltool -z quserex.def QueueUserAPCEx.o
+EXPORTS
+	QueueUserAPCEx @ 1
+	QueueUserAPCEx_Fini @ 2
+	QueueUserAPCEx_Init @ 3

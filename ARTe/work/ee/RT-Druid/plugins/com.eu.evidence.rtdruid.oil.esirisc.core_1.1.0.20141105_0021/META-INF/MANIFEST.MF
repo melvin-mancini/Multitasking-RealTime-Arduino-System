@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.7.1
+Created-By: 16.0-b13 (Sun Microsystems Inc.)
+Require-Bundle: com.eu.evidence.rtdruid.core,com.eu.evidence.rtdruid.o
+ il.core,com.eu.evidence.templates.core
+Bundle-Vendor: Evidence S.r.l.
+Bundle-ActivationPolicy: lazy
+Bundle-Version: 1.1.0.20141105_0021
+Bundle-Name: eSi-RISC support for Erika Enterprise
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.eu.evidence.rtdruid.oil.esirisc.core;singleto
+ n:=true
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+

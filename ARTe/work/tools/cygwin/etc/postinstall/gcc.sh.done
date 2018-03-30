@@ -1,0 +1,20 @@
+#!/bin/bash
+
+prefix=/usr
+bindir=${prefix}/bin
+sbindir=${prefix}/sbin
+infodir=${prefix}/share/info
+
+/usr/sbin/update-alternatives \
+    --install "${bindir}/gcc.exe" "gcc" "${bindir}/gcc-3.exe" 30 \
+  --slave "/usr/bin/cc.exe" "cc" "/usr/bin/cc-3.exe" \
+  --slave "/usr/bin/cpp.exe" "cpp" "/usr/bin/cpp-3.exe" \
+  --slave "/usr/bin/gcov.exe" "gcov" "/usr/bin/gcov-3.exe" \
+  --slave "/usr/bin/i686-pc-cygwin-gcc.exe" "i686-pc-cygwin-gcc" "/usr/bin/i686-pc-cygwin-gcc-3.exe" \
+  --slave "/usr/bin/protoize.exe" "protoize" "/usr/bin/protoize-3.exe" \
+  --slave "/usr/bin/unprotoize.exe" "unprotoize" "/usr/bin/unprotoize-3.exe" \
+  --slave "/usr/share/man/man1/cpp.1.gz" "cpp.1.gz" "/usr/share/man/man1/cpp-3.1.gz" \
+  --slave "/usr/share/man/man1/gcc.1.gz" "gcc.1.gz" "/usr/share/man/man1/gcc-3.1.gz" \
+  --slave "/usr/share/man/man1/gcov.1.gz" "gcov.1.gz" "/usr/share/man/man1/gcov-3.1.gz" \
+
+

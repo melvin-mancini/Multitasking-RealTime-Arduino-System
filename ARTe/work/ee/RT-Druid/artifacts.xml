@@ -1,0 +1,299 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?artifactRepository version='1.1.0'?>
+<repository name='Bundle pool' type='org.eclipse.equinox.p2.artifact.repository.simpleRepository' version='1.0.0'>
+  <properties size='2'>
+    <property name='p2.system' value='true'/>
+    <property name='p2.timestamp' value='1415143562821'/>
+  </properties>
+  <mappings size='3'>
+    <rule filter='(&amp; (classifier=osgi.bundle))' output='${repoUrl}/plugins/${id}_${version}.jar'/>
+    <rule filter='(&amp; (classifier=binary))' output='${repoUrl}/binary/${id}_${version}'/>
+    <rule filter='(&amp; (classifier=org.eclipse.update.feature))' output='${repoUrl}/features/${id}_${version}.jar'/>
+  </mappings>
+  <artifacts size='52'>
+    <artifact classifier='osgi.bundle' id='com.eu.evidence.rtdruid.oil.ppc.core' version='2.4.0.20141105_0021'>
+      <properties size='1'>
+        <property name='download.size' value='40103'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='com.eu.evidence.rtdruid.oil.osek.core' version='2.4.0.20141105_0021'>
+      <properties size='1'>
+        <property name='download.size' value='61874'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.xtext.util' version='2.3.0.v201206120633'>
+      <properties size='1'>
+        <property name='download.size' value='207895'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.equinox.common' version='3.6.100.v20120522-1841'>
+      <properties size='1'>
+        <property name='download.size' value='106768'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.core.runtime' version='3.8.0.v20120521-2346'>
+      <properties size='1'>
+        <property name='download.size' value='75324'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.equinox.app' version='1.3.100.v20120522-1841'>
+      <properties size='1'>
+        <property name='download.size' value='86389'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='com.eu.evidence.rtdruid.oil.ee.core' version='2.4.0.20141105_0021'>
+      <properties size='1'>
+        <property name='download.size' value='190919'/>
+      </properties>
+      <repositoryProperties size='1'>
+        <property name='artifact.folder' value='true'/>
+      </repositoryProperties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='com.google.inject' version='3.0.0.v201203062045'>
+      <properties size='1'>
+        <property name='download.size' value='520614'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.osgi' version='3.8.0.v20120529-1548'>
+      <properties size='1'>
+        <property name='download.size' value='1396175'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.apache.log4j' version='1.2.15.v201012070815'>
+      <properties size='1'>
+        <property name='download.size' value='427938'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='com.eu.evidence.rtdruid.oil.esirisc.core' version='1.1.0.20141105_0021'>
+      <properties size='1'>
+        <property name='download.size' value='7348'/>
+      </properties>
+      <repositoryProperties size='1'>
+        <property name='artifact.folder' value='true'/>
+      </repositoryProperties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.equinox.launcher.win32.win32.x86' version='1.1.200.v20120522-1813'>
+      <properties size='1'>
+        <property name='download.size' value='27402'/>
+      </properties>
+      <repositoryProperties size='1'>
+        <property name='artifact.folder' value='true'/>
+      </repositoryProperties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='com.eu.evidence.rtdruid.oil.cortex.core' version='2.4.0.20141105_0021'>
+      <properties size='1'>
+        <property name='download.size' value='27822'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='com.eu.evidence.templates.core' version='2.4.0.20141105_0021'>
+      <properties size='1'>
+        <property name='download.size' value='31623'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='com.eu.evidence.rtdruid.jscan.core' version='2.4.0.20141105_0021'>
+      <properties size='1'>
+        <property name='download.size' value='151118'/>
+      </properties>
+      <repositoryProperties size='1'>
+        <property name='artifact.folder' value='true'/>
+      </repositoryProperties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='com.eu.evidence.rtdruid.oil.s12.core' version='2.4.0.20141105_0021'>
+      <properties size='1'>
+        <property name='download.size' value='28439'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.emf.ecore.change' version='2.8.0.v20120606-0717'>
+      <properties size='1'>
+        <property name='download.size' value='83069'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.core.runtime.compatibility.registry' version='3.5.100.v20120521-2346'>
+      <properties size='1'>
+        <property name='download.size' value='19326'/>
+      </properties>
+      <repositoryProperties size='1'>
+        <property name='artifact.folder' value='true'/>
+      </repositoryProperties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.xtext' version='2.3.0.v201206120633'>
+      <properties size='1'>
+        <property name='download.size' value='2131447'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.equinox.launcher' version='1.3.0.v20120522-1813'>
+      <properties size='1'>
+        <property name='download.size' value='49278'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='com.eu.evidence.rtdruid.core' version='2.4.0.20141105_0021'>
+      <properties size='1'>
+        <property name='download.size' value='629970'/>
+      </properties>
+      <repositoryProperties size='1'>
+        <property name='artifact.folder' value='true'/>
+      </repositoryProperties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='com.eu.evidence.rtdruid.oil.frsh.core' version='2.4.0.20141105_0021'>
+      <properties size='1'>
+        <property name='download.size' value='33075'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='com.eu.evidence.rtdruid.oil.nios2.core' version='2.4.0.20141105_0021'>
+      <properties size='1'>
+        <property name='download.size' value='20450'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.core.contenttype' version='3.4.200.v20120523-2004'>
+      <properties size='1'>
+        <property name='download.size' value='93173'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='com.eu.evidence.rtdruid.oil.arm.core' version='2.4.0.20141105_0021'>
+      <properties size='1'>
+        <property name='download.size' value='26463'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.core.expressions' version='3.4.400.v20120523-2004'>
+      <properties size='1'>
+        <property name='download.size' value='88230'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='com.eu.evidence.rtdruid.oil.contrib.st.core' version='1.1.0.20141105_0021'>
+      <properties size='1'>
+        <property name='download.size' value='4594'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.equinox.preferences' version='3.5.0.v20120522-1841'>
+      <properties size='1'>
+        <property name='download.size' value='126768'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='com.eu.evidence.rtdruid.oil.tricore.core' version='2.4.0.20141105_0021'>
+      <properties size='1'>
+        <property name='download.size' value='46965'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.emf.ecore.xmi' version='2.8.0.v20120606-0717'>
+      <properties size='1'>
+        <property name='download.size' value='222829'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='javax.inject' version='1.0.0.v20091030'>
+      <properties size='1'>
+        <property name='download.size' value='17602'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.core.jobs' version='3.5.200.v20120521-2346'>
+      <properties size='1'>
+        <property name='download.size' value='92326'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.core.resources' version='3.8.0.v20120522-2034'>
+      <properties size='1'>
+        <property name='download.size' value='809747'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.xtext.smap' version='2.3.0.v201206120633'>
+      <properties size='1'>
+        <property name='download.size' value='15801'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='com.eu.evidence.rtdruid.oil.core' version='2.4.0.20141105_0021'>
+      <properties size='1'>
+        <property name='download.size' value='724091'/>
+      </properties>
+      <repositoryProperties size='1'>
+        <property name='artifact.folder' value='true'/>
+      </repositoryProperties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.core.filesystem' version='1.3.200.v20120522-2012'>
+      <properties size='1'>
+        <property name='download.size' value='57916'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.emf.edit' version='2.8.0.v20120608-0554'>
+      <properties size='1'>
+        <property name='download.size' value='264841'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='com.eu.evidence.rtdruid.oil.avr.core' version='2.4.0.20141105_0021'>
+      <properties size='1'>
+        <property name='download.size' value='44662'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='com.google.guava' version='10.0.1.v201203051515'>
+      <properties size='1'>
+        <property name='download.size' value='1593088'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='com.eu.evidence.rtdruid.oil.fp_edf.core' version='2.4.0.20141105_0021'>
+      <properties size='1'>
+        <property name='download.size' value='25202'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='com.eu.evidence.rtdruid.oil.msp430.core' version='1.1.0.20141105_0021'>
+      <properties size='1'>
+        <property name='download.size' value='9832'/>
+      </properties>
+      <repositoryProperties size='1'>
+        <property name='artifact.folder' value='true'/>
+      </repositoryProperties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.emf.ecore' version='2.8.0.v20120606-0717'>
+      <properties size='1'>
+        <property name='download.size' value='1126124'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='com.eu.evidence.rtdruid.oil.mico32.core' version='2.4.0.20141105_0021'>
+      <properties size='1'>
+        <property name='download.size' value='50173'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.xtext.xbase.lib' version='2.3.0.v201206120633'>
+      <properties size='1'>
+        <property name='download.size' value='97572'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.antlr.runtime' version='3.2.0.v201101311130'>
+      <properties size='1'>
+        <property name='download.size' value='214586'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='com.eu.evidence.rtdruid.oil.x86.core' version='1.0.0.20141105_0021'>
+      <properties size='1'>
+        <property name='download.size' value='16836'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='com.eu.evidence.rtdruid.oil.dspic.core' version='2.4.0.20141105_0021'>
+      <properties size='1'>
+        <property name='download.size' value='45980'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='com.eu.evidence.rtdruid.oil.hr.core' version='1.1.0.20141105_0021'>
+      <properties size='1'>
+        <property name='download.size' value='40465'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.core.variables' version='3.2.600.v20120521-2012'>
+      <properties size='1'>
+        <property name='download.size' value='34348'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.emf.common' version='2.8.0.v20120606-0717'>
+      <properties size='1'>
+        <property name='download.size' value='214216'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.equinox.registry' version='3.5.200.v20120522-1841'>
+      <properties size='1'>
+        <property name='download.size' value='184236'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='com.eu.evidence.rtdruid.oil.renesas.core' version='2.4.0.20141105_0021'>
+      <properties size='1'>
+        <property name='download.size' value='18368'/>
+      </properties>
+    </artifact>
+  </artifacts>
+</repository>

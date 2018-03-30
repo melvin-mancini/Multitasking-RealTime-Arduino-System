@@ -1,0 +1,163 @@
+mingw-gcc
+========================================================================
+The mingw-gcc package provides the Gnu Compiler Collection (GCC)
+configured as a cross compiler for generating native win32 binaries
+from cygwin.  It is configured to use the MinGW.org runtime and headers
+(as opposed to the 32bit or 64bit flavors of the mingw64 runtime).
+
+Currently, the mingw-gcc collection includes the following languages:
+  c,c++,[ada:x86 only],fortran,objc,obj-c++
+And is configured with the following ABI-affecting options:
+  --enable-libgomp
+  --disable-sjlj-exceptions (e.g. dw2 exceptions)
+  --enable-version-specific-runtime-libs
+  --enable-decimal-float=bid
+
+The java compiler and runtimes are not included. They may be added
+at a later date.
+
+Configuration:
+--------------
+  configure --srcdir=<local dir> \
+    --prefix=/usr --exec-prefix=/usr --bindir=/usr/bin \
+    --sbindir=/usr/sbin --libexecdir=/usr/lib --datadir=/usr/share \
+    --localstatedir=/var --sysconfdir=/etc --datarootdir=/usr/share \
+    --docdir=/usr/share/doc/mingw-gcc -C \
+    --build=i686-pc-cygwin \
+    --host=i686-pc-cygwin \
+    --target=i686-pc-mingw32 \
+  a --without-libiconv-prefix \
+  a --without-libintl-prefix \
+    --with-sysroot=/usr/i686-pc-mingw32/sys-root \
+    --with-build-sysroot=/usr/i686-pc-mingw32/sys-root \
+    --enable-languages=c,c++,${ARCH_i686+ada,}fortran,objc,obj-c++ \
+    --disable-sjlj-exceptions 
+    --with-dwarf2 \
+  a --enable-shared \
+    --enable-libgomp \
+    --disable-win32-registry \
+    --enable-libstdcxx-debug \
+  a --disable-build-poststage1-with-cxx \
+    --enable-version-specific-runtime-libs \
+    --disable-multilib \
+  a --enable-decimal-float=bid \
+    --disable-werror \
+    --enable-lto
+
+  ## MAKEFLAGS: picked up from mingw.org's release, with this explanation:
+  ## * Fix missing symbols in the Objective C export library.
+
+  make 'MAKEFLAGS=TARGET-target-libobjc=all\ LDFLAGS=-Wl,--export-all-symbols'
+
+Build Requirements:
+  gcc4-core
+  libgmp-devel
+  libcloog-devel
+  libiconv-devel
+  gettext-devel
+  gettext
+  libmpc-devel
+  libmpfr-devel
+  libppl-devel
+  cygport-0.12.2
+  make
+  bash
+  flex
+  bison
+  texinfo
+
+Canonical homepage:
+  http://gcc.gnu.org/
+
+Canonical download:
+  ftp://gcc.gnu.org/pub/gcc/releases/
+
+License:
+  GPLv3+ with runtime exception
+
+Language:
+  C,C++,Ada,Fortran,ObjC,Java,...
+
+========================================================================
+
+Port Notes:
+---------- mingw-gcc-4.7.3-1 -- 2013 Jul 16 -----------
+* Updated to lastest in 4.7.x series because 4.7.2 has an ICE during
+  build on cygwin64.
+* Rely on cygport to autogenerate setup.hints
+* x86 only: added Ada compiler & libs
+  NOTE: x86_64 version does not have Ada, because cygwin64's native
+  gcc does not yet provide it, and a native Ada is required to build
+  a cross-Ada.)
+* First cygwin64 release
+* x86_64 only: added debuginfo package
+
+---------- mingw-gcc-4.7.2-1 -- UNRELEASED -----------
+* Updated to match mingw.org offerings
+* Rely on cygport to autogenerate setup.hints
+* Added Ada compiler & libs
+* First cygwin64 release (NOTE: 64bit version does not
+  have Ada, because cygwin64's native gcc does not yet
+  provide it, and a native Ada is required to build a
+  cross-Ada.)
+
+* =============== ABI BREAKAGE ==================
+  The C and C++ ABI changed in GCC 4.7.0, which means in general you
+  can't link together binaries compiled with this version of the
+  compiler and with versions before GCC 4.7.0. In particular:
+  
+  * The option -mms-bitfields is enabled by default, which means the
+    bitfield layout follows the convention of the Microsoft compiler.
+  
+  * C++ class-member functions now follow the __thiscall calling
+    convention.
+  
+  * The compiler now assumes that the caller pops the stack for the
+    implicit arguments pointing to an aggregate return value. This
+    affects functions returning structs by value, like the complex
+    math type.
+
+* New features: See http://gcc.gnu.org/gcc-4.7/changes.html
+
+* Unless the -fno-keep-inline-dllexport compiler flag is given, inline
+  functions decorated with __declspec(dllexport) are always generated
+  and included in object files. This also applies to methods defined in
+  classes decorated with __declspec(dllexport).
+
+  This may cause a general increase in object size, since many copies of
+  dllexport'd inline function and methods end up in object files.
+
+  To avoid this, do:
+
+  1) Compile all sources with -fno-keep-inline-dllexport.
+
+  2) Compile a separate dummy source file, that includes all headers, with
+  -fkeep-inline-dllexport.
+
+  This will generate all dllexported inline methods
+  and functions, just once. The resulting DLL size should not be affected,
+  but the object size and the link time should be reduced.
+
+* Shared libgcc: If all modules are linked with -shared-libgcc,
+  exceptions can be thrown across DLL boundaries.  Note that this is
+  the default for all languages other than C. To disable this, use
+  -static-libgcc.
+
+* Shared libstdc++: By default, C++ modules are linked with a DLL version
+  of libstdc++. To use the static version, use the -static-libstdc++ flag.
+  Note: When building and using DLLs, it is best in general not to use
+  static libraries, to avoid the issue of having multiple copies of shared
+  data. This applies to static libstdc++ as well.
+
+---------- mingw-gcc-4.5.2-1 -- 2011 May 17 -----------
+* Update to match mingw.org offerings
+* Do *not* use --enable-fully-dynamic-strings, since that changes the
+  C++ ABI, and mingw.org doesn't use it.
+* First cygwin.com release
+
+---------- mingw-gcc-4.5.1-1 -- 2010 Nov 22 -----------
+* Initial release (but only via cygutils.fruitbat.org)
+
+========================================================================
+Cygwin port maintained by: Chuck Wilson <cygwin@cygwin.com>
+

@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.7.1
+Created-By: 16.0-b13 (Sun Microsystems Inc.)
+Require-Bundle: org.eclipse.core.runtime,com.eu.evidence.rtdruid.core,
+ com.eu.evidence.rtdruid.oil.core
+Bundle-Vendor: Evidence S.r.l.
+Bundle-ActivationPolicy: lazy
+Bundle-Version: 1.1.0.20141105_0021
+Bundle-Name: MSP430 support for Erika Enterprise
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.eu.evidence.rtdruid.oil.msp430.core;singleton
+ :=true
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+

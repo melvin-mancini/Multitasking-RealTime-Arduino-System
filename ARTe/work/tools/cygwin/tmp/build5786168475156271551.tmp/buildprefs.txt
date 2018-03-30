@@ -1,0 +1,38 @@
+build.arch = SAM
+build.board = SAM_DUE
+build.core = arduino
+build.core.path = C:\Users\Pietro\Desktop\Arduino-1.5.6-r2\build\windows\work\hardware\arduino\sam\cores\arduino
+build.extra_flags = -D__SAM3X8E__ -mthumb {build.usb_flags}
+build.f_cpu = 84000000L
+build.ldscript = linker_scripts/gcc/flash.ld
+build.mcu = cortex-m3
+build.path = C:\eeCygwin\tmp\build5786168475156271551.tmp
+build.pid = 0x003e
+build.project_name = Blink.cpp
+build.system.path = C:\Users\Pietro\Desktop\Arduino-1.5.6-r2\build\windows\work\hardware\arduino\sam\system
+build.usb_flags = -DUSB_VID={build.vid} -DUSB_PID={build.pid} -DUSBCON '-DUSB_MANUFACTURER={build.usb_manufacturer}' '-DUSB_PRODUCT={build.usb_product}'
+build.usb_manufacturer = "Unknown"
+build.usb_product = "Arduino Due"
+build.variant = arduino_due_x
+build.variant.path = C:\Users\Pietro\Desktop\Arduino-1.5.6-r2\build\windows\work\hardware\arduino\sam\variants\arduino_due_x
+build.variant_system_lib = libsam_sam3x8e_gcc_rel.a
+build.vid = 0x2341
+build.warn_data_percentage = 75
+compiler.S.flags = -c -g -x assembler-with-cpp
+compiler.ar.cmd = arm-none-eabi-ar
+compiler.ar.flags = rcs
+compiler.c.cmd = arm-none-eabi-gcc
+compiler.c.elf.cmd = arm-none-eabi-g++
+compiler.c.elf.flags = -Os -Wl,--gc-sections
+compiler.c.flags = -c -g -Os -w -ffunction-sections -fdata-sections -nostdlib --param max-inline-insns-single=500 -Dprintf=iprintf
+compiler.cpp.cmd = arm-none-eabi-g++
+compiler.cpp.flags = -c -g -Os -w -ffunction-sections -fdata-sections -nostdlib --param max-inline-insns-single=500 -fno-rtti -fno-exceptions -Dprintf=iprintf
+compiler.define = -DARDUINO=
+compiler.elf2hex.cmd = arm-none-eabi-objcopy
+compiler.elf2hex.flags = -O binary
+compiler.ldflags = 
+compiler.libsam.c.flags = "-I{build.system.path}/libsam" "-I{build.system.path}/CMSIS/CMSIS/Include/" "-I{build.system.path}/CMSIS/Device/ATMEL/"
+compiler.objcopy.cmd = arm-none-eabi-objcopy
+compiler.objcopy.eep.flags = -O ihex -j .eeprom --set-section-flags=.eeprom=alloc,load --no-change-warnings --change-section-lma .eeprom=0
+compiler.path = {runtime.ide.path}/hardware/tools/g++_arm_none_eabi/bin/
+compiler.size.cmd = arm-none-eabi-size

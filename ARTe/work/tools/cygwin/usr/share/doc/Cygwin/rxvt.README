@@ -1,0 +1,546 @@
+rxvt
+------------------------------------------
+VT102 terminal emulator for both X and Windows.
+See section entitled "ORIGINAL README TEXT" below for
+more information.
+
+
+Runtime requirements:
+  cygwin-1.7.0-46
+  Optional: libX11_6
+  Optional: font-bitstream-type1
+     for an X display (also requires a working Xserver)
+
+Build requirements:
+  cygwin-1.7.0-46
+  gcc-3.4.4-999
+  binutils-20080624-2
+  autoconf2.5-2.63-1
+  cygport-0.9.5-1
+
+Canonical homepage:
+  http://sourceforge.net/projects/rxvt/
+
+Canonical download:
+  http://prdownloads.sourceforge.net/rxvt/rxvt-2.7.10.tar.gz?download
+    or (better)
+  cvs -d :pserver:anonymous@cvs.sourceforge.net:/cvsroot/rxvt login
+  cvs -d :pserver:anonymous@cvs.sourceforge.net:/cvsroot/rxvt co rxvt -D 20050409
+
+License:
+  GPL
+
+Language:
+  C
+
+===========================================================
+
+Build instructions:
+  unpack rxvt-20050409-X-src.tar.bz2
+    if you use setup to install this src package, it will be
+	 unpacked under /usr/src automatically
+  cd /usr/src
+  cygport ./rxvt-20050409-X.cygport all
+
+This will create:
+  /usr/src/rxvt-20050409-X.tar.bz2
+  /usr/src/rxvt-20050409-X-src.tar.bz2
+
+Or use 'cygport ./rxvt-20050409-X.cygport prep' to get a patched source
+directory.
+
+To find out the files included in the binary distribution, you can
+use "cygcheck -l rxvt", or browse the listing for the appropriate version
+at <http://cygwin.com/packages/>.
+
+===========================================================
+
+Port Notes:
+----------  rxvt-20050409-21 -- 2009 Apr 27 ----------
+* Fix bug in postinstall script
+* Add -uas (--unixAltSpace) option to bypass Win32 handling
+  of Alt-Space key combination, and allow client (e.g.
+  Emacs) to handle it instead.
+
+----------  rxvt-20050409-20 -- 2009 Apr 24 ----------
+* Fork for cygwin-1.7 development.
+
+----------  rxvt-20050409-10 -- 2009 Apr 24 ----------
+* Use cygutils to create shortcuts in Start Menu
+* Update to most recent libtool
+* Switch default font (in X mode) to Courier. This avoids
+  possible dependency on not-common font-bitstream-vera-ttf
+  package.
+* Remove font-* package from requires. This means that
+  rxvt-x will be "broken" with default installation. BUT
+  if you install the X libraries and X server, then surely
+  the basic font-bitstream-type1 package would also be
+  installed...However, it also means that (typical) native-
+  only users will not be forced to install mkfontdir,
+  mkfontscale, fontconfig, font-encodings, and all of THEIR
+  dependencies.
+* New command-line parameter "-cd directory" which starts rxvt
+  in the given directory.  This allows you to set up a context
+  menu item for Windows Explorer directly, without requiring
+  chere. The registry entry would be:
+    REGEDIT4
+    [HKEY_CLASSES_ROOT\Folder\shell\Shell...\command]
+    @="c:\\cygwin\\usr\\bin\\rxvt.exe -cd \"%1\""
+  (along with whatever other command line arguments you wish).
+  Submitted by Mark Robinson
+* New command-line parameter "-swapButtons" or "-bs" (since
+  "sb" is already allocated).  This option swaps the middle and
+  right mouse buttons thus making life a little easier for those
+  folks with 2-button mice, or who don't wish to use the scroll
+  wheel as the third button.  Submitted by Mark Robinson
+* Fixed bugs in man page
+* Added syslog support to libW11 via custom DllMain(). This
+  will help in the future to debug libW11 operation. In fact,
+  has already been used to...
+* Restore Alt-Space behavior (e.g. pass thru to windows, to
+  allow access to Minimize/Maximze/Restore menu).
+
+----------  rxvt-20050409-9 -- 2008 Nov 15 ----------
+* Brown paper bag release.
+* Included two small xpm's for use as Rxvt*backgroundPixmap
+  resources; added commented-out example of usage to 
+  app-defaults file.
+
+----------  rxvt-20050409-8 -- 2008 Nov 15 ----------
+* Adapt to issues with new modular X distribution
+  In other words, changed changed the hard-coded 
+  app-defaults search path from
+
+      /usr/lib/X11/app-defaults/Rxvt
+      /usr/lib/X11/locale/%-.*s/app-defaults/Rxvt
+
+  to
+
+      /etc/X11/app-defaults/Rxvt
+      /etc/X11/locale/%-.*s/app-defaults/Rxvt
+
+  And fixed some build system issues caused by the new
+  location of the "real" X libraries in the system /usr/lib
+  directory.
+* Build with cygport 0.4.2 (STOCK)
+* Correct setup.hint
+
+----------  rxvt-20050409-7 -- 2007 Aug 27 ----------
+* Fix handling of alt-backspace, introduced in -6
+
+----------  rxvt-20050409-6 -- 2007 Aug 25 ----------
+* Fix issue with font size
+* Add Rxvt app-defaults
+* revert to TERM=xterm
+* Fix resources (missing icon)
+* Add new icon from run.exe
+
+----------  rxvt-20050409-5 -- 2007 Aug 20 ----------
+* Fix ALT-Fn key
+* default to TERM=rxvt instead of xterm
+
+----------  rxvt-20050409-4 -- 2006 Dec 4 -----------
+* Switch to cygport build framework
+* Some other minor build fixes
+* Propagate signals to child process (cmd processor shell) so
+  that Alt-F4 or 'click x buttom' on rxvt window don't leave
+  zombie shells behind.
+
+----------  rxvt-20050409-3 -- 2006 June 7 -----------
+* Implement XTranslateCoords() within libW11 in an attempt to get
+  smart resizing to work.  Discover that most Xservers lie about 
+  upper-left-corner position of client windows, such that WM decorations
+  are already accounted for -- and thus the small section rxvt code within
+  the smart-resize function that "compensates" for WM decorations is not 
+  active with "real" Xservers.
+
+  But libW11 does not lie about WM decorations.  And rxvt's "compensation"
+  code -- active in this case -- is hopelessly broken.
+
+  Don't use --enable-smart-resize. 
+
+----------  rxvt-20050409-2 -- 2006 May 21 -----------
+* Removed hide_console code.  As it happens, the W11 wrapper
+  library already had similar -- smarter -- code for hiding 
+  the console.  This pre-existing code did not hide the console
+  rxvt was invoked via a bash-in-cmd.exe shell, whereas the now-removed
+  code did do so.  Thus, invoking 'rxvt' from the command line in such
+  a shell permanently hid the user's existing session.  This was bad.
+* However, this means we will need a different solution for when we
+  invoke rxvt via a script and WANT the script's console hidden.
+  See http://cygwin.com/ml/cygwin/2006-05/msg00403.html
+* Turned on support for 24bit visuals (may only have effect when in
+  X mode), as well as selection scrolling.
+
+----------  rxvt-20050409-1 -- 2006 Mar 26 -----------
+* based on the same source code in rxvt-2.7.10-6, hence the date-based
+  version number.
+* reworked package to use 'method 2' packaging system (generic-build-script)
+* factored out local static xpm library into an overlay patch.  It is
+  still necessary for technical reasons but it's not 'core' to rxvt.
+* Enable rxvt X wrapper to also look in /usr/X11R6/bin for cygX11-n.dll
+  even if /usr/X11R6/bin is not in $PATH.
+* Borrow code from inetutils/inetd.c to enable rxvt to hide its own 
+  console window without relying on run.exe. 
+* Fix broken man page
+* Explicitly enable searching app-defaults/Rxvt file as well as
+  ~/.Xdefaults and ~/.Xresources  (NOTE: --enable-xgetdefault is not 
+  supported by native windows version, so it's disallowed for us, even
+  in X-mode.  Thus, we use the 'built-in' resource loader, but have to 
+  explicitly enable app-defaults use.)
+* Change the hard-coded (pay no attention to the --x-libraries value, folks)
+  app-defaults search path from
+
+      /usr/X11R6/lib/X11/app-defaults/Rxvt
+      /usr/X11R6/lib/X11/%-.*s/app-defaults/Rxvt
+  to
+      /usr/lib/X11/app-defaults/Rxvt
+      /usr/lib/X11/locale/%-.*s/app-defaults/Rxvt
+
+  Now, it's possible that the first one should further be modified to
+      /etc/X11/app-defaults/Rxvt
+
+  but as for the second one, there is no symlinkage for the locale-dependent
+  paths, and x.org is silent on the issue.  Also, research shows disagreement
+  as to whether it should be '/locale/en_GB.UTF-8/' or just '/en_GB.UTF-8/'.
+  Because locale-dependent app-defaults haven't even been enabled until now,
+  there's no regression if I guess wrong.  So, I went with what seemed to make
+  the most sense, and I'll leave both paths in /usr/lib/X11 for now.
+
+----------  rxvt-2.7.10-6 -- 09 Apr 2005 -----------
+Last known release by SteveO.
+
+===========================================================
+
+For more information about this package, see the upstream documentation in
+/usr/share/doc/rxvt-20050409.
+
+Cygwin port maintained by:  Charles Wilson  cygwin@cygwin.com
+Please address all questions to the Cygwin mailing list at <cygwin@cygwin.com>
+
+
+
+
+
+
+
+
+
+
+=============================================================================
+===                      BEGIN ORIGINAL README TEXT                       ===
+=============================================================================
+
+Win32 enabled rxvt README
+
+rxvt is a color vt102 terminal emulator intended as a replacement
+for xterm(1) and cmd.com.
+
+
+================
+Quick start, from a bash shell try running:
+
+rxvt -e /usr/bin/bash --login -i
+
+If this doesn't work, you may not have cygwin 1.1 or better 
+installed on your PC.  Visit: 
+   http://www.cygwin.com/
+
+If rxvt complains that it can't open the display, check that
+you are using the Win32 enabled rxvt, and that DISPLAY is either
+not set, or set to:
+  :0
+
+Setting DISPLAY to anything else causes the Win32 enabled rxvt 
+to revert to its traditional X behavior (assuming X is installed).  
+
+You may set DISPLAY from the command line like so:
+
+  rxvt -display :0
+
+
+================
+Shortcut:
+
+If you create a shortcut to the rxvt app, you should be able to 
+use it to launch a terminal.  A black console window may appear
+and quickly disappear when you run rxvt this way, this is ok.
+
+ rxvt -tn xterm -e /usr/bin/bash --login -i
+
+Note the forward slashes in the bash path.  
+
+If the black console window bothers you, use the 'run' utility which
+can be installed using the cygwin setup program. 
+
+
+================
+Fonts:
+
+You can experiment with different fonts with the -fn switch. 
+However, the font parsing code is pretty primitive.  These
+should work if you have the fonts installed:
+  rxvt -fn "Courier-bold-13" -e ...
+  rxvt -fn "-*-Courier-medium-r-*-13-*" -e ...
+  rxvt -fn "Lucida Console-10" -e ...
+
+You can also put the font definitions in your .Xdefaults to avoid
+cluttering up the command line.  An example:
+
+cat >> $HOME/.Xdefaults
+Rxvt*font: -*-lucidatypewriter-medium-r-*-*-16-*-*-*-*-*-*-*
+^D
+
+================
+
+Mark Harig suggests the following, which should work on any version
+of Windows without requiring custom fonts to be installed:
+
+rxvt*font: -outline-Courier New-normal-r-normal-normal-20-96-120-120-c-100-iso8859-1
+
+================
+Font is Huge, Font is Tiny:
+
+When invoked via a Windows Shortcut, Charles Wilson has found it necessary to
+configure this way:
+
+  (1) In ~/.Xdefaults, set whatever font you like for X usage.  He prefers
+Rxvt*font:     -*-bitstream vera sans mono-medium-r-normal--*-130-*-*-m-*-iso8859-1
+Rxvt*boldfont: -*-bitstream vera sans mono-bold-r-normal--*-130-*-*-m-*-iso8859-1
+
+  (2) In the shortcut for starting rxvt in X mode, use this command string
+C:\cygwin\bin\run.exe /usr/bin/rxvt.exe -display 127.0.0.1:0.0 \
+-tn rxvt-cygwin -e /usr/bin/bash --login -i
+
+  (3) In the shortcut for starting rxvt in Native mode, use this command string
+C:\cygwin\bin\run.exe /usr/bin/rxvt.exe -display :0 \
+-fn "Lucida ConsoleP-16" -tn rxvt-cygwin-native -e /usr/bin/bash --login -i
+
+Notice that in Native Mode, the font choice in ~/.Xdefaults is overriden, 
+and the new value is specified in "Windows"-ish format, rather than XLFD 
+format.  The reason for this necessity is that the W11 display code 
+interprets "130" as the pt size, while the X server interprets it as 
+"pt size in 10ths of a point".  Thus, in X mode 130 means 13 points, but
+in native it means 130 points.
+
+FYI, the "Lucida ConsoleP" font is a version of Lucida Console re-encoded
+to support codepage 437 -- the line draw characters -- instead of the
+default encoding which supports codepage 1252 (Latin-1) characters.
+To find it, google is your friend.
+
+================
+
+If you like the DOS look, Dan Kaminsky suggests:
+  rxvt -fn fixedsys -bg black -fg grey 
+Or
+  rxvt -fn fixedsys -rv 
+
+================
+
+Backspace:
+
+If you get the ^? character when you hit backspace, you may either
+run with the "-backspacekey ^H" option or put this into your .Xdefaults:
+
+Rxvt.backspacekey: ^H
+
+Alternatively, you can use stty to make ^? work:
+
+if [ "$COLORTERM" = "rxvt-xpm" ]
+then
+   stty erase ^?
+fi
+
+================
+How to Insert/Paste:
+
+Use the middle mouse button, Shift-Insert, or Shift-Left-Click.  
+
+If you have a two button mouse, check your control panel to see
+if the mouse can be configured to emulate a middle button by
+pressing both buttons simultaneously.
+
+
+================
+Colors:
+
+To make your bash prompt colorful try putting this in your .bash_profile:
+  export PS1="\[\e[34m\]\w\[\e[0m\]> "
+
+File listing can be in color with the following alias:
+  alias ls=ls\ -F\ --color
+
+vi will color your source code if you set your TERM to linux
+or patch the xterm /etc/termcap entry.  As Dan recommends,
+add: 
+   xn@:op=\E[39;49m:Km=\E[M:tc=linux:
+after the line:
+   xterm-r6|xterm|xterm X11R6 version:\
+
+
+================
+General Unix Shell:
+
+rxvt/bash uses some environmental variables which are 
+commonplace in Unix, but rare in Windows.   These are:
+  USER  set to your username
+  SHELL set to /bin/bash 
+  HOME  set to /home/username
+If you set these variables either in the autoexec.bat or 
+by right clicking "My Computer", you'll find that things
+work better.
+
+================
+John Vincent writes:
+---
+I also have a file in my home directory called .inputrc which
+is used to configure the key used by bash, ftp, and some other
+programs, I use the following entries (literal text) which mean
+I can use the delete key as well as the backspace key, and other
+keys, try it and see
+
+"\e[3~": delete-char
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
+"\e[H": beginning-of-line
+"\e[F": end-of-line
+"\e[7~": beginning-of-line
+"\e[8~": end-of-line
+set convert-meta off
+set output-meta on
+
+The convert-meta and output-meta settings are used so I
+can use the (£) UK pound symbol. I am in the UK and have
+a UK keyboard.
+---
+
+
+================
+Display, or "how can I get rxvt to connect to my X-server at :0"
+
+Here's some options:
+1) run your X-server as :1 (it is, after all, the second display)
+2) set DISPLAY to localhost:0
+3) set W11_LIBRARY to libX11
+
+================
+Does X need to be installed?
+
+No, unless you want to have rxvt display on an X-display.  The executable
+will dynamically load the appropriate library.  The order it searches is:
+1. $W11_LIBRARY if set
+2. cygX11-9, cygX11-8, cygX11-7, cygX11-6, libX11, if $DISPLAY is set
+3. libW11 
+
+
+================
+Recent fixes:
+- fixed double +/- when hitting KP +/-
+
+- enabled 256 colors
+- redid the library loading to support the new X11 dll name (cygX11-6.dll)
+
+- built pretty much out-of-the-box on 2.7.10
+- rclock builds (has problems displaying on windows, X ok)
+
+- Made Sh-KP+ and Sh-KP- work.
+- Enabled next and xterm scroll bars. 
+
+- Undid XLookupString hack.  Surprisingly, Sh-pageup still works.
+
+- XLookupString returns 1 only for keycodes < 128. Fixes Sh-pageup and -sr
+- Fixed calculation of windows decorations, fixes row off by one.
+- built off rxvt-2.7.9
+- fixed rxvt code to not respond to ^[[?c (Christopher Faylor)
+
+- paste fix for NT/WinME
+- altered XDrawImageString to not use TextOut OPAQUE mode
+
+- fixed-pitch fonts are treated as such
+- new event callback redraws while resizing
+- Cursor no longer looks bad under WinXP ClearType (Cole Lin)   
+- multicharacter (Chinese BIG5) support (Cole Lin) 
+- zero-sized paste fix (Cole Lin)
+
+- switched icons from rxtv to rxvt
+- patch to main rxvt code to make initial size correct (Dr. Volker Zell)
+- allow F10 to be passed to the shell (Christian LESTRADE)
+- better backspace handling, better erasing (thanks to Christian LESTRADE)
+- transparency
+- fixed beep 
+- added icon
+- reverted to building as a console app.  Windows treats console
+  apps differently somehow as far as childern inheriting the console.
+- put a special case in the event code to better handle selections
+- added switching between Win32 and X libraries
+- trying -mwindows to see if console is no longer necessary
+- Mousewheel support
+- Ctrl-Space now works (thanks to Patrick Doyle for the bug report)
+- Ctrl-S doesn't hang the program (thanks to cygwin improvements)
+- Builds with cygwin-1.1.8 (thanks to Axel Kowald for the alert)
+- Fixes for supporting Japanese Fonts (thanks to Genzoo.A)
+
+
+
+Building:
+
+ 1) configure
+
+       ./configure --enable-utmp --enable-wtmp --enable-lastlog \
+ --enable-xpm-background  --enable-menubar --enable-rxvt-scroll \
+ --enable-next-scroll --enable-xterm-scroll --enable-frills \
+ --enable-linespace --enable-mousewheel --enable-keepscrolling \
+ --enable-old-selection --enable-transparency \
+ --with-xpm-includes=`pwd`/W11/X11 --with-xpm-library=`pwd`/W11/lib \
+ --x-libraries=`pwd`/W11/lib \
+ --enable-languages --with-encoding=noenc \
+ CFLAGS="-O -g -W -I`pwd`/W11" \
+ LDFLAGS="-mwindows -Wl,--subsystem,console" \
+ DLIB=`pwd`/W11/wrap/rxvt_res.o
+
+ 2) edit config.h to comment out #define HAVE_STRUCT_UTMPX 
+
+ 3) run make
+
+
+Credits, bugs, updates:
+
+rxvt is used mostly out-of-the-box the rxvt sourceforge project cvs
+and linked with a fake X-library that uses the Windows API.
+
+The fake X-library is a heavily modified version of:
+ ftp://ftp.microsoft.com/developr/drg/UNIX-to-Windows/Ports/Xlib/ntxlib.zip
+
+xpm-3.4k is used out-of-the-box and statically linked to rxvt.
+
+Thanks to Geoff Wing for integrating this port into the offical source,
+maintaining rxvt, and offering build suggestions.
+
+
+Bugs in windows support:
+- shell child processes may not die if the window is closed 
+    The rxvt code does not do any explicit process mgmt on exit
+- cat rxvt.exe will hang rxvt (patches need to be applied to cygwin).
+- really large large pastes can cause the window to hang.
+- locales are not supported.
+- native-console accesses (ReadConsole(), WriteConsole()) are not supported.
+    This is particularly true when non-cygwin programs ask for passwords.
+- if rxvt doesn't allocate a console occasionally an unexpected
+    console will pop up while running non-cygwin apps.
+- pixmaps are experimental, must be multiple of 8 pixels wide.
+- transparency is bare-bones.  Assumes you have a static tiled .BMP as your
+  background.  A proper implementation seems to require a fair amount of code.
+- rclock shows appointment window, draws the date at the wrong place
+
+TODO:
+- improve transparency support - maybe use the win2k alpha support
+- add support to select icons from the command line
+- figure out why cygwin requires a tt_resize and X doesn't
+
+Updates and source may be found using the cygwin setup tool.
+If you fix something, please let me know (Steve O <bub@io.com>).
+Thanks.
+
+=============================================================================
+===                    END ORIGINAL README TEXT                           ===
+=============================================================================

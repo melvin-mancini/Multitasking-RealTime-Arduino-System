@@ -1,0 +1,21 @@
+Rxvt*background:        #000040
+Rxvt*foreground:        #ffffbf
+Rxvt*scrollBar:         true
+Rxvt*scrollBar_right:   true
+
+! by default, stick with courier
+Rxvt*font:              -bitstream-courier 10 pitch-medium-r-normal--0-140-0-0-m-0-iso8859-1
+Rxvt*boldfont:          -bitstream-courier 10 pitch-bold-r-normal--0-140-0-0-m-0-iso8859-1
+
+! However, this looks better...
+!Rxvt*font:             -bitstream-bitstream vera sans mono-medium-r-normal--*-160-*-*-m-*-iso8859-1
+!Rxvt*boldfont:         -bitstream-bitstream vera sans mono-bold-r-normal--*-160-*-*-m-*-iso8859-1
+
+Rxvt*saveLines:         10000
+!Rxvt*loginshell:       true
+Rxvt.backspacekey:      ^H
+!---- this works in both native and X modes -----
+!Rxvt*backgroundPixmap: /usr/share/pixmaps/rxvt-dark-stripes.xpm
+!---- this only seems to work in X mode -----
+!Rxvt*inheritPixmap:    true
+

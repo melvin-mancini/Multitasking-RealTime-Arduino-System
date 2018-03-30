@@ -1,0 +1,80 @@
+* Create a warning macro for MSVCRT_VERSION and the use of a declared function
+  when the function does not exist in the MSVCRT_VERSION value.
+
+* Review the following headers:
+** io.h
+** limits.h
+** lmaccess.h
+** lmremutl.h
+** lmstats.h - What is LM20_WORKSTATION_STATISTICS?
+** malloc.h - What about calloc, free, malloc, realloc and _recalloc?
+** math.h - Commented out code.
+** objbase.h - DBG, how does MS set this macro?
+** objidl.h - Commented out code in PROVARIANT struct.
+** odbcinst.h - UNICODE??
+** ras.h - WINNT35COMPATIBLE??
+** rpc.h - SEH??
+** rpcdce.h - RPC_UNICODE_SUPPORTED
+** rpcdce2.h - RPC_UNICODE_SUPPORTED
+** rpcdcep.h - __RPC_NT__??
+** rpcndr.h - CONST_VTABLE, _M_IX86, __MIDL_USER_DEFINED
+** rpcnsi.h - UNICODE_ONLY, RPC_UNICODE_SUPPORTED
+** rpcproxy.h - NT35_STRICT, PROXY_CLSID, PROXY_CLSID_IS, PROXY_DELEGATION,
+		REGISTER_PROXY_DLL, USE_SUBLESS_PROXY
+	      - Should the CINTERFACE warning be and error?
+** sddl.h - WINADVAPI
+** servprov.h - COBJMACROS
+** setupapi.h - _SETUPAPI_VER???, USE_SP_DRVINFO_DATA_V1
+** shldisp.h - COBJMACROS
+** shlobj.h - COBJMACROS, _FIX_ENABLEMODELESS_CONFLICT
+** shlwapi.h - _OBJC_NO_COM
+** sql.h - ODBCVER
+** sqlext.h - ODBCVER, ODBC_STD
+** sqltypes.h - ODBCVER
+** stdio.h - _POSIX_SOURCE, __NO_ISOCEXT, __USE_MINGW_ANSI_STDIO, _MT,
+	     __USE_MINGW_FSEEK, __NO_INLINE__
+** stdlib.h - __NO_ISOCEXT, __NO_INLINE__
+** tchar.h - wmain, wWinMain, _wenviron and __wargv - implmentation?
+** time.h - _USE_32BIT_TIME_T
+	    _time32(), etc - should these always be defined?
+** unistd.h - __NO_ISOCEXT
+** unknwn.h - COM_NO_WINDOWS_H, CINTERFACE, COBJMACROS
+** values.h - ?? is it needed?
+** varargs.h - ?? can it be removed?
+** vfw.h - _OBJC_NO_COM, OFN_READONLY
+** vmr9.h - VMR9VideoStreamInfo, VMR9AlphaBitmap, VMR9PresentationInfo,
+	    VMR9AllocationInfo
+** wtypes.h - NONAMELESSUNION
+** wchar.h - __NO_ISOCEXT, _USE_32BIT_TIME_T - Make sure the time structures
+	    are defined correctly.
+** winbase.h - __W32API_USE_DLLIMPORT__, UNDER_CE, _WIN32_CE
+	       EXECUTION_STATE - should be defined in WinNT.
+	       Check the UNICODE mapping.
+** wincrypt.h - CERT_CHAIN_PARA_HAS_EXTRA_FIELDS
+** windef.h - WINVER, _WIN32_WINNT - remove default settings due to sdkddkver.h.
+	      _NO_W32_PSEUDO_MODIFIERS, NOMINMAX, NONAMELESSUNION, NO_STRICT
+** windows.h - __USE_W32_SOCKETS, __OBJC__
+	       wincrypt.h, winefs.h, winscard.h (need to add with NOCRYPT guard)
+** wingdi.h - _WIN32_CE, __W32API_USE_DLLIMPORT__
+** winnls.h - __W32API_USE_DLLIMPORT__
+	      Commented out symbols for VISTA.
+** winnt.h: FIXME
+	    Move target maps to separate file.
+	    __TEXT() move definition to _mingw.h and get rid of __STR() in
+	    mingw.h.
+** winsock2.h: _GNU_H_WINDOWS32_SOCKETS, __W32API_USE_DLLIMPORT__
+** winuser.h: __W32API_USE_DLLIMPORT__
+** ws2tcpip.h: GetNameInfoW - Add declaration.
+** wspiapi.h: Add file.
+** sys/timeb.h - _USE_32BIT_TIME_T
+** sys/types.h - _USE_32BIT_TIME_T
+** sys/utime.h - _USE_32BIT_TIME_T
+** gdiplus/gdiplusenums.h: FIXME
+** gdiplus/gdiplusimpl.h: FIXME
+** gdiplus/gdiplusmetaheader.h: FIXME
+** gdiplus/gdiplustypes.h: FIXME
+** ddk/atm.h: FIXME
+** ddk/cfgmgr32.h: FIXME
+** ddk/ntapi.h: FIXME
+** ddk/ntifs.h: _GNU_NTIFS_, VER_PRODUCTBUILD, _ALPHA_
+** ddk/ws2san.h: FIXME

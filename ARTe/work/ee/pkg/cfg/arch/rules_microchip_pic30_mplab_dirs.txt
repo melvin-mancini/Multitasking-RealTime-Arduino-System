@@ -1,0 +1,9 @@
+pkg/board/ee_flex/inc
+pkg/board/microchip_dspicdem11plus/inc
+pkg/board/microchip_explorer16/inc
+pkg/cpu/pic30/inc
+pkg/kernel/alarms/inc
+pkg/kernel/edf/inc
+pkg/kernel/fp/inc
+pkg/kernel/sem/inc
+pkg/mcu/microchip_dspic/inc

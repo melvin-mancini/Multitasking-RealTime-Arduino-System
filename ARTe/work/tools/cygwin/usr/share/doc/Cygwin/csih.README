@@ -1,0 +1,241 @@
+csih
+========================================================================
+Provides support for installing cygwin services.
+See /usr/share/csih/*.sh for more information (documentation is embedded
+within scripts)
+
+Runtime requirements:
+  cygwin-1.7.17-1
+  bash
+  gawk
+  editrights
+  grep
+  diffutils
+  coreutils
+
+Build requirements:
+  cygwin                1.7.17-1
+  cygport               0.11.3-1
+  gcc4-core             4.5.3-3
+  gcc4-g++              4.5.3-3
+  binutils              2.23.51-1
+  w32api-headers        3.0b_svn5591-1
+  w32api-runtime        3.0b_svn5591-1
+  mingw64-*-binutils    2.22.52-1
+  mingw64-*-gcc-core    4.5.3-6
+  mingw64-*-gcc-g++     4.5.3-6
+  mingw64-*-headers     3.0b_svn5591-1
+  mingw64-*-runtime     3.0b_svn5591-1
+
+Canonical website:
+  n/a
+
+Canonical download:
+  n/a
+
+License:
+  GPL
+
+Language:
+  C, C++, bash 
+
+========================================================================
+
+Build instructions:
+  unpack csih-VER-REL-src.tar.bz2
+    if you use setup to install this src package, it will be
+	 unpacked under /usr/src automatically
+  cd /usr/src
+  cygport ./csih-VER-REL.cygport all
+
+This will create:
+  /usr/src/csih-VER-REL-src.tar.bz2
+  /usr/src/csih-VER-REL.tar.bz2
+
+========================================================================
+
+Files included in the binary package:
+
+  /usr/lib/csih/getAccountName.exe
+  /usr/lib/csih/winProductName.exe
+  /usr/lib/csih/getVolInfo.exe
+  /usr/share/csih/cygwin-service-installation-helper.sh
+  /usr/share/doc/Cygwin/csih.README
+
+========================================================================
+
+Port Notes:
+----------  csih-0.9.7-1 -- 09 Apr 2013 -----------
+* winProductName: Better support for Windows Server 2012 variants.
+* getVolInfo: Adapt to new w32api; avoid ddk.
+* csih: Renamed csih_is_exactly_windows8server to csih_is_exactly_server2012.
+* csih: Added csih_cygwin_is_64bit.
+* Support cross-compilation; support cygwin64.
+* Use mingw64 toolchains by default for "native" executables.
+
+----------  csih-0.9.6-1 -- 26 Mar 2012 -----------
+* Avoid language runtime DLLS in utility programs.
+
+----------  csih-0.9.5-1 -- 9 Feb 2012 -----------
+* native/Makefile: Avoid -mno-cygwin and gcc3; use mingw cross compiler.
+* native/winProductName.c (GetOSDisplayString): Support
+  Windows 8 and Windows Server 8. Improve support for various
+  Microsoft OS products.
+* New functions csih_is_windows8(), csih_is_exactly_windows8(),
+  and csih_is_exactly_windows8server().
+* In csih_account_has_necessary_privileges(), no longer attempt to
+  validate membership in Administrators group -- the test doesn't
+  work properly on domains anyway. Just try to set the necessary
+  rights and report error if the operation fails. Reported by
+  Corinna Vinschen.
+* In csih_create_privileged_user(), don't attempt to check whether
+  /usr/bin/passwd has the -e option; all versions of passwd shipped
+  with cygwin-1.7.x support it. Reported by Tom Schutter.
+* Fixed bug related to the various existing csih_is_exactly_*
+  functions.
+
+----------  csih-0.9.4-1 -- 13 Feb 2011 -----------
+* New function csih_call_winsys32() for invoking programs
+  in C:\Windows\system32.
+* New function csih_writable_tmpdir() echos path to a temporary
+  directory, using $TMP, $TEMP, $TMPDIR, $HOME, etc.
+* New function csih_mktemp() safely wraps /usr/bin/mktemp.
+* csih_sanity_check() deprecated (replaced by internal function).
+* csih_check_basic_mounts() deprecated (ditto).
+* New mutable variables csih_sanity_check_server and
+  csih_required_commands[] for modifying the behavior of the internal
+  replacement function for csih_sanity_check().
+* All external applications (mkpasswd, expr, tr, sed, etc) are now called
+  by their full path, to avoid conflicts in the presence of unexpected
+  $PATH contents.
+* (internal): massive reorganization, changing the order of intialization.
+  Required because some initialization requires calling external programs,
+  and we now verify these programs are accessible first.
+
+----------  csih-0.9.3-1 -- 07 Feb 2011 -----------
+o In csih_install_config(), don't treat as error when user elects NOT to
+  overwrite existing files; instead return success. (Corinna Vinschen)
+o Compile cygwin elements using gcc4 (adds new dependency on libgcc1)
+
+----------  csih-0.9.2-1 -- 16 Nov 2010 -----------
+o Remove all vestiges of pre-NT support.
+o Update user messages and comments to accurately reflect handling of
+  Windows XP 64bit. Note that this means 'csih_is_nt2003' is now
+  /documented/ to return true for Windows XP 64, in additional to
+  the expected "Windows NT Server 2003 and above". This is necessary
+  because XP64 shares the same kernel as NT2003, and thus both display
+  similar behavior regarding the privileges of the built-in SYSTEM
+  account.
+
+----------  csih-0.9.1-1 -- 01 Aug 2009 -----------
+o Various changes to getVolInfo; don't request unnecessary rights
+  when opening volume information.
+
+----------  csih-0.9.0-1 -- 03 May 2009 -----------
+o Forked for cygwin-1.7 development.
+o Only a few substantive changes relative to 0.2.0:
+  - use common version.h file in compiled programs,
+    to avoid having to increment the version number
+    in too many places.
+  - new csih_win_product_name() function caches result
+    of calling winProductName.
+  - Verify that OS is at least WinNT, and that cygwin
+    version is at least 1.7.0, or error. 
+
+----------  csih-0.2.0-1 -- 03 May 2009 -----------
+* No functional changes. Simply bumped version number
+  and branched CVS for cygwin-1.5-specific maintainance.
+
+----------  csih-0.1.9-2 -- 29 Mar 2009 -----------
+* Add ACLs for system user and Administrators group to
+  /var/log, /var/run, and /var/empty.
+* Suppress informational messages about other privileged
+  users when using '-u $specific_username_request'
+
+----------  csih-0.1.9-1 -- 28 Mar 2009 -----------
+* correct setup.hint dependencies
+* correct csih_check_access behavior.
+* suppress errors in _csih_setup
+* No longer restrict contents of CYGWIN variable
+* New -f option for csih_select_privileged_username to
+  accomodate unattended installs 
+* New '-u default_username' for csih_select_privileged_username
+  for another way to accomodate unattended installs
+* Now warn user when an account is specified in /etc/passwd,
+  but is not found in the SAM. This is ok if the account is
+  a domain account, but the user should be aware of the issue.
+* Updated winProductName to reflect Windows 7, Server 2008 R2
+* csih has new functions related to detecting Windows 7 and
+  Server 2008 R2.
+
+----------  csih-0.1.8-1 -- 20 Aug 2008 -----------
+* improved support for using pre-existing domain accounts
+* attempt to explicitly set permissions on /var/[log|run|empty]
+  and /etc.
+
+----------  csih-0.1.7-1 -- 16 Aug 2008 -----------
+* bug fixes
+* better Vista support
+* cygwin-1.7 support
+
+----------  csih-0.1.6-1 -- 07 Aug 2008 -----------
+* See NEWS for more complete description of changes
+* more permissions tweaks for privileged user.
+  NOTE: the privileged user is now no longer prevented from
+    Interactive Logons (since 0.1.6)
+    Network Logons     (since 0.1.5)
+  and no longer has the ability to
+    Increase Quota     (since 0.1.6)
+* Even on NT/2k/XP, prefer to use "privileged" user if one
+  already exists.
+* Accept privileged accounts that exist only in /etc/passwd and
+  are not present in the local SAM.  That is, accept pre-existing 
+  privileged domain accounts.
+* New utility program: getVolInfo
+* New function: csih_path_supports_acls()
+* It is no longer a fatal error if, when checking the 
+  permissions or access rights of a file or directory, the
+  target is located on a volume that does not support ACLs.
+  A warning is issued, but operation continues.
+* The Administrators group is no longer required to be in 
+  /etc/passwd.
+
+----------  csih-0.1.5-1 -- 19 Jul 2008 -----------
+* Tweak privileged user's privileges
+
+----------  csih-0.1.4-1 -- 14 Apr 2008 -----------
+* New facilities and options to support 'user' config scripts
+* New facilities to support version-string comparison
+* Added help output to winProductName utility
+* Clarified licensing terms
+
+----------  csih-0.1.3-1 -- 16 Mar 2008 -----------
+* brown paper bag: fix bug in csih.sh script
+
+----------  csih-0.1.2-1 -- 16 Mar 2008 -----------
+* added utility: 'winProductName' which obtains the exact
+  operating system name (with finer granularity than `uname')
+  Currently used only to distinguish between vista and server2008.
+* New system id function: csih_is_exactly_vista(), csih_is_exactly_server2008
+* Protection against evaluating $0 when invoked by login shell
+* Fix typo in setup.hint
+
+----------  csih-0.1.1-1 -- 08 Mar 2008 -----------
+* added utility: 'getAccountName' which obtains the (localized) name
+  of well known accounts
+* New system id function: csih_is_2k(), csih_is_xp(), csih_is_vista()
+* New function: csih_invoke_helper
+    invokes utilities in /usr/lib/csih/
+* New function: csih_get_localized_account_name
+    Given an WELL_KNOWN_SID_TYPE enumeration value, uses getAccountName
+    utility to obtain the localized name associated with the account
+* New function: csih_get_guest_account_name
+    Shortcut using csih_get_localized_account_name for Guest account
+* New function: csih_guest_account_active
+    returns true if Guest account is active, false otherwise
+* -src package reorganization
+
+----------  csih-0.1-1 -- 29 Feb 2008 -----------
+* initial pre-release
+
+Cygwin port maintained by:  Charles Wilson <cygwin@cygwin.com>

@@ -1,0 +1,5 @@
+/usr/bin/rm -f /usr/share/fonts/misc/encodings.dir /usr/share/fonts/misc/fonts.{dir,scale}
+/usr/bin/mkfontscale /usr/share/fonts/misc || /usr/bin/rm -f /usr/share/fonts/misc/fonts.scale
+/usr/bin/mkfontdir -e /usr/share/fonts/encodings -e /usr/share/fonts/encodings/large /usr/share/fonts/misc || /usr/bin/rm -f /usr/share/fonts/misc/{encodings,fonts}.dir
+/usr/bin/fc-cache -f /usr/share/fonts/misc
+

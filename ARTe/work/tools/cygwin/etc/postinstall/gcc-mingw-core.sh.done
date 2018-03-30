@@ -1,0 +1,43 @@
+#!/bin/sh
+[ -f /etc/postinstall/gcc-mingw-core-3.4.4-20050522-3.tar.xz ] || exit 0
+/bin/mkdir -p /usr/i686-pc-mingw32
+cd /usr/i686-pc-mingw32
+for d in include lib bin
+do
+  if [ -e /usr/i686-pc-mingw32/$d -a -h /usr/i686-pc-mingw32/$d ]
+  then
+    rm -f /usr/i686-pc-mingw32/$d
+  fi
+done
+echo "*** Unpacking /etc/postinstall/gcc-mingw-core-3.4.4-20050522-3.tar.xz.  Please wait. ***"
+/bin/tar -xvJf /etc/postinstall/gcc-mingw-core-3.4.4-20050522-3.tar.xz -C /usr |\
+	/bin/sort -r > /etc/preremove/gcc-mingw-core-manifest.tmp
+
+echo "*** Creating symbolic links for cc1.exe and collect2.exe.  Please wait. ***"
+cd /usr/lib/gcc/i686-pc-mingw32/3.4.4
+ln -fs ../../i686-pc-cygwin/3.4.4/cc1.exe .
+ln -fs ../../i686-pc-cygwin/3.4.4/collect2.exe .
+
+echo lib/gcc/i686-pc-mingw32/3.4.4/cc1.exe      >> /etc/preremove/gcc-mingw-core-manifest.tmp
+echo lib/gcc/i686-pc-mingw32/3.4.4/collect2.exe >> /etc/preremove/gcc-mingw-core-manifest.tmp
+
+cat /etc/preremove/gcc-mingw-core-manifest.tmp | sort -r > /etc/preremove/gcc-mingw-core-manifest.lst
+rm -f /etc/preremove/gcc-mingw-core-manifest.tmp
+
+echo "*** Creating symbolic links for runtime files ***"
+if [ ! -d /usr/i686-pc-mingw32/lib ]
+then
+	mkdir -p /usr/i686-pc-mingw32/lib
+fi
+cd /usr/i686-pc-mingw32/lib
+for f in CRT_fp10.o CRT_fp8.o CRT_noglob.o binmode.o \
+	crt1.o crt2.o crtmt.o crtst.o dllcrt1.o dllcrt2.o \
+	gcrt1.o gcrt2.o txtmode.o
+do
+	if [ -f $f ]
+	then
+		rm -f $f
+	fi
+	ln -fs /usr/i686-pc-mingw32/sys-root/mingw/lib/$f .
+done
+

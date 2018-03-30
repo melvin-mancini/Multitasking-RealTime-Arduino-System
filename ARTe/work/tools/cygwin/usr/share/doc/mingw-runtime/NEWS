@@ -1,0 +1,189 @@
+mingwrt-4.0
+w32api-4.0
+-----
+We have combined the source libraries for winsup/mingw and winsup/w32api into
+our own repository named mingw-org-wsl.  This change allows us to maintain our
+repositories locally and provide the MinGW users a better maintenance plan.
+
+We have a new license for all files that fell into public domain originally. The
+license is now MIT style and is embedded at the top of all files where we were
+able to apply our own license to the file.  Files not containing this new
+license are stored in the misc directory in the repository.  The move of the
+repository files does not change the location of the distributed files.
+
+All include files now include the _mingw.h file in order to make use of some new
+macros as explained later.  The w32api.h file is now deprecated and should not
+be used.  If you are using it you will receive a warning telling you to not use
+the file.
+
+All filters for OS version now check only _WIN32_WINNT and use a named macro as
+defined in the new file include/sdkddkver.h and the filters were moved to the
+end of the file if possible to reduce the noise caused by the filter.
+
+A new macro named __AW() and defined in _mingw.h is used to suffix a symbol with
+the ANSI versus UNICODE A or W declarations and definitions.  This reduced the
+number of lines in an include file by significant amounts dependent on the
+number of symbols which are specific to ANSI versus UNICODE.
+
+You should now always define NTDDI_VERSION with the least OS version you wish
+your application to support.  We determine a default based on the _WIN32_WINNT
+value suffixed with 0000 (service pack 0).  If _WIN32_WINNT is not defined we
+determine a default for it based on WINVER if it is defined otherwise
+_WIN32_WINNT_WIN2K.  If NTDDI_VERSION is defined then _WIN32_WINNT is checked
+for a match if defined and give an error if they do not match.  If NTDDI_VERSION
+is defined but _WIN32_WINNT not defined _WIN32_WINNT takes on the
+OSDIR(NTDDI_VERSION) value.  The windows.h header file will include sdkddkver.h
+but you may need to specify the include in your source in order to use the
+definitions in that file to set the NTDDI_VERSION.
+
+CRTDLL is no longer supported.  We have removed the creation of the library and
+the filters from the code.  This also removes startup object files that you
+would have had to specify to the linker.  The GCC specs file is already not
+supporting CRTDLL; I do not know when this was removed.
+
+All occurances of __MSVCRT_VERSION__ filters were removed as unneeded.  This
+results in the fact that if you do not specify an appropriate -lmsvcr?? library
+where ?? represents the library version number and you use a symbol that is
+only available in a versioned library DLL then you will either receive an error
+during the link step or during runtime.  However, this also removes the
+inconsistency between a Microsoft build and the MinGW build in that you do not
+need to define __MSVCRT_VERSION__ correctly.
+
+We now have a MSVCRT_VERSION which is aimed to contain a value which represents
+the version of the MSVCRT.DLL on a Windows OS.  For instance XP has a version
+of 710, Vista has a value of 800 and Win7 has a value of 910.  These values are
+based on the (MajorLinkerVersion * 100) + MinorLinkerVersion as returned from
+objdump -x MSVCRT.DLL.  The default value will be determined by the value of
+_WIN32_WINNT within the _mingw.h file unless the user has defined it already.
+This allows the code builder to not need to worry with the value of
+MSVCRT_VERSION since it should have the correct value for the targeted OS.
+
+We now assume that GCC is the only compiler used with the MinGW.org WSL
+(Windows System Libraries) and that the minimum supported version of GCC is
+3.5.4.  This allowed for futher code refactoring reducing the number of lines
+in a header file.  You will receive an error if __GNUC__ is not defined or
+if the GCC version isn't 3.5.4.
+
+The build system was revamped in order to take advantage of the combined MinGW
+runtime and w32api source.  We will currently continue to release both the
+mingwrt and the w32api library packages for the time being.  We will eventually
+do away with the dual release packages and have a release under the
+mingw-org-wsl name.
+
+A new macro _HAVE_32BIT_TIME_T can be used if you are needing _USE_32BIT_TIME_T
+and have a library that contains the symbols (e.g. _localtime32).  Otherwise the
+when _USE_32BIT_TIME_T is defined but _HAVE_32BIT_TIME_T the time functions use
+the 64bit time_t functions and type define as appropriate.  This allows you to
+use 32bit time_t with msvcrt.dll but it would be slightly slower.  Note, I
+have discovered that the SysWOW64/msvcrt.dll contains the 32bit time_t functions
+but we do not deliver libmsvcrt.a with these imports as this is not available on
+all systems.  However, you could possibly (needs testing) use the msvcrt.dll
+directly to link against and define _HAVE_32BIT_TIME_T during the compile.  In
+many cases we create a _CRTALIAS for the functions in the header files.  This
+allows an application to use 32bit time_t structures and 32bit time functions
+regardless of the MSVCRT.DLL on the system.  If the MSVCRT.DLL contains the
+function for the targeted MSVCRT_VERSION value then the function is imported
+instead of an alias being defined.
+
+We have an ABI incompatibility due to a reworking of the dirent.c which provides
+opendir() and friends.  You will need to rebuild all libraries to that use
+these functions.
+
+Issues resolved:
+gdtoa/gd_qnan.h: Make NAN constants positive valued.
+Add MemoryBarrier to libmingwex.a.
+Declare _wexec* and _wspawn* functions in include/process.h.
+Declare _strtoi64, _strtoi64_l, _strtoui64, _strtoui64_l, _wcstrtoi64,
+  _wcstrtoi64_l, _wcstrtoui64, _wcstrtoui64_l in include/stdlib.h.
+Declare _wcstrtoi64, _wcstrtoi64_l, _wcstrtoui64, _wcstrtoui64_l in
+  include/wchar.h.
+Add __STRICT_ANSI__ guard for _getws, _putws, _wfdpen, _wfopen, _wfsopen,
+  _wtmpnam, _wtempnam, _wrename, _wremove, _wperror, _wpopen and PATH_MAX.
+Declare _lock_file and _unlock_file in include/stdio.h.
+When setting default for MAXPATHLEN make sure that PATH_MAX is defined before
+  using it in include/sys/param.h.
+Declare threadlocalinfostruct, threadmbinfostruct, *pthreadlocinfo,
+  *pthreadmbcinfo, _locale_tstruct, and *_locale_t in include/_mingw.h.
+Resolve an issue with tsearch.c.
+Some preparation for _WIN64.
+Performance improvements in libmingwex.a dirent.c code.
+Correct _wfindfirst, _wfindnext, _wfindfirst32, _wfindnext32, _wfindfirsti64
+  _wfindnexti64, _wfindfirst32i64, _wfindfirst64i32, _wfindnext32i64,
+  _wfindnext64i32, _wfindnext64 to use intptr_t in include/io.h.
+Add inline definitions for getc, putc, getchar, putchar, fopen64 and ftello64
+  in include/stdio.h.
+Reapply fix for __dyn_tls_init.
+Handling of errno in mingwex is more POSIX conformant.
+Redefine the structure for dirent and _wdirent to include d_type and be
+  copesetic to Microsoft attributes.
+Declare DIR and _WDIR as opaque data types.
+__dirstream_t and __wdirstream_t are moved to mingwex dirent.c.
+Add MemoryBarrier to include/winnt.h.
+Correct declaration of VerQueryValue[AW] based on MSDN in include/winver.h.
+Correct typos in include/setupapi.h.
+Correct dwItemData definition for tagMENUITMEINFO[AW] in include/winuser.h.
+Add declaration of WTSVirtualChannelClose, WTSVirtualChannelOpen,
+  WTSVirtualChannelOpenEx, WTSVirtualChannelPurgeInput,
+  WTSVirtualChannelPurgeOutput, WTSVirtualChannelQuery, WTSVirtualChannelRead,
+  and WTSVirtualChannelWrite in include/wtsapi32.h.
+Add import symbols WTSVirtualChannelOpenEx@12 to wtsapi32.def.
+Do not deliver amvideo.h and amaudio.h due to incomplete dependencies.
+Add delivery of include/sdkddkver.h.
+Correct OS version guard for GetModuleHandleEx[AW].
+Add delivery of include/shobjidl.h.
+Reorder IP_LOCAL_BINDING definition before IP_ADAPTER_BINDING_INFO.
+Default OS version is now Windows 2000 service pack 0.
+Define JOB_OBJECT_LIMIT_BREAKAWAY_OK, JOB_OBJECT_LIMIT_SILENT_BREAKAWAY_OK in
+  include/winnt.h.
+Define JOB_OBJECT_BREAKAWAY_OK as JOB_OBJECT_LIMIT_BREAKAWAY_OK and deprecate.
+Define JOB_OBJECT_SILENT_BREAKAWAY as JOB_OBJECT_LIMIT_SILENT_BREAKAWAY_OK and
+  deprecate.
+Define PROCESS_QUERY_LIMITED_INFORMATION in include/winnt.h.
+Define MAPVK_* in include/winuser.h.
+Resolve typo for IMAGE_DLLCHARACTERISTICS_* in include/winnt.h.
+Deprecate IMAGE_DLL_CHARACTERISTICS_*.
+Define SIO_UDP_CONNRESET in include/winsock2.h.
+Correct GCP_RESULTSW definition in include/wingdi.h.
+Define STACK_SIZE_PARAM_IS_A_RESERVATION in include/winbase.h.
+Removed PACKED macro from incldue/windef.h.
+Replace PACKED in include/wincon.h with __attribute__((packed)).
+Correct PREAD_PROCESS_MEMORY_ROUTINE definition in imagehlp.h.
+Define DOMAIN_ALIAS_RID_REMOTE_DESKTOP_USERS in winnt.h.
+Some new functions and definitions in userenv.h.
+O_RAW is now declared if ndef _NO_MOLDNAMES in fcntl.h.
+CRYPT_KEY_PROV_INFO and CRYPT_KEY_PROV_PARAM are now defined in wincrypt.h.
+KeQueryActiveProcessorCount is now declared in ddk/ntddk.h; but still is
+  broken.  See Issue [#1183].
+Remove ndef _NO_OLDNAMES guard from off_t in sys/types.h so that it is always
+  defined.
+Added definitions of _MCW_DN, _DN_SAVE and _DN_FLUSH to float.h.
+The stat functions were modified to use the various _stat32, _stat64,
+  _stat64i32, etc functions.  Using _stat will resolve to the correct structure.
+  The resolution is a result of _USE_32BIT_TIME_T and _HAVE_32BIT_TIME_T user
+  land initiated definitions.  See sys/stat.h for the implementation.
+The POINTTOPOINTS returned data type was changed from a POINTS structure to the
+  value of MAKELONG based on user experience with the macro.
+The POINTSTOPOINT, MAKEWORD, MAKELONG, LOWORD, HIWORD, LOBYTE, HIBYTE macros
+  were corrected to use the correct data type casts.
+Correct the tdelete, tfind and tsearch declarations in search.h
+Correct the LaunchScreenSaver implementation in src/libscrnsave/scrnsave.c to
+  allow operation on systems older than Windows 2000.
+Correct the typo defining LPENUMSTATPROPSTG as a pointer in objfwd.h.
+Correct the constants in gd_qnan.h to produce the correct NaN results.
+Added declaration and import of WSAPoll function.
+Added declaration and import of CertEnumCRLsInStore function.
+Corrected declarations and definitions for DllMain [#1670].
+Added declaration of _vscwprintf.
+Include reason.h in winreg.h so that the public definitions are defined by
+  including windows.h.
+Define LONG_PTR specific to _WIN64 versus _WIN32.
+Define _MAX_ENV if not __STRICT_ANSI__.
+Define interfaced declarations for ICreateTypeInfo, ICreateTypeInfo2,
+  ICreateTypeLib and ICreateTypeLib2.
+Provide implementations for IID_IGlobalInterface, FMTID_DocSummaryInformation,
+  FMTID_SummaryInformation, FMTID_UserDefinedProperties, and
+  CLSID_StdGlobalInterfaceTable.
+Added declaration and import of RegisterTypeLibForUser and
+  UnRegisterTypeLibForUser.
+Resolve the shell globbing issue as describe in thread
+  http://thread.gmane.org/gmane.comp.gnu.mingw.user/38302

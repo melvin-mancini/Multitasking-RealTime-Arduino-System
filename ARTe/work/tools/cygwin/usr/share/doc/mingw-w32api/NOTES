@@ -1,0 +1,4 @@
+WINVER < 0x0400 indicates Windows NT 3.5 and 3.51
+WINVER = 0x0400 indicates Windows 95, 98 and NT4.
+WINVER > 0x0400 indicates NT4 with enhancements.
+WINVER = 0x0500 indicates Windows 2000

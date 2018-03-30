@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<evidence_example version="1" ID="msp430_launchpad">
+
+<category>msp430/launchpad_example</category>
+<title>LaunchPad Temperature Sensor Demo</title>
+   
+<small_descr>
+A monostack demo project to periodically read the internal temperature sensor
+and display temperature deltas on the LEDs.
+</small_descr>
+
+<long_descr>
+This demo shows the basic structure of an ERIKA Enterprise monostack project, and includes examples of TASKs and ISRs.
+
+The application uses timerA to periodically raise an interrupt which activates Task1.
+Task1 starts an ADC conversion to read the internal temperature sensor.
+When the ADC conversion finishes an interrupt is raised which activates Task2.
+Task2 reads the results of the ADC conversion and controls the LEDs depending on whether the current temperature is above, below or the same as the reference temperature.
+The reference temperature is read at start-up and whenever button 1 is pressed.
+
+This demo could be made more compact by removing Task1 and starting the ADC conversion from
+within the timerA ISR. That exercise is left to the reader.
+</long_descr>
+
+<file_section>
+ <file     name="main.c"/> 
+ <file     name="conf.oil"/>
+</file_section>
+
+</evidence_example>

@@ -1,0 +1,2 @@
+sketch_may15a:3: error: variable or field 'loop1' declared void
+sketch_may15a:6: error: variable or field 'loop1' declared void

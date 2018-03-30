@@ -1,0 +1,6 @@
+if [ ! -f /etc/X11/system.XWinrc ]
+then
+    /usr/bin/mkdir -p /etc/X11
+    /usr/bin/cp /etc/defaults/etc/X11/system.XWinrc /etc/X11/system.XWinrc
+fi
+

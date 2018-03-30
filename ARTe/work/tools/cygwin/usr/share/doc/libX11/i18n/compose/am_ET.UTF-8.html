@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="ANSI_X3.4-1968" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968" /><title>Xlib Compose Keys for am_ET.UTF-8</title><meta name="generator" content="DocBook XSL Stylesheets V1.77.1" /><link rel="home" href="libX11-keys.html" title="Xlib Compose Key Charts" /><link rel="up" href="libX11-keys.html" title="Xlib Compose Key Charts" /><link rel="prev" href="libX11-keys.html" title="Xlib Compose Key Charts" /><link rel="next" href="armscii-8.html" title="Xlib Compose Keys for armscii-8" /><style xmlns="" type="text/css">/*
+ * Copyright (c) 2011 Gaetan Nadon
+ * Copyright (c) 2010, Oracle and/or its affiliates. All rights reserved.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice (including the next
+ * paragraph) shall be included in all copies or substantial portions of the
+ * Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ * DEALINGS IN THE SOFTWARE.
+ */
+
+/*
+ * Shared stylesheet for X.Org documentation translated to HTML format
+ * http://www.sagehill.net/docbookxsl/UsingCSS.html
+ * http://www.w3schools.com/css/default.asp
+ * https://addons.mozilla.org/en-US/firefox/addon/web-developer/developers
+ * https://addons.mozilla.org/en-US/firefox/addon/font-finder/
+ */
+
+/*
+ * The sans-serif fonts are considered more legible on a computer screen
+ * http://dry.sailingissues.com/linux-equivalents-verdana-arial.html
+ *
+ */
+body {
+  font-family: "Bitstream Vera Sans", "DejaVu Sans", Tahoma, Geneva, Arial, Sans-serif;
+  /* In support of using "em" font size unit, the w3c recommended method */
+  font-size: 100%;
+}
+
+/*
+ * Selection: all elements requiring mono spaced fonts.
+ *
+ * The family names attempt to match the proportionally spaced font
+ * family names such that the same font name is used for both.
+ * We'd like to use Bitstream, for example, in both proportionally and
+ * mono spaced font text.
+ */
+.command,
+.errorcode,
+.errorname,
+.errortype,
+.filename,
+.funcsynopsis,
+.function,
+.parameter,
+.programlisting,
+.property,
+.screen,
+.structname,
+.symbol,
+.synopsis,
+.type
+{
+  font-family:  "Bitstream Vera Sans Mono", "DejaVu Sans Mono", Courier, "Liberation Mono", Monospace;
+}
+
+/*
+ * Books have a title page, a preface, some chapters and appendices,
+ * a glossary, an index and a bibliography, in that order.
+ *
+ * An Article has no preface and no chapters. It has sections, appendices,
+ * a glossary, an index and a bibliography.
+ */
+
+/*
+ * Selection: book main title and subtitle
+ */
+div.book>div.titlepage h1.title,
+div.book>div.titlepage h2.subtitle {
+  text-align: center;
+}
+
+/*
+ * Selection: article main title and subtitle
+ */
+div.article>div.titlepage h2.title,
+div.article>div.titlepage h3.subtitle,
+div.article>div.sect1>div.titlepage h2.title,
+div.article>div.section>div.titlepage h2.title {
+  text-align: center;
+}
+
+/*
+ * Selection: various types of authors and collaborators, individuals or corporate
+ *
+ * These authors are not always contained inside an authorgroup.
+ * They can be contained inside a lot of different parent types where they might
+ * not be centered.
+ * Reducing the margin at the bottom makes a visual separation between authors
+ * We specify here the ones on the title page, others may be added based on merit.
+ */
+div.titlepage .authorgroup,
+div.titlepage .author,
+div.titlepage .collab,
+div.titlepage .corpauthor,
+div.titlepage .corpcredit,
+div.titlepage .editor,
+div.titlepage .othercredit {
+  text-align: center;
+  margin-bottom: 0.25em;
+}
+
+/*
+ * Selection: the affiliation of various types of authors and collaborators,
+ * individuals or corporate.
+ */
+div.titlepage .affiliation {
+  text-align: center;
+}
+
+/*
+ * Selection: product release information (X Version 11, Release 7)
+ *
+ * The releaseinfo element can be contained inside a lot of different parent
+ * types where it might not be centered.
+ * We specify here the one on the title page, others may be added based on merit.
+ */
+div.titlepage p.releaseinfo {
+  font-weight: bold;
+  text-align: center;
+}
+
+/*
+ * Selection: publishing date
+ */
+div.titlepage .pubdate {
+  text-align: center;
+}
+
+/*
+ * The legal notices are displayed in smaller sized fonts
+ * Justification is only supported in IE and therefore not requested.
+ *
+ */
+.legalnotice {
+  font-size: small;
+  font-style: italic;
+}
+
+/*
+ * For documentation having multiple licenses, the copyright and legalnotice
+ * elements sequence cannot instantiated multiple times.
+ * The copyright notice and license text are therefore coded inside a legalnotice
+ * element. The role attribute on the paragraph is used to allow styling of the
+ * copyright notice text which should not be italicized.
+ */
+p.multiLicensing {
+  font-style: normal;
+  font-size: medium;
+}
+
+/*
+ * Selection: book or article main ToC title
+ * A paragraph is generated for the title rather than a level 2 heading.
+ * We do not want to select chapters sub table of contents, only the main one
+ */
+div.book>div.toc>p,
+div.article>div.toc>p {
+  font-size: 1.5em;
+  text-align: center;
+}
+
+/*
+ * Selection: major sections of a book or an article
+ *
+ * Unlike books, articles do not have a titlepage element for appendix.
+ * Using the selector "div.titlepage h2.title" would be too general.
+ */
+div.book>div.preface>div.titlepage h2.title,
+div.book>div.chapter>div.titlepage h2.title,
+div.article>div.sect1>div.titlepage h2.title,
+div.article>div.section>div.titlepage h2.title,
+div.book>div.appendix>div.titlepage h2.title,
+div.article>div.appendix h2.title,
+div.glossary>div.titlepage h2.title,
+div.index>div.titlepage h2.title,
+div.bibliography>div.titlepage h2.title {
+   /* Add a border top over the major parts, just like printed books */
+   /* The Gray color is already used for the ruler over the main ToC. */
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: Gray;
+  /* Put some space between the border and the title */
+  padding-top: 0.2em;
+  text-align: center;
+}
+
+/*
+ * A Screen is a verbatim environment for displaying text that the user might
+ * see on a computer terminal. It is often used to display the results of a command.
+ *
+ * http://www.css3.info/preview/rounded-border/
+ */
+.screen {
+  background: #e0ffff;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #B0C4DE;
+  border-radius: 1.0em;
+  /* Browser's vendor properties prior to CSS 3 */
+  -moz-border-radius: 1.0em;
+  -webkit-border-radius: 1.0em;
+  -khtml-border-radius: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 1.0em;
+  padding: 0.5em;
+}
+
+/*
+ * Emphasis program listings with a light shade of gray similar to what
+ * DocBook XSL guide does: http://www.sagehill.net/docbookxsl/ProgramListings.html
+ * Found many C API docs on the web using like shades of gray.
+ */
+.programlisting {
+  background: #F4F4F4;
+  border-width: 1px;
+  border-style: solid;
+  border-color: Gray;
+  padding: 0.5em;
+}
+
+/*
+ * Emphasis functions synopsis using a darker shade of gray.
+ * Add a border such that it stands out more.
+ * Set the padding so the text does not touch the border.
+ */
+.funcsynopsis, .synopsis {
+  background: #e6e6fa;
+  border-width: 1px;
+  border-style: solid;
+  border-color: Gray;
+  clear: both;
+  margin: 0.5em;
+  padding: 0.25em;
+}
+
+/*
+ * Selection: paragraphs inside synopsis
+ *
+ * Removes the default browser margin, let the container set the padding.
+ * Paragraphs are not always used in synopsis
+ */
+.funcsynopsis p,
+.synopsis p {
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * Selection: variable lists, informal tables and tables
+ *
+ * Note the parameter name "variablelist.as.table" in xorg-xhtml.xsl
+ * A table with rows and columns is constructed inside div.variablelist
+ *
+ * Set the left margin so it is indented to the right
+ * Display informal tables with single line borders
+ */
+table {
+  margin-left: 0.5em;
+  border-collapse: collapse;
+}
+
+/*
+ * Selection: paragraphs inside tables
+ *
+ * Removes the default browser margin, let the container set the padding.
+ * Paragraphs are not always used in tables
+ */
+td p {
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * Add some space between the left and right column.
+ * The vertical alignment helps the reader associate a term
+ * with a multi-line definition.
+ */
+td, th {
+  padding-left: 1.0em;
+  padding-right: 1.0em;
+  vertical-align: top;
+}
+
+.warning {
+  border: 1px solid red;
+  background: #FFFF66;
+  padding-left: 0.5em;
+}
+</style></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Xlib Compose Keys for am_ET.UTF-8</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="libX11-keys.html">Prev</a>&#160;</td><th width="60%" align="center">&#160;</th><td width="20%" align="right">&#160;<a accesskey="n" href="armscii-8.html">Next</a></td></tr></table><hr /></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="am_ET.UTF-8"></a>Xlib Compose Keys for am_ET.UTF-8</h2></div></div></div><p>Applications using Xlib input handling should recognize
+ these compose key sequences in locales using the
+ am_ET.UTF-8 compose table.</p><p> UTF-8 (Unicode) compose sequence for Ethiopean layout. Designed as a part of OLPC project  2007 Sergey Udaltsov &lt;svu@gnome.org&gt; </p><div class="table"><a id="idp867710124"></a><p class="title"><strong>Table&#160;1.&#160;Compose Key Sequences for am_ET.UTF-8</strong></p><div class="table-contents"><table summary="Compose Key Sequences for am_ET.UTF-8" border="1"><colgroup><col class="seq" /><col class="action" /></colgroup><thead><tr><th>Key Sequence</th><th>Action</th></tr></thead><tbody><tr><td colspan="2"> Group I </td></tr><tr><td colspan="2">Modifier: /u/</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1200</span></td><td>"&#4609;" U1201 # key h (base character &#4608;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1208</span></td><td>"&#4617;" U1209 # key l (base character &#4616;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1218</span></td><td>"&#4633;" U1219 # key m (base character &#4632;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1228</span></td><td>"&#4649;" U1229 # key r (base character &#4648;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1230</span></td><td>"&#4657;" U1231 # key s (base character &#4656;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1240</span></td><td>"&#4673;" U1241 # key q (base character &#4672;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1260</span></td><td>"&#4705;" U1261 # key b (base character &#4704;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1270</span></td><td>"&#4721;" U1271 # key t (base character &#4720;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1290</span></td><td>"&#4753;" U1291 # key n (base character &#4752;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U12A0</span></td><td>"&#4769;" U12A1 # key x (base character &#4768;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U12A8</span></td><td>"&#4777;" U12A9 # key k (base character &#4776;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U12C8</span></td><td>"&#4809;" U12C9 # key w (base character &#4808;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U12D8</span></td><td>"&#4825;" U12D9 # key z (base character &#4824;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U12E8</span></td><td>"&#4841;" U12E9 # key y (base character &#4840;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U12F0</span></td><td>"&#4849;" U12F1 # key d (base character &#4848;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1300</span></td><td>"&#4865;" U1301 # key j (base character &#4864;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1308</span></td><td>"&#4873;" U1309 # key g (base character &#4872;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1340</span></td><td>"&#4929;" U1341 # key [ (base character &#4928;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1348</span></td><td>"&#4937;" U1349 # key f (base character &#4936;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1350</span></td><td>"&#4945;" U1351 # key p (base character &#4944;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1238</span></td><td>"&#4665;" U1239 # key v (base character &#4664;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1328</span></td><td>"&#4905;" U1329 # key ] (base character &#4904;)</td></tr><tr><td colspan="2">Modifier: /i/</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1200</span></td><td>"&#4610;" U1202 # key h (base character &#4608;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1208</span></td><td>"&#4618;" U120A # key l (base character &#4616;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1218</span></td><td>"&#4634;" U121A # key m (base character &#4632;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1228</span></td><td>"&#4650;" U122A # key r (base character &#4648;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1230</span></td><td>"&#4658;" U1232 # key s (base character &#4656;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1240</span></td><td>"&#4674;" U1242 # key q (base character &#4672;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1260</span></td><td>"&#4706;" U1262 # key b (base character &#4704;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1270</span></td><td>"&#4722;" U1272 # key t (base character &#4720;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1290</span></td><td>"&#4754;" U1292 # key n (base character &#4752;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U12A0</span></td><td>"&#4770;" U12A2 # key x (base character &#4768;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U12A8</span></td><td>"&#4778;" U12AA # key k (base character &#4776;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U12C8</span></td><td>"&#4810;" U12CA # key w (base character &#4808;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U12D8</span></td><td>"&#4826;" U12DA # key z (base character &#4824;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U12E8</span></td><td>"&#4842;" U12EA # key y (base character &#4840;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U12F0</span></td><td>"&#4850;" U12F2 # key d (base character &#4848;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1300</span></td><td>"&#4866;" U1302 # key j (base character &#4864;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1308</span></td><td>"&#4874;" U130A # key g (base character &#4872;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1340</span></td><td>"&#4930;" U1342 # key [ (base character &#4928;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1348</span></td><td>"&#4938;" U134A # key f (base character &#4936;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1350</span></td><td>"&#4946;" U1352 # key p (base character &#4944;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1238</span></td><td>"&#4666;" U123A # key v (base character &#4664;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1328</span></td><td>"&#4906;" U132A # key ] (base character &#4904;)</td></tr><tr><td colspan="2">Modifier: /a/</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1200</span></td><td>"&#4611;" U1203 # key h (base character &#4608;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1208</span></td><td>"&#4619;" U120B # key l (base character &#4616;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1218</span></td><td>"&#4635;" U121B # key m (base character &#4632;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1228</span></td><td>"&#4651;" U122B # key r (base character &#4648;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1230</span></td><td>"&#4659;" U1233 # key s (base character &#4656;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1240</span></td><td>"&#4675;" U1243 # key q (base character &#4672;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1260</span></td><td>"&#4707;" U1263 # key b (base character &#4704;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1270</span></td><td>"&#4723;" U1273 # key t (base character &#4720;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1290</span></td><td>"&#4755;" U1293 # key n (base character &#4752;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U12A0</span></td><td>"&#4771;" U12A3 # key x (base character &#4768;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U12A8</span></td><td>"&#4779;" U12AB # key k (base character &#4776;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U12C8</span></td><td>"&#4811;" U12CB # key w (base character &#4808;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U12D8</span></td><td>"&#4827;" U12DB # key z (base character &#4824;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U12E8</span></td><td>"&#4843;" U12EB # key y (base character &#4840;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U12F0</span></td><td>"&#4851;" U12F3 # key d (base character &#4848;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1300</span></td><td>"&#4867;" U1303 # key j (base character &#4864;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1308</span></td><td>"&#4875;" U130B # key g (base character &#4872;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1340</span></td><td>"&#4931;" U1343 # key [ (base character &#4928;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1348</span></td><td>"&#4939;" U134B # key f (base character &#4936;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1350</span></td><td>"&#4947;" U1353 # key p (base character &#4944;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1238</span></td><td>"&#4667;" U123B # key v (base character &#4664;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1328</span></td><td>"&#4907;" U132B # key ] (base character &#4904;)</td></tr><tr><td colspan="2">Modifier: /e/</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1200</span></td><td>"&#4612;" U1204 # key h (base character &#4608;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1208</span></td><td>"&#4620;" U120C # key l (base character &#4616;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1218</span></td><td>"&#4636;" U121C # key m (base character &#4632;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1228</span></td><td>"&#4652;" U122C # key r (base character &#4648;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1230</span></td><td>"&#4660;" U1234 # key s (base character &#4656;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1240</span></td><td>"&#4676;" U1244 # key q (base character &#4672;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1260</span></td><td>"&#4708;" U1264 # key b (base character &#4704;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1270</span></td><td>"&#4724;" U1274 # key t (base character &#4720;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1290</span></td><td>"&#4756;" U1294 # key n (base character &#4752;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U12A0</span></td><td>"&#4772;" U12A4 # key x (base character &#4768;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U12A8</span></td><td>"&#4780;" U12AC # key k (base character &#4776;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U12C8</span></td><td>"&#4812;" U12CC # key w (base character &#4808;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U12D8</span></td><td>"&#4828;" U12DC # key z (base character &#4824;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U12E8</span></td><td>"&#4844;" U12EC # key y (base character &#4840;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U12F0</span></td><td>"&#4852;" U12F4 # key d (base character &#4848;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1300</span></td><td>"&#4868;" U1304 # key j (base character &#4864;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1308</span></td><td>"&#4876;" U130C # key g (base character &#4872;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1340</span></td><td>"&#4932;" U1344 # key [ (base character &#4928;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1348</span></td><td>"&#4940;" U134C # key f (base character &#4936;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1350</span></td><td>"&#4948;" U1354 # key p (base character &#4944;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1238</span></td><td>"&#4668;" U123C # key v (base character &#4664;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1328</span></td><td>"&#4908;" U132C # key ] (base character &#4904;)</td></tr><tr><td colspan="2">Modifier: /c/</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1200</span></td><td>"&#4613;" U1205 # key h (base character &#4608;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1208</span></td><td>"&#4621;" U120D # key l (base character &#4616;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1218</span></td><td>"&#4637;" U121D # key m (base character &#4632;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1228</span></td><td>"&#4653;" U122D # key r (base character &#4648;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1230</span></td><td>"&#4661;" U1235 # key s (base character &#4656;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1240</span></td><td>"&#4677;" U1245 # key q (base character &#4672;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1260</span></td><td>"&#4709;" U1265 # key b (base character &#4704;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1270</span></td><td>"&#4725;" U1275 # key t (base character &#4720;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1290</span></td><td>"&#4757;" U1295 # key n (base character &#4752;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U12A0</span></td><td>"&#4773;" U12A5 # key x (base character &#4768;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U12A8</span></td><td>"&#4781;" U12AD # key k (base character &#4776;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U12C8</span></td><td>"&#4813;" U12CD # key w (base character &#4808;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U12D8</span></td><td>"&#4829;" U12DD # key z (base character &#4824;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U12E8</span></td><td>"&#4845;" U12ED # key y (base character &#4840;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U12F0</span></td><td>"&#4853;" U12F5 # key d (base character &#4848;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1300</span></td><td>"&#4869;" U1305 # key j (base character &#4864;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1308</span></td><td>"&#4877;" U130D # key g (base character &#4872;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1340</span></td><td>"&#4933;" U1345 # key [ (base character &#4928;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1348</span></td><td>"&#4941;" U134D # key f (base character &#4936;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1350</span></td><td>"&#4949;" U1355 # key p (base character &#4944;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1238</span></td><td>"&#4669;" U123D # key v (base character &#4664;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1328</span></td><td>"&#4909;" U132D # key ] (base character &#4904;)</td></tr><tr><td colspan="2">Modifier: /o/</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1200</span></td><td>"&#4614;" U1206 # key h (base character &#4608;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1208</span></td><td>"&#4622;" U120E # key l (base character &#4616;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1218</span></td><td>"&#4638;" U121E # key m (base character &#4632;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1228</span></td><td>"&#4654;" U122E # key r (base character &#4648;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1230</span></td><td>"&#4662;" U1236 # key s (base character &#4656;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1240</span></td><td>"&#4678;" U1246 # key q (base character &#4672;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1260</span></td><td>"&#4710;" U1266 # key b (base character &#4704;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1270</span></td><td>"&#4726;" U1276 # key t (base character &#4720;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1290</span></td><td>"&#4758;" U1296 # key n (base character &#4752;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U12A0</span></td><td>"&#4774;" U12A6 # key x (base character &#4768;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U12A8</span></td><td>"&#4782;" U12AE # key k (base character &#4776;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U12C8</span></td><td>"&#4814;" U12CE # key w (base character &#4808;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U12D8</span></td><td>"&#4830;" U12DE # key z (base character &#4824;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U12E8</span></td><td>"&#4846;" U12EE # key y (base character &#4840;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U12F0</span></td><td>"&#4854;" U12F6 # key d (base character &#4848;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1300</span></td><td>"&#4870;" U1306 # key j (base character &#4864;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1308</span></td><td>"&#4878;" U130E # key g (base character &#4872;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1340</span></td><td>"&#4934;" U1346 # key [ (base character &#4928;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1348</span></td><td>"&#4942;" U134E # key f (base character &#4936;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1350</span></td><td>"&#4950;" U1356 # key p (base character &#4944;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1238</span></td><td>"&#4670;" U123E # key v (base character &#4664;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1328</span></td><td>"&#4910;" U132E # key ] (base character &#4904;)</td></tr><tr><td colspan="2">Modifier: /A/</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U1208</span></td><td>"&#4623;" U120F # key l (base character &#4616;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U1218</span></td><td>"&#4639;" U121F # key m (base character &#4632;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U1228</span></td><td>"&#4655;" U122F # key r (base character &#4648;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U1230</span></td><td>"&#4663;" U1237 # key s (base character &#4656;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U1240</span></td><td>"&#4683;" U124B # key q (base character &#4672;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U1260</span></td><td>"&#4711;" U1267 # key b (base character &#4704;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U1270</span></td><td>"&#4727;" U1277 # key t (base character &#4720;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U1290</span></td><td>"&#4759;" U1297 # key n (base character &#4752;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U12A0</span></td><td>"&#4775;" U12A7 # key x (base character &#4768;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U12A8</span></td><td>"&#4787;" U12B3 # key k (base character &#4776;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U12D8</span></td><td>"&#4831;" U12DF # key z (base character &#4824;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U12F0</span></td><td>"&#4855;" U12F7 # key d (base character &#4848;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U1300</span></td><td>"&#4871;" U1307 # key j (base character &#4864;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U1308</span></td><td>"&#4883;" U1313 # key g (base character &#4872;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U1348</span></td><td>"&#4943;" U134F # key f (base character &#4936;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U1350</span></td><td>"&#4951;" U1357 # key p (base character &#4944;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U1238</span></td><td>"&#4671;" U123F # key v (base character &#4664;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U1328</span></td><td>"&#4911;" U132F # key ] (base character &#4904;)</td></tr><tr><td colspan="2">Modifier: /U/</td></tr><tr><td><span class="keysym">U</span> <span class="keysym">U1240</span></td><td>"&#4685;" U124D # key q (base character &#4672;)</td></tr><tr><td><span class="keysym">U</span> <span class="keysym">U12A8</span></td><td>"&#4789;" U12B5 # key k (base character &#4776;)</td></tr><tr><td><span class="keysym">U</span> <span class="keysym">U1308</span></td><td>"&#4885;" U1315 # key g (base character &#4872;)</td></tr><tr><td colspan="2">Modifier: /I/</td></tr><tr><td><span class="keysym">I</span> <span class="keysym">U1240</span></td><td>"&#4682;" U124A # key q (base character &#4672;)</td></tr><tr><td><span class="keysym">I</span> <span class="keysym">U12A8</span></td><td>"&#4786;" U12B2 # key k (base character &#4776;)</td></tr><tr><td><span class="keysym">I</span> <span class="keysym">U1308</span></td><td>"&#4882;" U1312 # key g (base character &#4872;)</td></tr><tr><td colspan="2">Modifier: /E/</td></tr><tr><td><span class="keysym">E</span> <span class="keysym">U1240</span></td><td>"&#4684;" U124C # key q (base character &#4672;)</td></tr><tr><td><span class="keysym">E</span> <span class="keysym">U12A8</span></td><td>"&#4788;" U12B4 # key k (base character &#4776;)</td></tr><tr><td><span class="keysym">E</span> <span class="keysym">U1308</span></td><td>"&#4884;" U1314 # key g (base character &#4872;)</td></tr><tr><td colspan="2">Modifier: /O/</td></tr><tr><td><span class="keysym">O</span> <span class="keysym">U1240</span></td><td>"&#4680;" U1248 # key q (base character &#4672;)</td></tr><tr><td><span class="keysym">O</span> <span class="keysym">U12A8</span></td><td>"&#4784;" U12B0 # key k (base character &#4776;)</td></tr><tr><td><span class="keysym">O</span> <span class="keysym">U1308</span></td><td>"&#4880;" U1310 # key g (base character &#4872;)</td></tr><tr><td colspan="2"> Group II  Modifier: /u/</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1210</span></td><td>"&#4625;" U1211 # key h (base character &#4624;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1220</span></td><td>"&#4641;" U1221 # key s (base character &#4640;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1250</span></td><td>"&#4689;" U1251 # key q (base character &#4688;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1278</span></td><td>"&#4729;" U1279 # key c (base character &#4728;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1320</span></td><td>"&#4897;" U1321 # key t (base character &#4896;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1298</span></td><td>"&#4761;" U1299 # key n (base character &#4760;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U12D0</span></td><td>"&#4817;" U12D1 # key x (base character &#4816;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U12B8</span></td><td>"&#4793;" U12B9 # key k (base character &#4792;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U12E0</span></td><td>"&#4833;" U12E1 # key z (base character &#4832;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U12F8</span></td><td>"&#4857;" U12F9 # key d (base character &#4856;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1318</span></td><td>"&#4889;" U1319 # key g (base character &#4888;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1338</span></td><td>"&#4921;" U1339 # key [ (base character &#4920;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1330</span></td><td>"&#4913;" U1331 # key p (base character &#4912;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1280</span></td><td>"&#4737;" U1281 # key ] (base character &#4736;)</td></tr><tr><td><span class="keysym">u</span> <span class="keysym">U1268</span></td><td>"&#4713;" U1269 # key v (base character &#4712;)</td></tr><tr><td colspan="2">Modifier: /i/</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1210</span></td><td>"&#4626;" U1212 # key h (base character &#4624;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1220</span></td><td>"&#4642;" U1222 # key s (base character &#4640;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1250</span></td><td>"&#4690;" U1252 # key q (base character &#4688;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1278</span></td><td>"&#4730;" U127A # key c (base character &#4728;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1320</span></td><td>"&#4898;" U1322 # key t (base character &#4896;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1298</span></td><td>"&#4762;" U129A # key n (base character &#4760;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U12D0</span></td><td>"&#4818;" U12D2 # key x (base character &#4816;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U12B8</span></td><td>"&#4794;" U12BA # key k (base character &#4792;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U12E0</span></td><td>"&#4834;" U12E2 # key z (base character &#4832;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U12F8</span></td><td>"&#4858;" U12FA # key d (base character &#4856;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1318</span></td><td>"&#4890;" U131A # key g (base character &#4888;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1338</span></td><td>"&#4922;" U133A # key [ (base character &#4920;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1330</span></td><td>"&#4914;" U1332 # key p (base character &#4912;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1280</span></td><td>"&#4738;" U1282 # key ] (base character &#4736;)</td></tr><tr><td><span class="keysym">i</span> <span class="keysym">U1268</span></td><td>"&#4714;" U126A # key v (base character &#4712;)</td></tr><tr><td colspan="2">Modifier: /a/</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1210</span></td><td>"&#4627;" U1213 # key h (base character &#4624;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1220</span></td><td>"&#4643;" U1223 # key s (base character &#4640;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1250</span></td><td>"&#4691;" U1253 # key q (base character &#4688;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1278</span></td><td>"&#4731;" U127B # key c (base character &#4728;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1320</span></td><td>"&#4899;" U1323 # key t (base character &#4896;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1298</span></td><td>"&#4763;" U129B # key n (base character &#4760;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U12D0</span></td><td>"&#4819;" U12D3 # key x (base character &#4816;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U12B8</span></td><td>"&#4795;" U12BB # key k (base character &#4792;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U12E0</span></td><td>"&#4835;" U12E3 # key z (base character &#4832;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U12F8</span></td><td>"&#4859;" U12FB # key d (base character &#4856;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1318</span></td><td>"&#4891;" U131B # key g (base character &#4888;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1338</span></td><td>"&#4923;" U133B # key [ (base character &#4920;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1330</span></td><td>"&#4915;" U1333 # key p (base character &#4912;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1280</span></td><td>"&#4739;" U1283 # key ] (base character &#4736;)</td></tr><tr><td><span class="keysym">a</span> <span class="keysym">U1268</span></td><td>"&#4715;" U126B # key v (base character &#4712;)</td></tr><tr><td colspan="2">Modifier: /e/</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1210</span></td><td>"&#4628;" U1214 # key h (base character &#4624;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1220</span></td><td>"&#4644;" U1224 # key s (base character &#4640;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1250</span></td><td>"&#4692;" U1254 # key q (base character &#4688;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1278</span></td><td>"&#4732;" U127C # key c (base character &#4728;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1320</span></td><td>"&#4900;" U1324 # key t (base character &#4896;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1298</span></td><td>"&#4764;" U129C # key n (base character &#4760;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U12D0</span></td><td>"&#4820;" U12D4 # key x (base character &#4816;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U12B8</span></td><td>"&#4796;" U12BC # key k (base character &#4792;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U12E0</span></td><td>"&#4836;" U12E4 # key z (base character &#4832;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U12F8</span></td><td>"&#4860;" U12FC # key d (base character &#4856;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1318</span></td><td>"&#4892;" U131C # key g (base character &#4888;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1338</span></td><td>"&#4924;" U133C # key [ (base character &#4920;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1330</span></td><td>"&#4916;" U1334 # key p (base character &#4912;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1280</span></td><td>"&#4740;" U1284 # key ] (base character &#4736;)</td></tr><tr><td><span class="keysym">e</span> <span class="keysym">U1268</span></td><td>"&#4716;" U126C # key v (base character &#4712;)</td></tr><tr><td colspan="2">Modifier: /c/</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1210</span></td><td>"&#4629;" U1215 # key h (base character &#4624;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1220</span></td><td>"&#4645;" U1225 # key s (base character &#4640;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1250</span></td><td>"&#4693;" U1255 # key q (base character &#4688;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1278</span></td><td>"&#4733;" U127D # key c (base character &#4728;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1320</span></td><td>"&#4901;" U1325 # key t (base character &#4896;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1298</span></td><td>"&#4765;" U129D # key n (base character &#4760;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U12D0</span></td><td>"&#4821;" U12D5 # key x (base character &#4816;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U12B8</span></td><td>"&#4797;" U12BD # key k (base character &#4792;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U12E0</span></td><td>"&#4837;" U12E5 # key z (base character &#4832;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U12F8</span></td><td>"&#4861;" U12FD # key d (base character &#4856;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1318</span></td><td>"&#4893;" U131D # key g (base character &#4888;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1338</span></td><td>"&#4925;" U133D # key [ (base character &#4920;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1330</span></td><td>"&#4917;" U1335 # key p (base character &#4912;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1280</span></td><td>"&#4741;" U1285 # key ] (base character &#4736;)</td></tr><tr><td><span class="keysym">c</span> <span class="keysym">U1268</span></td><td>"&#4717;" U126D # key v (base character &#4712;)</td></tr><tr><td colspan="2">Modifier: /o/</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1210</span></td><td>"&#4630;" U1216 # key h (base character &#4624;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1220</span></td><td>"&#4646;" U1226 # key s (base character &#4640;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1250</span></td><td>"&#4694;" U1256 # key q (base character &#4688;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1278</span></td><td>"&#4734;" U127E # key c (base character &#4728;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1320</span></td><td>"&#4902;" U1326 # key t (base character &#4896;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1298</span></td><td>"&#4766;" U129E # key n (base character &#4760;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U12D0</span></td><td>"&#4822;" U12D6 # key x (base character &#4816;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U12B8</span></td><td>"&#4798;" U12BE # key k (base character &#4792;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U12E0</span></td><td>"&#4838;" U12E6 # key z (base character &#4832;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U12F8</span></td><td>"&#4862;" U12FE # key d (base character &#4856;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1318</span></td><td>"&#4894;" U131E # key g (base character &#4888;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1338</span></td><td>"&#4926;" U133E # key [ (base character &#4920;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1330</span></td><td>"&#4918;" U1336 # key p (base character &#4912;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1280</span></td><td>"&#4742;" U1286 # key ] (base character &#4736;)</td></tr><tr><td><span class="keysym">o</span> <span class="keysym">U1268</span></td><td>"&#4718;" U126E # key v (base character &#4712;)</td></tr><tr><td colspan="2">Modifier: /A/</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U1210</span></td><td>"&#4631;" U1217 # key h (base character &#4624;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U1220</span></td><td>"&#4647;" U1227 # key s (base character &#4640;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U1250</span></td><td>"&#4699;" U125B # key q (base character &#4688;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U1278</span></td><td>"&#4735;" U127F # key c (base character &#4728;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U1320</span></td><td>"&#4903;" U1327 # key t (base character &#4896;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U1298</span></td><td>"&#4767;" U129F # key n (base character &#4760;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U12B8</span></td><td>"&#4803;" U12C3 # key k (base character &#4792;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U12E0</span></td><td>"&#4839;" U12E7 # key z (base character &#4832;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U12F8</span></td><td>"&#4863;" U12FF # key d (base character &#4856;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U1338</span></td><td>"&#4927;" U133F # key [ (base character &#4920;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U1330</span></td><td>"&#4919;" U1337 # key p (base character &#4912;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U1280</span></td><td>"&#4747;" U128B # key ] (base character &#4736;)</td></tr><tr><td><span class="keysym">A</span> <span class="keysym">U1268</span></td><td>"&#4719;" U126F # key v (base character &#4712;)</td></tr><tr><td colspan="2">Modifier: /U/</td></tr><tr><td><span class="keysym">U</span> <span class="keysym">U1250</span></td><td>"&#4701;" U125D # key q (base character &#4688;)</td></tr><tr><td><span class="keysym">U</span> <span class="keysym">U12B8</span></td><td>"&#4805;" U12C5 # key k (base character &#4792;)</td></tr><tr><td colspan="2">Modifier: /I/</td></tr><tr><td><span class="keysym">I</span> <span class="keysym">U1250</span></td><td>"&#4698;" U125A # key q (base character &#4688;)</td></tr><tr><td><span class="keysym">I</span> <span class="keysym">U12B8</span></td><td>"&#4802;" U12C2 # key k (base character &#4792;)</td></tr><tr><td colspan="2">Modifier: /E/</td></tr><tr><td><span class="keysym">E</span> <span class="keysym">U1250</span></td><td>"&#4700;" U125C # key q (base character &#4688;)</td></tr><tr><td><span class="keysym">E</span> <span class="keysym">U12B8</span></td><td>"&#4804;" U12C4 # key k (base character &#4792;)</td></tr><tr><td colspan="2">Modifier: /O/</td></tr><tr><td><span class="keysym">O</span> <span class="keysym">U1250</span></td><td>"&#4696;" U1258 # key q (base character &#4688;)</td></tr><tr><td><span class="keysym">O</span> <span class="keysym">U12B8</span></td><td>"&#4800;" U12C0 # key k (base character &#4792;)</td></tr><tr><td colspan="2"> Group III </td></tr><tr><td><span class="keysym">backslash</span> <span class="keysym">quotedbl</span></td><td>"&#4965;" U1365 # key "</td></tr><tr><td><span class="keysym">backslash</span> <span class="keysym">apostrophe</span></td><td>"&#4966;" U1366 # key "</td></tr><tr><td><span class="keysym">backslash</span> <span class="keysym">minus</span></td><td>"|" U007C # key -</td></tr><tr><td><span class="keysym">backslash</span> <span class="keysym">underscore</span></td><td>"&#165;" U00A5 # key _</td></tr><tr><td><span class="keysym">backslash</span> <span class="keysym">question</span></td><td>"&#4967;" U1367 # key ?</td></tr><tr><td colspan="2"> Khmer digraphs </td></tr><tr><td><span class="keysym">U17ff</span></td><td>"&#6070;&#6086;"</td></tr><tr><td><span class="keysym">U17fe</span></td><td>"&#6084;&#6087;"</td></tr><tr><td><span class="keysym">U17fd</span></td><td>"&#6081;&#6087;"</td></tr><tr><td><span class="keysym">U17fc</span></td><td>"&#6075;&#6086;"</td></tr><tr><td><span class="keysym">U17fb</span></td><td>"&#6075;&#6087;"</td></tr><tr><td colspan="2"> Arabic Lam-Alef ligatures </td></tr><tr><td><span class="keysym">UFEFB</span></td><td>"&#1604;&#1575;" # ARABIC LIGATURE LAM WITH ALEF</td></tr><tr><td><span class="keysym">UFEF7</span></td><td>"&#1604;&#1571;" # ARABIC LIGATURE LAM WITH ALEF WITH HAMZA ABOVE</td></tr><tr><td><span class="keysym">UFEF9</span></td><td>"&#1604;&#1573;" # ARABIC LIGATURE LAM WITH ALEF WITH HAMZA BELOW</td></tr><tr><td><span class="keysym">UFEF5</span></td><td>"&#1604;&#1570;" # ARABIC LIGATURE LAM WITH ALEF WITH MADDA ABOVE</td></tr></tbody></table></div></div><br class="table-break" /></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="libX11-keys.html">Prev</a>&#160;</td><td width="20%" align="center">&#160;</td><td width="40%" align="right">&#160;<a accesskey="n" href="armscii-8.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Xlib Compose Key Charts&#160;</td><td width="20%" align="center"><a accesskey="h" href="libX11-keys.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Xlib Compose Keys for armscii-8</td></tr></table></div></body></html>

@@ -1,0 +1,44 @@
+OIL_VERSION = "2.4";
+
+IMPLEMENTATION ee {
+    OS {
+        ENUM [
+        	//srl added
+            ESI_RISC {
+                STRING ID = "default_cpu";
+                STRING APP_SRC[];
+                BOOLEAN [
+                    TRUE {
+                        BOOLEAN [
+                            TRUE {
+                                UINT32 SYS_SIZE;
+                            },
+                            FALSE
+                        ] IRQ_STACK;
+                    },
+                    FALSE
+                ] MULTI_STACK = FALSE;
+            }
+        ] CPU_DATA[];
+
+        ENUM [
+        	//srl added 
+        	ESI_RISC {
+                ENUM [
+                    CUSTOM {
+                        STRING MODEL;
+                    }
+             	] MODEL;
+       		}
+     	] MCU_DATA[];
+        
+    
+        STRING EE_OPT[];
+        STRING CFLAGS[];
+        STRING ASFLAGS[];
+        STRING LDFLAGS[];
+        STRING LDDEPS[];
+        STRING LIBS[];
+        
+   };
+};

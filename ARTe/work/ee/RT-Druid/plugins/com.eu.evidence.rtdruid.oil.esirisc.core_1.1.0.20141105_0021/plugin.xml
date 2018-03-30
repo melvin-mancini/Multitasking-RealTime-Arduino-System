@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="com.eu.evidence.rtdruid.oil.core.oil_implementation">
+      <implementation_file
+            path="oil_files/esi_risc.oil">
+      </implementation_file>
+   </extension>
+   <extension
+         point="com.eu.evidence.rtdruid.oil.core.xsltWriterStep">
+      <Step
+            stepId="esi_risc"
+            xsltFile="xsltTransformations/esi_risc.xsl">
+      </Step>
+   </extension>
+   <extension
+         point="com.eu.evidence.rtdruid.oil.ee.core.eeXsltSectionWriter">
+      <xsltWriter
+            id="esi_risc_writer" type="CPU" enabled="true">
+         <xsltStep
+               xsltWriterStepId="esi_risc">
+         </xsltStep>
+      </xsltWriter>
+   </extension>
+
+    <extension
+         point="com.eu.evidence.templates.core.template">
+      <template
+            dir="examples/">
+      </template>
+   </extension>
+</plugin>

@@ -1,0 +1,45 @@
+mingw-runtime
+========================================================================
+The mingw-runtime package provides public domain implementations of
+header files, import libraries, and other support for the MSVCRT C
+Runtime Library.  These are used by the MinGW cross toolchain.
+
+Build requirements:
+  mingw-gcc
+  mingw-binutils
+  make
+  cygport-0.12.2
+
+Canonical homepage:
+  http://mingw.org/
+
+Canonical download:
+  mirror://sourceforge/mingw/
+
+License:
+  Public Domain
+
+Language:
+  C
+
+========================================================================
+
+Port Notes:
+---------- mingw-runtime-4.0-1 -- 2013 Jul 10 -----------
+* Update to latest upstream release
+* Rely on cygport to autogenerate setup.hint
+* First cygwin64 release
+
+---------- mingw-runtime-3.18-3 -- 2011 May 01 -----------
+* First version for the MinGW.org cross toolchain available from
+  cygwin.com
+
+---------- mingw-runtime-3.18-2 -- 2010 Nov 22 -----------
+* First release for the MinGW.org cross toolchain (older versions were
+  intended for use with the (deprecated) -mno-cygwin mode of the cygwin
+  compiler).
+* Only published via cygutils.fruitbat.org
+
+========================================================================
+Cygwin port maintained by: Chris Sutcliffe <cygwin@cygwin.com>
+

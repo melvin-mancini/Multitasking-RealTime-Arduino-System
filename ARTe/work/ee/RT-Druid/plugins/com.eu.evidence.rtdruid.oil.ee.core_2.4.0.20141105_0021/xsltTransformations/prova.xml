@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="pre_parsing_rules.xsl"?>
+<application Name="mySystem">
+<object Name="myOs" Type="OS">
+<parameter CurrValue="DEBUG" Name="EE_OPT"/>
+<parameter Name="STATUS">
+<enumerator Name="EXTENDED"/>
+</parameter>
+<parameter Name="STARTUPHOOK">
+<enumerator Name="TRUE"/>
+</parameter>
+<parameter Name="ERRORHOOK">
+<enumerator Name="FALSE"/>
+</parameter>
+<parameter Name="SHUTDOWNHOOK">
+<enumerator Name="FALSE"/>
+</parameter>
+<parameter Name="PRETASKHOOK">
+<enumerator Name="FALSE"/>
+</parameter>
+<parameter Name="POSTTASKHOOK">
+<enumerator Name="FALSE"/>
+</parameter>
+<parameter Name="USEGETSERVICEID">
+<enumerator Name="FALSE"/>
+</parameter>
+<parameter Name="USEPARAMETERACCESS">
+<enumerator Name="FALSE"/>
+</parameter>
+<parameter Name="USERESSCHEDULER">
+<enumerator Name="TRUE"/>
+</parameter>
+<parameter Name="CPU_DATA">
+<enumerator Name="PIC32">
+<parameter CurrValue="code.c" Name="APP_SRC"/>
+<parameter CurrValue="T1.S" Name="APP_SRC"/>
+<parameter Name="MULTI_STACK">
+<enumerator Name="FALSE"/>
+</parameter>
+<parameter Name="ICD2">
+<enumerator Name="TRUE"/>
+</parameter>
+</enumerator>
+</parameter>
+<parameter Name="KERNEL_TYPE">
+<enumerator Name="BCC1"/>
+</parameter>
+</object>
+<object Name="Task0" Type="TASK">
+<parameter CurrValue="1" Name="PRIORITY"/>
+<parameter Name="RESOURCE">
+<enumerator Name="MUTEX_sync"/>
+</parameter>
+<parameter CurrValue="4" Name="ACTIVATION"/>
+<parameter Name="STACK">
+<enumerator Name="SHARED"/>
+</parameter>
+<parameter Name="SCHEDULE">
+<enumerator Name="FULL"/>
+</parameter>
+</object>
+<object Name="Task1" Type="TASK">
+<parameter CurrValue="2" Name="PRIORITY"/>
+<parameter CurrValue="4" Name="ACTIVATION"/>
+<parameter Name="STACK">
+<enumerator Name="SHARED"/>
+</parameter>
+<parameter Name="SCHEDULE">
+<enumerator Name="FULL"/>
+</parameter>
+</object>
+<object Name="Task2" Type="TASK">
+<parameter CurrValue="3" Name="PRIORITY"/>
+<parameter Name="RESOURCE">
+<enumerator Name="MUTEX_sync"/>
+</parameter>
+<parameter CurrValue="4" Name="ACTIVATION"/>
+<parameter Name="STACK">
+<enumerator Name="SHARED"/>
+</parameter>
+<parameter Name="SCHEDULE">
+<enumerator Name="FULL"/>
+</parameter>
+</object>
+<object Name="Task3" Type="TASK">
+<parameter CurrValue="4" Name="PRIORITY"/>
+<parameter CurrValue="4" Name="ACTIVATION"/>
+<parameter Name="STACK">
+<enumerator Name="SHARED"/>
+</parameter>
+<parameter Name="SCHEDULE">
+<enumerator Name="FULL"/>
+</parameter>
+</object>
+<object Name="MUTEX_sync" Type="RESOURCE">
+<parameter Name="RESOURCEPROPERTY">
+<enumerator Name="STANDARD"/>
+</parameter>
+</object>
+</application>

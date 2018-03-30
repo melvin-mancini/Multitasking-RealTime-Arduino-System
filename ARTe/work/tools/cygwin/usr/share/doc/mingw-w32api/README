@@ -1,0 +1,44 @@
+;;
+; @file README
+; Copyright 2012-2013 MinGW.org project
+;
+; Permission is hereby granted, free of charge, to any person obtaining a
+; copy of this software and associated documentation files (the "Software"),
+; to deal in the Software without restriction, including without limitation
+; the rights to use, copy, modify, merge, publish, distribute, sublicense,
+; and/or sell copies of the Software, and to permit persons to whom the
+; Software is furnished to do so, subject to the following conditions:
+; 
+; The above copyright notice and this permission notice (including the next
+; paragraph) shall be included in all copies or substantial portions of the
+; Software.
+; 
+; THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+; IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+; FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+; AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+; LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+; FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+; DEALINGS IN THE SOFTWARE.
+;;
+mingw-org-wsl (Windows System Libraries):
+=====
+This package contains both the C Runtime (libcrt) and the Windows API (winapi)
+definitions as provided by the MinGW.org team.  These libraries can be used
+for both 32 bit and 64 bit Windows programming.  We have extended some parts
+of the C runtime to be C99 compliant but for the most part you can find the
+documentation provided by http://msdn.microsoft.com to be your best source for
+how to use these libraries in your C programming.  The GNU C++ compiler (g++)
+has its own implementation of the C++ standard and the documentation you find
+for stdc++ on the http://gcc.gnu.org site will be your best source of informa-
+tion for it.  Note that some of the C++ API will not able to be used on Windows
+due to lack of implementation for the Windows platform.
+
+Changes between versions are being given in the following file:
+c:\mingw\share\doc\mingwrt\NEWS or c:\mingw\share\doc\w32api\NEWS.
+Note that these two files are exactly the same since the source has now been
+combined.  Changes for versions earlier than 4.0 you will need to look at the
+source files for the historical ChangeLog.
+
+Bug Reports: http://www.mingw.org/Reporting_Bugs
+Submit Patches: http://www.mingw.org/wiki/SubmitPatches

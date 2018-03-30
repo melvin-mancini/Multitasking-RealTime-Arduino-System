@@ -1,0 +1,45 @@
+mingw-w32api
+========================================================================
+The w32api package provides header files and import libraries for the
+Windows platform.  This package provides a version intended for use
+with a MinGW.org cross compiler toolchain, which generates native (that
+is, non-cygwin) binaries.
+
+Runtime requirements:
+
+Build requirements:
+  mingw-gcc
+  mingw-binutils
+  make
+  cygport-0.12.2
+
+Canonical homepage:
+  http://mingw.org/
+
+Canonical download:
+  mirror://sourceforge/mingw/
+
+License:
+  Public Domain
+
+Language:
+  C
+
+========================================================================
+
+Port Notes:
+---------- mingw-w32api-4.0-1 -- 2013 Jul 10 -----------
+* Update to latest upstream release
+* Rely on cygport to autogenerate setup.hint
+* First cygwin64 release
+
+---------- mingw-w32api-3.17-2 -- 2011 May 01 -----------
+* Update to match mingw.org offerings
+* First cygwin.com release
+
+---------- mingw-w32api-3.15-1 -- 2010 Nov 22 -----------
+* Initial release (but only via cygutils.fruitbat.org)
+
+========================================================================
+Cygwin port maintained by: Chuck Wilson <cygwin@cygwin.com>
+

@@ -1,0 +1,34 @@
+#!/bin/bash
+
+PATH=/bin
+export PATH
+prefix=/usr
+bindir=${prefix}/bin
+sbindir=${prefix}/sbin
+
+manifest=/etc/preremove/rxvt-manifest.lst
+[ -f ${manifest} ] || (echo "Unable to find manifest file" && exit 0)
+
+while read f; do
+    fSrc=/etc/defaults/${f}
+    fDest=/${f}
+    if [ ! -e ${fDest} -a ! -L ${fDest} ]; then
+        /bin/echo "Using the default version of ${fDest} (${fSrc})"
+        /bin/touch ${fDest}
+        /bin/cp ${fSrc} ${fDest}
+    else
+        echo ${fDest} already exists, not overwriting.
+    fi
+done < ${manifest}
+
+/usr/bin/mkdir -p "$(/usr/bin/cygpath -AP)/Cygwin"
+/usr/bin/mkshortcut -AP -n "Cygwin/rxvt-native" -d "Cygwin RXVT (native)" \
+        -w /usr/bin -i /usr/bin/cygicons-0.dll -j 1 \
+        -a '-display :0 -fn "Lucida Console-14" -tn rxvt-cygwin-native -e /bin/bash --login' \
+        /usr/bin/rxvt.exe
+/usr/bin/mkshortcut -AP -n "Cygwin/rxvt-x" -d "Cygwin RXVT (X11)" \
+        -w /usr/bin -i /usr/bin/cygicons-0.dll -j 2 \
+        -a '/usr/bin/rxvt.exe -display 127.0.0.1:0 -tn rxvt-cygwin -e /bin/bash --login' \
+        /usr/bin/run.exe
+
+
