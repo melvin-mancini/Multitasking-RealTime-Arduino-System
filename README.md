@@ -1,6 +1,6 @@
 # <a name="Title"></a> Multitasking RealTime Arduino System
 ## <a name="Introduction"></a> Introduction 
-This simple project shows how Arduino can be used with a real time operating system (Erika). The project is designed to show how Arduino can be integrated with a Real-Time operating system and how to use hardware and software components. A special version of Arduino called ARTe was used for software development. For more information on how to use ARTe, visit the official developer site (http://retis.sssup.it/?q=arte). 
+This simple project shows how Arduino can be used with a real time operating system (Erika). The project is designed to show how Arduino can be integrated with a Real-Time operating system and how to use hardware and software components. A special version of Arduino called ARTe was used for software development. For more information on how to use ARTe, visit the official developer site (http://arte.retis.santannapisa.it/index.html). 
 
 The file [Report.pdf](./Report.pdf) presents the main differences between a Real-Time/Multitasking and Non-Real-Time operating system running on a widespread microcontroller, Arduino. The [document](./Report.pdf) shows the efficienty evaluation and performance differences when two different OSs are running in the system implemented: **ERIKA (Enterprise Open-Source Real-time Kernel)** and **Arduino’s default OS Singletask**).
 
@@ -15,7 +15,7 @@ Processes, when they are running, handle different activities. A process for man
 
 ## <a name="How-to-use"></a> How to use
 ### <a name="ARTe-installation"></a> ARTe installation
-In order to develop applications with ARTe you have to install the development tool. The developer site (http://retis.sssup.it/?q=arte) provides all the information on how to use the development tool, providing documentation and examples. The link (http://retis.sssup.it/?q=arte) where you can download the software application it seems to be not working. In this project it has been uploaded a version of ARTe and you can use it by opening the folder **work** and executing the file **arduino.exe**. You need to import the library [DigitalToggle.zip](./Arte/DigitalToggle.zip) through the Arduino IDE.
+In order to develop applications with ARTe you have to install the development tool. The developer site (http://arte.retis.santannapisa.it/index.html) provides all the information on how to use the development tool, providing documentation and examples. The link (http://arte.retis.santannapisa.it/index.html) where you can download the software application it seems to be not working. In this project it has been uploaded a version of ARTe and you can use it by opening the folder **work** and executing the file **arduino.exe**. You need to import the library [DigitalToggle.zip](./Arte/DigitalToggle.zip) through the Arduino IDE.
 
 Once installed the tool is quite similar to Arduino's editor but with the ability to use the Arte Extension.
 You can then enable or disable the ARTe extension by clicking on the **Tools** item in the menu bar. The item **ARTℇ** will appear and click on it you can select enable or disable.
