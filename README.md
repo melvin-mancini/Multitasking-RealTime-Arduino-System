@@ -15,7 +15,8 @@ Processes, when they are running, handle different activities. A process for man
 
 ## <a name="How-to-use"></a> How to use
 ### <a name="ARTe-installation"></a> ARTe installation
-In order to develop applications with ARTe you have to install the development tool. The developer site (http://arte.retis.santannapisa.it/index.html) provides all the information on how to use the development tool, providing documentation and examples. The link (http://arte.retis.santannapisa.it/index.html) where you can download the software application it seems to be not working. In this project it has been uploaded a version of ARTe and you can use it by opening the folder **work** and executing the file **arduino.exe**. You need to import the library [DigitalToggle.zip](./Arte/DigitalToggle.zip) through the Arduino IDE.
+In order to develop applications with ARTe you have to install the development tool. The version of ARTe used to develop this project can be found on the following web page: http://retis.sssup.it/?q=arte . ARTe is evolved and the new version can be downloaded from the site: http://arte.retis.santannapisa.it/index.html . The developer sites (http://arte.retis.santannapisa.it/index.html or http://arte.retis.santannapisa.it/index.html) provide all the information on how to use the development tool, providing documentation and examples.
+In this project it has been uploaded a version of ARTe (which is avilable on the web site http://retis.sssup.it/?q=arte ) and you can use it by opening the folder **work** and executing the file **arduino.exe**. You need to import the library [DigitalToggle.zip](./Arte/DigitalToggle.zip) through the Arduino IDE.
 
 Once installed the tool is quite similar to Arduino's editor but with the ability to use the Arte Extension.
 You can then enable or disable the ARTe extension by clicking on the **Tools** item in the menu bar. The item **ARTℇ** will appear and click on it you can select enable or disable.
